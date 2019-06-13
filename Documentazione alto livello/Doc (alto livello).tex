@@ -2,18 +2,20 @@
 \input{Stile/Stile.tex}
 \input{Stile/FunzioniComandi.tex}
 \input{Res/Comandi}
-
+\AtBeginDocument{\renewcommand\contentsname{Contents}}
+\AtBeginDocument{\renewcommand\listfigurename{List of figures}}
 \begin{document}
+	
 \copertina
 
 \tableofcontents
-%\pagebreak
+\pagebreak
 
 %\listoftables
 %\pagebreak
 
-%\listoffigures
-%\pagebreak
+\listoffigures
+\pagebreak
 
 % Comando per testare con le linee più grosse
 \arrayrulewidth=1pt

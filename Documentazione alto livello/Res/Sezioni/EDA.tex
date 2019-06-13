@@ -40,4 +40,9 @@ There are two main types of architecture components: a \textbf{broker} component
 There is no central event-mediator component controlling and orchestrating the initial event; rather, each event-processor component is responsible for processing an event and publishing a new event indicating the action it just performed. \\
 The broker topology is all about the chaining of events to perform a business function; once an event processor hands off the event, it is no longer involved with the processing of that specific event.
 
+\subsection{Analysis}
+One consideration to take into account when choosing this architecture pattern is the lack of atomic transactions for a single business process. Because event processor components are highly decoupled and distributed, it is very difficult to maintain a transactional unit of work across them. \\
+One of the most difficult aspects of the event-driven architecture pattern is the creation, maintenance, and governance of the event-processor component contracts. Each event usually has a specific contract associated with it.
+
+
 

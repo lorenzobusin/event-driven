@@ -1,0 +1,434 @@
+{
+  "service": {
+    "service": "serverless-dynamodb-streams",
+    "serviceObject": {
+      "name": "serverless-dynamodb-streams"
+    },
+    "provider": {
+      "stage": "dev",
+      "region": "eu-central-1",
+      "variableSyntax": "\\${([ ~:a-zA-Z0-9._@'\",\\-\\/\\(\\)*]+?)}",
+      "name": "aws",
+      "runtime": "nodejs10.x",
+      "iamRoleStatements": [
+        {
+          "Effect": "Allow",
+          "Resource": "*",
+          "Action": [
+            "dynamodb:*"
+          ]
+        }
+      ],
+      "versionFunctions": true,
+      "remoteFunctionData": null,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "UpdateUserLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-dynamodb-streams-dev-updateUser"
+            }
+          },
+          "CreateUserLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-dynamodb-streams-dev-createUser"
+            }
+          },
+          "DeleteUserLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-dynamodb-streams-dev-deleteUser"
+            }
+          },
+          "LoggerLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-dynamodb-streams-dev-logger"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "dev",
+                        "serverless-dynamodb-streams",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-dynamodb-streams-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/serverless-dynamodb-streams-dev*:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:GetRecords",
+                          "dynamodb:GetShardIterator",
+                          "dynamodb:DescribeStream",
+                          "dynamodb:ListStreams"
+                        ],
+                        "Resource": [
+                          "arn:aws:dynamodb:eu-central-1:582373673306:table/users/stream/2019-06-17T12:43:26.873"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "serverless-dynamodb-streams",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "UpdateUserLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1560779743191-2019-06-17T13:55:43.191Z/serverless-dynamodb-streams.zip"
+              },
+              "FunctionName": "serverless-dynamodb-streams-dev-updateUser",
+              "Handler": "handler.updateUser",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6
+            },
+            "DependsOn": [
+              "UpdateUserLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "UpdateUserLambdaVersionBiwKQD9Rdzd9FckztRjSLyEfF6k4iyWCIgw0obys4": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateUserLambdaFunction"
+              },
+              "CodeSha256": "cbWloSLZTBwA+p85zkEbSuZ1e0W2PgxynFvxG6I/2Z4="
+            }
+          },
+          "CreateUserLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1560779743191-2019-06-17T13:55:43.191Z/serverless-dynamodb-streams.zip"
+              },
+              "FunctionName": "serverless-dynamodb-streams-dev-createUser",
+              "Handler": "handler.createUser",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6
+            },
+            "DependsOn": [
+              "CreateUserLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "CreateUserLambdaVersionqMQ1EwEzzTEdcGqQCqqKCFfLv54TRyidl3QC7nNuv4": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "CreateUserLambdaFunction"
+              },
+              "CodeSha256": "cbWloSLZTBwA+p85zkEbSuZ1e0W2PgxynFvxG6I/2Z4="
+            }
+          },
+          "DeleteUserLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1560779743191-2019-06-17T13:55:43.191Z/serverless-dynamodb-streams.zip"
+              },
+              "FunctionName": "serverless-dynamodb-streams-dev-deleteUser",
+              "Handler": "handler.deleteUser",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6
+            },
+            "DependsOn": [
+              "DeleteUserLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "DeleteUserLambdaVersionsBNJcTYud8djuiSDytrQYTmzK63Ky07LBiM8w0Urk7Y": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteUserLambdaFunction"
+              },
+              "CodeSha256": "cbWloSLZTBwA+p85zkEbSuZ1e0W2PgxynFvxG6I/2Z4="
+            }
+          },
+          "LoggerLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1560779743191-2019-06-17T13:55:43.191Z/serverless-dynamodb-streams.zip"
+              },
+              "FunctionName": "serverless-dynamodb-streams-dev-logger",
+              "Handler": "handler.logger",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6
+            },
+            "DependsOn": [
+              "LoggerLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "LoggerLambdaVersionY2GLMLmI484rvN0iyyL7aOYiwkvYw33blf1ffXxVvI": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "LoggerLambdaFunction"
+              },
+              "CodeSha256": "cbWloSLZTBwA+p85zkEbSuZ1e0W2PgxynFvxG6I/2Z4="
+            }
+          },
+          "LoggerEventSourceMappingDynamodbUsers": {
+            "Type": "AWS::Lambda::EventSourceMapping",
+            "DependsOn": "IamRoleLambdaExecution",
+            "Properties": {
+              "BatchSize": 10,
+              "EventSourceArn": "arn:aws:dynamodb:eu-central-1:582373673306:table/users/stream/2019-06-17T12:43:26.873",
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "LoggerLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "StartingPosition": "TRIM_HORIZON",
+              "Enabled": "True"
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          },
+          "UpdateUserLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateUserLambdaVersionBiwKQD9Rdzd9FckztRjSLyEfF6k4iyWCIgw0obys4"
+            }
+          },
+          "CreateUserLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "CreateUserLambdaVersionqMQ1EwEzzTEdcGqQCqqKCFfLv54TRyidl3QC7nNuv4"
+            }
+          },
+          "DeleteUserLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteUserLambdaVersionsBNJcTYud8djuiSDytrQYTmzK63Ky07LBiM8w0Urk7Y"
+            }
+          },
+          "LoggerLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "LoggerLambdaVersionY2GLMLmI484rvN0iyyL7aOYiwkvYw33blf1ffXxVvI"
+            }
+          }
+        }
+      },
+      "coreCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "pluginsData": {},
+    "functions": {
+      "updateUser": {
+        "handler": "handler.updateUser",
+        "events": [],
+        "name": "serverless-dynamodb-streams-dev-updateUser",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "createUser": {
+        "handler": "handler.createUser",
+        "events": [],
+        "name": "serverless-dynamodb-streams-dev-createUser",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "deleteUser": {
+        "handler": "handler.deleteUser",
+        "events": [],
+        "name": "serverless-dynamodb-streams-dev-deleteUser",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "logger": {
+        "handler": "handler.logger",
+        "events": [
+          {
+            "stream": "arn:aws:dynamodb:eu-central-1:582373673306:table/users/stream/2019-06-17T12:43:26.873"
+          }
+        ],
+        "name": "serverless-dynamodb-streams-dev-logger",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      }
+    },
+    "serviceFilename": "serverless.yml",
+    "layers": {},
+    "artifact": "C:\\Users\\loren\\Desktop\\Stage\\event-driven\\serverless-dynamodb-streams\\.serverless\\serverless-dynamodb-streams.zip"
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/serverless-dynamodb-streams/dev/1560779743191-2019-06-17T13:55:43.191Z",
+    "artifact": "serverless-dynamodb-streams.zip"
+  }
+}

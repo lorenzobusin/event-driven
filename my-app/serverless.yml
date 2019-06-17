@@ -22,7 +22,7 @@ provider:
       Resource:
         - "*"
   environment:
-    USERS_TABLE: ${self:custom.tableName}
+    EVENT_TABLE:  ${self:custom.tableName}
 
 functions:
   app:
@@ -30,3 +30,15 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
+
+  writeDB:
+    handler: index.handler
+    events:
+      - http: 'POST /users'
+
+  readDB:
+    handler: index.handler
+    events:
+      - http: 'GET /users/{proxy+}'
+
+

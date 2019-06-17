@@ -59,7 +59,28 @@ module.exports.deleteUser = (event, context, callback) => {
     }
     callback(null, { message: 'User successfully deleted', params });
     });
+};
+
+module.exports.getUser = (event, context, callback) => {
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const data = event;
+  data.updatedAt = new Date().getTime();
+
+  const params = {
+    TableName: 'users',
+    Key:{
+      "id": event.id
+    },
   };
+
+  return dynamoDb.get(params, (error, data) => {
+    if (error) {
+      callback(error);
+    }
+      callback(null, { message: 'User: ', params });
+    });
+};
 
 module.exports.logger = (event, context, callback) => {
   // print out the event information on the console (so that we can see it in the CloudWatch logs)

@@ -20,6 +20,9 @@ functions:
 
   deleteUser: 
     handler: handler.deleteUser
+
+  getUser: 
+    handler: handler.getUser
   
   logger:
     handler: handler.logger

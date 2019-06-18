@@ -1,5 +1,14 @@
 service: serverless-dynamodb-streams
 
+plugins:
+  - serverless-finch
+
+custom:
+  client:
+    bucketName: serverless-bucket-s3-public
+    indexDocument: index.html
+    errorDocument: error.html
+
 provider:
   name: aws
   runtime: nodejs10.x
@@ -10,6 +19,24 @@ provider:
       Resource: "*"
       Action:
         - "dynamodb:*"
+
+resources:
+  Resources:
+    UsersDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: users
 
 functions:
   updateUser:

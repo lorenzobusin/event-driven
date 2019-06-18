@@ -8,6 +8,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.6.7"
+    "aws-sdk": "^2.6.7",
+    "serverless-finch": "^2.4.2"
   }
 }

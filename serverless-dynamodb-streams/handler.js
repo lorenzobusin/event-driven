@@ -1,17 +1,52 @@
 'use strict';
 
 const AWS = require('aws-sdk');
+const s3 = new AWS.S3();
 
 
 module.exports.createUser = (event, context, callback) => {
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-  const data = event;
-  data.updatedAt = new Date().getTime();
+  var txt = {
+    "userId":  "1",
+    "firstName": "ciao",
+    "lastName": "ciao", 
+    "username": "ciao"
+  };
+
+  var writeParams = {
+    Bucket: 'serverless-bucket-s3-public', 
+    Key: 'testEvent.json', 
+    Body: JSON.stringify(txt, null, 2)
+  }
+
+  s3.upload(writeParams, function(err, data) {
+    if (err) 
+      return err;
+    console.log(`File uploaded successfully at ${data.Location}`)
+  });
+
+  var getParams = {
+    Bucket: 'serverless-bucket-s3-public', // your bucket name,
+    Key: 'event.json' // path to the object you're looking for
+  }
+  s3.getObject(getParams, function(err, data) {
+    if (err)
+        return err;
+
+  var eventFile = data.Body.toString('utf-8');
+  
+  var obj = JSON.parse(eventFile);
+  var objToPut = {
+    "userId":  obj.userId,
+    "firstName": obj.firstName,
+    "lastName": obj.lastName, 
+    "username": obj.username
+  };
 
   const params = {
     TableName: 'users',
-    Item: data
+    Item: objToPut
   };
 
   return dynamoDb.put(params, (error, data) => {
@@ -20,22 +55,20 @@ module.exports.createUser = (event, context, callback) => {
     }
     callback(null, { message: 'User successfully created', params });
   });
+
+  });
+
 };
 
 module.exports.getUser = (event, context, callback) => {
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
- // const data = event;
- // data.updatedAt = new Date().getTime();
-
   const params = {
     TableName: 'users',
-    KeyConditionExpression: "#id = :userId",
-    ExpressionAttributeNames:{
-        "#id": "userId"
-    },
+    ProjectionExpression:"userId, firstName, lastName, username",
+    KeyConditionExpression: "userId = :id",
     ExpressionAttributeValues: {
-        ":userId": event.userId
+        ":id": event.userId
     }
   };
 
@@ -43,22 +76,13 @@ module.exports.getUser = (event, context, callback) => {
     if (error) {
       callback(error);
     }
-      callback(null, { message: 'User: ', data });
+      let response = data.Items[0];
+      callback(null, response);
     });
-
-  /*return dynamoDb.get(params, (error, data) => {
-    if (error) {
-      callback(error);
-    }
-      callback(null, { message: 'User: ', params });
-    });*/
 };
 
 module.exports.updateUser = (event, context, callback) => {
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
-  const data = event;
-  data.updatedAt = new Date().getTime();
 
   const params = {
     TableName: 'users',
@@ -76,14 +100,15 @@ module.exports.updateUser = (event, context, callback) => {
 module.exports.deleteUser = (event, context, callback) => {
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-  const data = event;
-  data.updatedAt = new Date().getTime();
-
   const params = {
     TableName: 'users',
     Key:{
       "id": event.id
     },
+    KeyConditionExpression: "userId = :id",
+    ExpressionAttributeValues: {
+        ":id": event.userId
+    }
   };
 
   return dynamoDb.delete(params, (error, data) => {
@@ -92,13 +117,6 @@ module.exports.deleteUser = (event, context, callback) => {
     }
     callback(null, { message: 'User successfully deleted', params });
     });
-};
-
-module.exports.logger = (event, context, callback) => {
-  // print out the event information on the console (so that we can see it in the CloudWatch logs)
-  console.log(`The following happend in the DynamoDB database table "users":\n${JSON.stringify(event.Records[0].dynamodb, null, 2)}`);
-
-  callback(null, { event });
 };
 
 

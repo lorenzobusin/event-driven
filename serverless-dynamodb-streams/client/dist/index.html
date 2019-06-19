@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="utf-8">
-    <title>Usare Management</title>
+    <title>User Management</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     
@@ -15,7 +15,7 @@
   <body ng-controller='MainCtrl' class="container">
     <div class="row form-section">
       <div class="col-md-12">
-
+        <h3>Create new user</h3>
         <div class="form row">
           <div class="form-group col-md-3">
             <label>idUser</label>
@@ -34,17 +34,31 @@
             <input type="text" class="form-control" name="username" ng-model="user.username"/>
           </div>
         </div>
-
         <button class="btn btn-success" ng-click="crateUser">Create</button>
 
+<hr>
         <form action="https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/user?" method="get">
-          <h1>Cerca utente per id</h1>
-          <div class="form-group col-md-3">
+          <h3>Search user by ID</h3>
+          <div class="form-group col-md-6">
               <label>idUser</label>
               <input type="text" class="form-control" name="userId"/>
           </div>
-          <button class="btn btn-success" type="submit">Cerca</button>
+          <button class="btn btn-success" type="submit">Search</button>
         </form>
+
+<hr>
+        <form action="https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/user?" method="get">
+          <h3>Delete user by ID</h3>
+          <div class="form-group col-md-6">
+              <label>idUser</label>
+              <input type="text" class="form-control" name="userId"/>
+          </div>
+          <button class="btn btn-success" type="submit">Delete</button>
+        </form>
+
+<hr>
+
+
       </div>
 
 

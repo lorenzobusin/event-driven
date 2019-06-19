@@ -50,8 +50,4 @@ functions:
 
   getUser: 
     handler: handler.getUser
-  
-  logger:
-    handler: handler.logger
-    events:
-      - stream: arn:aws:dynamodb:eu-central-1:582373673306:table/users/stream/2019-06-17T12:43:26.873
+

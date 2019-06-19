@@ -7,25 +7,6 @@ const s3 = new AWS.S3();
 module.exports.createUser = (event, context, callback) => {
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-  var txt = {
-    "userId":  "1",
-    "firstName": "ciao",
-    "lastName": "ciao", 
-    "username": "ciao"
-  };
-
-  var writeParams = {
-    Bucket: 'serverless-bucket-s3-public', 
-    Key: 'testEvent.json', 
-    Body: JSON.stringify(txt, null, 2)
-  }
-
-  s3.upload(writeParams, function(err, data) {
-    if (err) 
-      return err;
-    console.log(`File uploaded successfully at ${data.Location}`)
-  });
-
   var getParams = {
     Bucket: 'serverless-bucket-s3-public', // your bucket name,
     Key: 'event.json' // path to the object you're looking for
@@ -33,7 +14,6 @@ module.exports.createUser = (event, context, callback) => {
   s3.getObject(getParams, function(err, data) {
     if (err)
         return err;
-
   var eventFile = data.Body.toString('utf-8');
   
   var obj = JSON.parse(eventFile);
@@ -117,6 +97,29 @@ module.exports.deleteUser = (event, context, callback) => {
     }
     callback(null, { message: 'User successfully deleted', params });
     });
+};
+
+module.exports.uploadEventToS3 = (event, context, callback) => {
+
+  var txt = {
+    "userId":  event.userId,
+    "firstName": event.firstName,
+    "lastName": event.lastName, 
+    "username": event.username
+  };
+
+  console.log("EVENTO: " + event.toString);
+  var params = {
+    Bucket: 'serverless-bucket-s3-public', 
+    Key: 'event.json', 
+    Body: JSON.stringify(txt, null, 2)
+  };
+
+  s3.upload(params, function(err, data) {
+    if (err) 
+      return err;
+    callback(null, { message: 'Event successfully uploaded', params });
+  });
 };
 
 

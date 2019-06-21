@@ -111,13 +111,6 @@ module.exports.uploadEventToSQS = (event, context, callback) => {
  // const bodyParsed = JSON.parse(body);
  // console.log("body: ", bodyParsed);
 
-  var txt = {
-    "userId":  "1",
-    "firstName": "1",
-    "lastName": "1", 
-    "username": "1"
-  };
-
   var params = {
    // MessageBody: JSON.stringify(event),
     MessageBody: JSON.stringify(event),

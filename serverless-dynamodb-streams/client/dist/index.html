@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="css/style.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js" charset="utf-8"></script>
-    <script src="js/create.js" charset="utf-8"></script>
+   <!-- <script src="js/create.js" charset="utf-8"></script> -->
+
   </head>
 
 
@@ -16,26 +17,54 @@
 
     <div class="row form-section">
       <div class="col-md-12">
+
         <h3>Create new user</h3>
-        <div class="form row">
-          <div class="form-group col-md-3">
-            <label>idUser</label>
-            <input type="text" class="form-control" name="id" ng-model="user.idUser"/>
+        <form class="form" id="createUser">
+          <div class="form row">
+            <div class="form-group col-md-3">
+              <label>idUser</label>
+              <input type="text" class="form-control" name="userId" id="userId"/>
+            </div>
+            <div class="form-group col-md-6">
+              <label>firstName</label>
+              <input type="text" class="form-control" name="firstName" id="firstName"/>
+            </div>
+            <div class="form-group col-md-6">
+              <label>lastName</label>
+              <input type="text" class="form-control" name="lastName" id="lastName"/>
+            </div>
+            <div class="form-group col-md-6">
+              <label>username</label>
+              <input type="text" class="form-control" name="username" id="username"/>
+            </div>
           </div>
-          <div class="form-group col-md-6">
-            <label>firstName</label>
-            <input type="text" class="form-control" name="firstName" ng-model="user.firstName"/>
-          </div>
-          <div class="form-group col-md-6">
-            <label>lastName</label>
-            <input type="text" class="form-control" name="lastName" ng-model="user.lastName"/>
-          </div>
-          <div class="form-group col-md-6">
-            <label>username</label>
-            <input type="text" class="form-control" name="username" ng-model="user.username"/>
-          </div>
-        </div>
-        <button class="btn btn-success" onclick="getInfoAndUploadJSON()">Create</button>
+        <button class="btn btn-success" type="submit">Create</button>
+      </form>
+
+    <script>
+        const createUser = document.getElementById('createUser');
+        createUser.addEventListener('submit', function(e){
+          e.preventDefault();
+
+          fetch("https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/", {
+            mode: 'no-cors',
+            method: "post",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+
+            //make sure to serialize your JSON body
+            body: JSON.stringify({
+              "userId": document.getElementById('userId').value,
+              "firstName": document.getElementById('firstName').value,
+              "lastName": document.getElementById('lastName').value,
+              "username": document.getElementById('username').value
+            })
+        });
+
+      });
+    </script>
 
 <hr>
         <form action="https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/user?" method="get">
@@ -62,8 +91,6 @@
 
       </div>
 
-
-<!--  <button type="submit" formmethod="post">Submit using POST</button> -->
 
 
       

@@ -51,6 +51,6 @@ functions:
   getUser: 
     handler: handler.getUser
 
-  uploadEventToS3: 
-    handler: handler.uploadEventToS3
+  uploadEventToSQS: 
+    handler: handler.uploadEventToSQS
 

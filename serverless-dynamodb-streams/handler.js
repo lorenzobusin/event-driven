@@ -1,32 +1,27 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-const s3 = new AWS.S3();
+//const s3 = new AWS.S3();
+const SQS = new AWS.SQS();
 
 
 module.exports.createUser = (event, context, callback) => {
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-  var getParams = {
-    Bucket: 'serverless-bucket-s3-public', // your bucket name,
-    Key: 'event.json' // path to the object you're looking for
-  }
-  s3.getObject(getParams, function(err, data) {
-    if (err)
-        return err;
-  var eventFile = data.Body.toString('utf-8');
-  
-  var obj = JSON.parse(eventFile);
-  var objToPut = {
-    "userId":  obj.userId,
-    "firstName": obj.firstName,
-    "lastName": obj.lastName, 
-    "username": obj.username
+  const body = event.Records[0].body.toString('utf-8'); //read new event body from SQS
+  const bodyParsed = JSON.parse(body);
+  console.log("body: ", bodyParsed);
+
+  const userParam = {
+    "userId":  bodyParsed.userId,
+    "firstName": bodyParsed.firstName,
+    "lastName": bodyParsed.lastName, 
+    "username": bodyParsed.username
   };
 
   const params = {
     TableName: 'users',
-    Item: objToPut
+    Item: userParam
   };
 
   return dynamoDb.put(params, (error, data) => {
@@ -34,8 +29,6 @@ module.exports.createUser = (event, context, callback) => {
       callback(error);
     }
     callback(null, { message: 'User successfully created', params });
-  });
-
   });
 
 };
@@ -99,17 +92,10 @@ module.exports.deleteUser = (event, context, callback) => {
     });
 };
 
-module.exports.uploadEventToS3 = (event, context, callback) => {
+module.exports.uploadEventToSQS = (event, context, callback) => {
 
-  var txt = {
-    "userId":  event.userId,
-    "firstName": event.firstName,
-    "lastName": event.lastName, 
-    "username": event.username
-  };
-
-  console.log("EVENTO: " + event.toString);
-  var params = {
+  console.log("EVENTO: " + JSON.stringify(event));
+  /*var params = {
     Bucket: 'serverless-bucket-s3-public', 
     Key: 'event.json', 
     Body: JSON.stringify(txt, null, 2)
@@ -119,6 +105,31 @@ module.exports.uploadEventToS3 = (event, context, callback) => {
     if (err) 
       return err;
     callback(null, { message: 'Event successfully uploaded', params });
+  });*/
+
+ // const body = event.Records[0].body.toString('utf-8'); //read new event body from SQS
+ // const bodyParsed = JSON.parse(body);
+ // console.log("body: ", bodyParsed);
+
+  var txt = {
+    "userId":  "1",
+    "firstName": "1",
+    "lastName": "1", 
+    "username": "1"
+  };
+
+  var params = {
+   // MessageBody: JSON.stringify(event),
+    MessageBody: JSON.stringify(event),
+    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/eventQueue"
+  };
+
+  SQS.sendMessage(params, function(err,data){
+    if(err) {
+      callback(err);
+    }else{
+      callback(null, { message: 'Event successfully put in SQS', params });
+    }
   });
 };
 

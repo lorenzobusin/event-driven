@@ -15,10 +15,22 @@
   margin-top: 50px;
 }
 
+.form-group{
+	display: inline;
+}
+
 .row{
 	display: block;
 }
 
 .form-section{
   margin-bottom: 20px;
+}
+
+.create_update{
+	display: flex;
+}
+
+.crud_title{
+
 }

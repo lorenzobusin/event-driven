@@ -3,12 +3,18 @@
 const AWS = require('aws-sdk');
 const SQS = new AWS.SQS();
 const LAMBDA = new AWS.Lambda();
+const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.mediator = (event, context, callback) => {
 
   const body = event.Records[0].body.toString('utf-8'); //read new event body from SQS
- // console.log("body: " + body);
   const bodyParsed = JSON.parse(body);
+  const userParams = {
+    "userId": bodyParsed.userId,
+    "firstName": bodyParsed.firstName,
+    "lastName": bodyParsed.lastName,
+    "username": bodyParsed.username
+  };
 
   switch(bodyParsed.typeEvent){
     case("C"): {
@@ -17,10 +23,9 @@ module.exports.mediator = (event, context, callback) => {
         FunctionName: "serverless-dynamodb-streams-dev-createUser", 
         InvocationType: "Event", 
         LogType: "Tail", 
-        Payload: body, 
-        Qualifier: "1"
+        Payload: JSON.stringify(userParams)
        };
-    
+
        LAMBDA.invoke(params, function(err, data) {
         if (err) {
           console.log(err);
@@ -29,8 +34,65 @@ module.exports.mediator = (event, context, callback) => {
         }
       });
     }
-      break;
+    break;
 
+    case("R"): {
+      console.log("Event type: READ");
+      var params = {
+        FunctionName: "serverless-dynamodb-streams-dev-getUser", 
+        InvocationType: "Event", 
+        LogType: "Tail", 
+        Payload: JSON.stringify(userParams)
+       };
+
+       LAMBDA.invoke(params, function(err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Payload sending...');
+        }
+      });
+    }
+    break;
+
+    case("U"): {
+      console.log("Event type: UPDATE");
+      var params = {
+        FunctionName: "serverless-dynamodb-streams-dev-updateUser", 
+        InvocationType: "Event", 
+        LogType: "Tail", 
+        Payload: JSON.stringify(userParams)
+       };
+
+       LAMBDA.invoke(params, function(err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Payload sending...');
+        }
+      });
+    }
+    break;
+
+    case("D"): {
+      console.log("Event type: DELETE");
+      var params = {
+        FunctionName: "serverless-dynamodb-streams-dev-deleteUser", 
+        InvocationType: "Event", 
+        LogType: "Tail", 
+        Payload: JSON.stringify(userParams)
+       };
+
+       LAMBDA.invoke(params, function(err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Payload sending...');
+        }
+      });
+    }
+    break;
+    
     default:
       console.log("Undefined type event");
   }
@@ -39,18 +101,10 @@ module.exports.mediator = (event, context, callback) => {
 
 
 module.exports.createUser = (event, context, callback) => {
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
-  const userParam = {
-    "userId":  event.userId,
-    "firstName": event.firstName,
-    "lastName": event.lastName, 
-    "username": event.username
-  };
 
   const params = {
     TableName: 'users',
-    Item: userParam
+    Item: event
   };
 
   dynamoDb.put(params, (error, data) => {
@@ -63,62 +117,83 @@ module.exports.createUser = (event, context, callback) => {
 };
 
 module.exports.getUser = (event, context, callback) => {
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
     TableName: 'users',
+    Key: {
+      "userId":  parsedEvent.userId
+    },
     ProjectionExpression:"userId, firstName, lastName, username",
     KeyConditionExpression: "userId = :id",
     ExpressionAttributeValues: {
-        ":id": event.userId
+        ":id": event.parsedEvent
     }
   };
 
-  return dynamoDb.query(params, (error, data) => {
-    if (error) {
-      callback(error);
+  dynamoDb.get(params, (err, data) => {
+    if (err)
+      console.log(err);
+    else{
+      let response = data;
+      if(response == "")
+        console.log("User not found");
+      //console.log(response); //string with result
+      else
+        console.log("User successfully read");
     }
-      let response = data.Items[0];
-      callback(null, response);
-    });
+  });
 };
 
 module.exports.updateUser = (event, context, callback) => {
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
     TableName: 'users',
-    Item: data
+    Key: {
+      "userId":  parsedEvent.userId
+    },
+    UpdateExpression: "set firstName = :fn, lastName=:ln, username=:u",
+    ExpressionAttributeValues:{
+        ":fn": parsedEvent.firstName,
+        ":ln": parsedEvent.lastName,
+        ":u": parsedEvent.username
+    }   
   };
 
-  return dynamoDb.put(params, (error, data) => {
-    if (error) {
-      callback(error);
-    }
-    callback(null, { message: 'User successfully updated', params });
+  dynamoDb.update(params, (err, data) => {
+    if (err)
+      console.log(err);
+    else
+      console.log('User successfully updated');
   });
 };
 
 module.exports.deleteUser = (event, context, callback) => {
 
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+  
   const params = {
     TableName: 'users',
     Key:{
-      "id": event.id
+      "userId": parsedEvent.userId
     },
-    KeyConditionExpression: "userId = :id",
+    ConditionExpression:"userId = :val",
     ExpressionAttributeValues: {
-        ":id": event.userId
+        ":val": parsedEvent.userId
     }
   };
 
-  return dynamoDb.delete(params, (error, data) => {
-    if (error) {
-      callback(error);
-    }
-    callback(null, { message: 'User successfully deleted', params });
+  dynamoDb.delete(params, (err, data) => {
+    if (err)
+      console.log(err);
+    else
+    console.log('User successfully deleted');
     });
 };
 

@@ -17,46 +17,72 @@
 
     <div class="row form-section">
       <div class="col-md-12">
+        <div class="create_update">
 
-        <h3>Create new user</h3>
-        <form class="form" id="createUser">
+        <h3 class="crud_title">Create user</h3>
+        <form class="form" id="CREATE_USER">
           <div class="form row">
             <div class="form-group col-md-3">
-              <label>idUser</label>
-              <input type="text" class="form-control" name="userId" id="userId"/>
+              <label>userId</label>
+              <input type="text" class="form-control" name="userId" id="CREATE_userId"/>
             </div>
             <div class="form-group col-md-6">
               <label>firstName</label>
-              <input type="text" class="form-control" name="firstName" id="firstName"/>
+              <input type="text" class="form-control" name="firstName" id="CREATE_firstName"/>
             </div>
             <div class="form-group col-md-6">
               <label>lastName</label>
-              <input type="text" class="form-control" name="lastName" id="lastName"/>
+              <input type="text" class="form-control" name="lastName" id="CREATE_lastName"/>
             </div>
             <div class="form-group col-md-6">
               <label>username</label>
-              <input type="text" class="form-control" name="username" id="username"/>
+              <input type="text" class="form-control" name="username" id="CREATE_username"/>
             </div>
           </div>
         <button class="btn btn-success" type="submit">Create</button>
       </form>
 
+      <h3>Update user</h3>
+        <form class="form" id="UPDATE_USER">
+          <div class="form row">
+            <div class="form-group col-md-3">
+              <label>userId</label>
+              <input type="text" class="form-control" name="userId" id="UPDATE_userId"/>
+            </div>
+            <div class="form-group col-md-6">
+              <label>firstName</label>
+              <input type="text" class="form-control" name="firstName" id="UPDATE_firstName"/>
+            </div>
+            <div class="form-group col-md-6">
+              <label>lastName</label>
+              <input type="text" class="form-control" name="lastName" id="UPDATE_lastName"/>
+            </div>
+            <div class="form-group col-md-6">
+              <label>username</label>
+              <input type="text" class="form-control" name="username" id="UPDATE_username"/>
+            </div>
+          </div>
+        <button class="btn btn-success" type="submit">Update</button>
+      </form>
+    </div>
+
 <hr>
-        <form action="https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/user?" method="get">
-          <h3>Search user by ID</h3>
+        <form class="form" id="READ_USER">
+          <h3>Search by ID</h3>
           <div class="form-group col-md-6">
-              <label>idUser</label>
-              <input type="text" class="form-control" name="userId"/>
+              <label>userId</label>
+              <input type="text" class="form-control" name="userId" id="READ_userId"/>
           </div>
           <button class="btn btn-success" type="submit">Search</button>
         </form>
 
 <hr>
-        <form action="https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/user?" method="get">
-          <h3>Delete user by ID</h3>
+
+        <h3>Delete by ID</h3>
+        <form class="form" id="DELETE_USER">
           <div class="form-group col-md-6">
-              <label>idUser</label>
-              <input type="text" class="form-control" name="userId"/>
+              <label>userId</label>
+              <input type="text" class="form-control" name="userId" id="DELETE_userId"/>
           </div>
           <button class="btn btn-success" type="submit">Delete</button>
         </form>
@@ -69,12 +95,15 @@
 
 
 <script type="text/javascript">
+
+  const linkAPI_POST = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/";
+
   //CREATE
-  const createUser = document.getElementById('createUser');
+  const createUser = document.getElementById('CREATE_USER');
   createUser.addEventListener('submit', function(e){
     e.preventDefault();
 
-    fetch("https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/", {
+    fetch(linkAPI_POST, {
       mode: 'no-cors',
       method: "post",
       headers: {
@@ -84,20 +113,91 @@
 
       body: JSON.stringify({
         "typeEvent": "C",
-        "userId": document.getElementById('userId').value,
-        "firstName": document.getElementById('firstName').value,
-        "lastName": document.getElementById('lastName').value,
-        "username": document.getElementById('username').value
+        "userId": document.getElementById('CREATE_userId').value.trim(),
+        "firstName": document.getElementById('CREATE_firstName').value.trim(),
+        "lastName": document.getElementById('CREATE_lastName').value.trim(),
+        "username": document.getElementById('CREATE_username').value.trim()
       })
     });
 
-    document.getElementById('userId').value = "";
-    document.getElementById('firstName').value = "";
-    document.getElementById('lastName').value = "";
-    document.getElementById('username').value = "";
+    document.getElementById('CREATE_userId').value = "";
+    document.getElementById('CREATE_firstName').value = "";
+    document.getElementById('CREATE_lastName').value = "";
+    document.getElementById('CREATE_username').value = "";
+  });
+
+  //READ
+  const getUser = document.getElementById('READ_USER');
+  getUser.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    fetch(linkAPI_POST, {
+      mode: 'no-cors',
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        "typeEvent": "R",
+        "userId": document.getElementById('READ_userId').value.trim()
+      })
+    });
+
+    document.getElementById('READ_userId').value = "";
   });
 
   //UPDATE
+  const updateUser = document.getElementById('UPDATE_USER');
+  updateUser.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    fetch(linkAPI_POST, {
+      mode: 'no-cors',
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        "typeEvent": "U",
+        "userId": document.getElementById('UPDATE_userId').value.trim(),
+        "firstName": document.getElementById('UPDATE_firstName').value.trim(),
+        "lastName": document.getElementById('UPDATE_lastName').value.trim(),
+        "username": document.getElementById('UPDATE_username').value.trim()
+      })
+    });
+
+    document.getElementById('UPDATE_userId').value = "";
+    document.getElementById('UPDATE_firstName').value = "";
+    document.getElementById('UPDATE_lastName').value = "";
+    document.getElementById('UPDATE_username').value = "";
+  });
+
+
+  //DELETE
+  const deleteUser = document.getElementById('DELETE_USER');
+  deleteUser.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    fetch(linkAPI_POST, {
+      mode: 'no-cors',
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        "typeEvent": "D",
+        "userId": document.getElementById('DELETE_userId').value.trim()
+      })
+    });
+
+    document.getElementById('DELETE_userId').value = "";
+  });
 </script>
 
 

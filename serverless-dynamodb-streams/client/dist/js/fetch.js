@@ -1,32 +1,25 @@
-fetch("https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/", {
-  method: "post",
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
+const createUser = document.getElementById('createUser');
+createUser.addEventListener('submit', function(e){
+  e.preventDefault();
 
-  //make sure to serialize your JSON body
-  body: JSON.stringify({
-    "userId": "2",
-    "firstName": "Lorenzo",
-    "lastName": "Busin",
-    "username": "lbusin"
-  })
-})
-.then(function(res){ 
-    console.log(res) 
-});
-
-/*(async () => {
-  const rawResponse = await fetch("https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/", {
-    method: 'POST',
+  fetch("https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/", {
+    mode: 'no-cors',
+    method: "post",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({a: 1, b: 'Textual content'})
-  });
-  const content = await rawResponse.json();
 
-  console.log(content);
-})();*/
+    body: JSON.stringify({
+      "userId": document.getElementById('userId').value,
+      "firstName": document.getElementById('firstName').value,
+      "lastName": document.getElementById('lastName').value,
+      "username": document.getElementById('username').value
+    })
+  });
+
+  document.getElementById('userId').value = "";
+  document.getElementById('firstName').value = "";
+  document.getElementById('lastName').value = "";
+  document.getElementById('username').value = "";
+});

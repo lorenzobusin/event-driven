@@ -39,6 +39,10 @@ resources:
         TableName: users
 
 functions:
+
+  mediator:
+    handler: handler.mediator
+
   updateUser:
     handler: handler.updateUser
 

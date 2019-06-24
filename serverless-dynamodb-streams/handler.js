@@ -1,22 +1,51 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-//const s3 = new AWS.S3();
 const SQS = new AWS.SQS();
+const LAMBDA = new AWS.Lambda();
+
+module.exports.mediator = (event, context, callback) => {
+
+  const body = event.Records[0].body.toString('utf-8'); //read new event body from SQS
+ // console.log("body: " + body);
+  const bodyParsed = JSON.parse(body);
+
+  switch(bodyParsed.typeEvent){
+    case("C"): {
+      console.log("Event type: CREATE");
+      var params = {
+        FunctionName: "serverless-dynamodb-streams-dev-createUser", 
+        InvocationType: "Event", 
+        LogType: "Tail", 
+        Payload: body, 
+        Qualifier: "1"
+       };
+    
+       LAMBDA.invoke(params, function(err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Payload sending...');
+        }
+      });
+    }
+      break;
+
+    default:
+      console.log("Undefined type event");
+  }
+
+};
 
 
 module.exports.createUser = (event, context, callback) => {
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-  const body = event.Records[0].body.toString('utf-8'); //read new event body from SQS
-  const bodyParsed = JSON.parse(body);
-  console.log("body: ", bodyParsed);
-
   const userParam = {
-    "userId":  bodyParsed.userId,
-    "firstName": bodyParsed.firstName,
-    "lastName": bodyParsed.lastName, 
-    "username": bodyParsed.username
+    "userId":  event.userId,
+    "firstName": event.firstName,
+    "lastName": event.lastName, 
+    "username": event.username
   };
 
   const params = {
@@ -24,11 +53,11 @@ module.exports.createUser = (event, context, callback) => {
     Item: userParam
   };
 
-  return dynamoDb.put(params, (error, data) => {
-    if (error) {
-      callback(error);
-    }
-    callback(null, { message: 'User successfully created', params });
+  dynamoDb.put(params, (error, data) => {
+    if (error)
+      console.log(error);
+    else
+    console.log('User successfully created');
   });
 
 };
@@ -71,6 +100,7 @@ module.exports.updateUser = (event, context, callback) => {
 };
 
 module.exports.deleteUser = (event, context, callback) => {
+
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
   const params = {
@@ -94,34 +124,16 @@ module.exports.deleteUser = (event, context, callback) => {
 
 module.exports.uploadEventToSQS = (event, context, callback) => {
 
-  console.log("EVENTO: " + JSON.stringify(event));
-  /*var params = {
-    Bucket: 'serverless-bucket-s3-public', 
-    Key: 'event.json', 
-    Body: JSON.stringify(txt, null, 2)
-  };
-
-  s3.upload(params, function(err, data) {
-    if (err) 
-      return err;
-    callback(null, { message: 'Event successfully uploaded', params });
-  });*/
-
- // const body = event.Records[0].body.toString('utf-8'); //read new event body from SQS
- // const bodyParsed = JSON.parse(body);
- // console.log("body: ", bodyParsed);
-
   var params = {
-   // MessageBody: JSON.stringify(event),
     MessageBody: JSON.stringify(event),
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/eventQueue"
   };
 
   SQS.sendMessage(params, function(err,data){
     if(err) {
-      callback(err);
+      console.log(err);
     }else{
-      callback(null, { message: 'Event successfully put in SQS', params });
+      console.log('Event successfully put in SQS');
     }
   });
 };

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js" charset="utf-8"></script>
-   <!-- <script src="js/create.js" charset="utf-8"></script> -->
+   <!-- <script src="js/fetch.js" charset="utf-8"></script> -->
 
   </head>
 
@@ -41,31 +41,6 @@
         <button class="btn btn-success" type="submit">Create</button>
       </form>
 
-    <script>
-        const createUser = document.getElementById('createUser');
-        createUser.addEventListener('submit', function(e){
-          e.preventDefault();
-
-          fetch("https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/", {
-            mode: 'no-cors',
-            method: "post",
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-
-            //make sure to serialize your JSON body
-            body: JSON.stringify({
-              "userId": document.getElementById('userId').value,
-              "firstName": document.getElementById('firstName').value,
-              "lastName": document.getElementById('lastName').value,
-              "username": document.getElementById('username').value
-            })
-        });
-
-      });
-    </script>
-
 <hr>
         <form action="https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/user?" method="get">
           <h3>Search user by ID</h3>
@@ -88,13 +63,43 @@
 
 <hr>
 
-
       </div>
-
-
-
       
     </div>
+
+
+<script type="text/javascript">
+  //CREATE
+  const createUser = document.getElementById('createUser');
+  createUser.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    fetch("https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/", {
+      mode: 'no-cors',
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        "typeEvent": "C",
+        "userId": document.getElementById('userId').value,
+        "firstName": document.getElementById('firstName').value,
+        "lastName": document.getElementById('lastName').value,
+        "username": document.getElementById('username').value
+      })
+    });
+
+    document.getElementById('userId').value = "";
+    document.getElementById('firstName').value = "";
+    document.getElementById('lastName').value = "";
+    document.getElementById('username').value = "";
+  });
+
+  //UPDATE
+</script>
+
 
   </body>
 </html>

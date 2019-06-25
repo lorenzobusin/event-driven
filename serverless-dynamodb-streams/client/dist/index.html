@@ -19,9 +19,10 @@
       <div class="col-md-12">
         <div class="create_update">
 
-        <h3 class="crud_title">Create user</h3>
+        
         <form class="form" id="CREATE_USER">
           <div class="form row">
+            <h3 class="crud_title">Create user</h3>
             <div class="form-group col-md-3">
               <label>userId</label>
               <input type="text" class="form-control" name="userId" id="CREATE_userId"/>
@@ -41,10 +42,10 @@
           </div>
         <button class="btn btn-success" type="submit">Create</button>
       </form>
-
-      <h3>Update user</h3>
+      
         <form class="form" id="UPDATE_USER">
           <div class="form row">
+            <h3 class="crud_title">Update user</h3>
             <div class="form-group col-md-3">
               <label>userId</label>
               <input type="text" class="form-control" name="userId" id="UPDATE_userId"/>
@@ -68,18 +69,25 @@
 
 <hr>
         <form class="form" id="READ_USER">
-          <h3>Search by ID</h3>
+          <h3 class="crud_title">Search by ID</h3>
           <div class="form-group col-md-6">
               <label>userId</label>
               <input type="text" class="form-control" name="userId" id="READ_userId"/>
           </div>
           <button class="btn btn-success" type="submit">Search</button>
-        </form>
+          <button class="btn btn-success" id="RELOAD">Reload</button>
+        <div>
+          <p>First name: </p>
+          <p>Last name: </p>
+          <p>Username: </p>
+        </div>
+      </form>
+
 
 <hr>
-
-        <h3>Delete by ID</h3>
+ 
         <form class="form" id="DELETE_USER">
+          <h3 class="crud_title">Delete by ID</h3>
           <div class="form-group col-md-6">
               <label>userId</label>
               <input type="text" class="form-control" name="userId" id="DELETE_userId"/>
@@ -97,6 +105,7 @@
 <script type="text/javascript">
 
   const linkAPI_POST = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/";
+  const linkAPI_GET = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/getuser?userId=";
 
   //CREATE
   const createUser = document.getElementById('CREATE_USER');
@@ -127,7 +136,7 @@
   });
 
   //READ
-  const getUser = document.getElementById('READ_USER');
+  /*const getUser = document.getElementById('READ_USER');
   getUser.addEventListener('submit', function(e){
     e.preventDefault();
 
@@ -143,10 +152,10 @@
         "typeEvent": "R",
         "userId": document.getElementById('READ_userId').value.trim()
       })
-    });
+    }).then(response => response.json()).then(data => console.log(JSON.stringify(data)));
 
     document.getElementById('READ_userId').value = "";
-  });
+  });*/
 
   //UPDATE
   const updateUser = document.getElementById('UPDATE_USER');
@@ -197,6 +206,24 @@
     });
 
     document.getElementById('DELETE_userId').value = "";
+  });
+
+  //RELOAD
+  const reload = document.getElementById('RELOAD');
+  reload.addEventListener('click', function(e){
+    e.preventDefault();
+
+    fetch(linkAPI_GET + document.getElementById('READ_userId').value.trim(), {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function(response){
+        const stringedResponse = JSON.stringify(response);
+        const parsedResponse = JSON.parse(stringedResponse);
+        console.log("RES: " + stringedResponse);
+        console.log(response);
+    });
   });
 </script>
 

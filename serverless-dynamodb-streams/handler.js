@@ -23,7 +23,7 @@ module.exports.mediator = (event, context, callback) => {
         FunctionName: "serverless-dynamodb-streams-dev-createUser", 
         InvocationType: "Event", 
         LogType: "Tail", 
-        Payload: JSON.stringify(userParams)
+        Payload: JSON.stringify(userParams) //only string type
        };
 
        LAMBDA.invoke(params, function(err, data) {
@@ -36,13 +36,13 @@ module.exports.mediator = (event, context, callback) => {
     }
     break;
 
-    case("R"): {
+   /* case("R"): {
       console.log("Event type: READ");
       var params = {
         FunctionName: "serverless-dynamodb-streams-dev-getUser", 
         InvocationType: "Event", 
         LogType: "Tail", 
-        Payload: JSON.stringify(userParams)
+        Payload: JSON.stringify(userParams) //only string type
        };
 
        LAMBDA.invoke(params, function(err, data) {
@@ -53,7 +53,7 @@ module.exports.mediator = (event, context, callback) => {
         }
       });
     }
-    break;
+    break;*/
 
     case("U"): {
       console.log("Event type: UPDATE");
@@ -61,7 +61,7 @@ module.exports.mediator = (event, context, callback) => {
         FunctionName: "serverless-dynamodb-streams-dev-updateUser", 
         InvocationType: "Event", 
         LogType: "Tail", 
-        Payload: JSON.stringify(userParams)
+        Payload: JSON.stringify(userParams) //only string type
        };
 
        LAMBDA.invoke(params, function(err, data) {
@@ -80,8 +80,8 @@ module.exports.mediator = (event, context, callback) => {
         FunctionName: "serverless-dynamodb-streams-dev-deleteUser", 
         InvocationType: "Event", 
         LogType: "Tail", 
-        Payload: JSON.stringify(userParams)
-       };
+        Payload: JSON.stringify(userParams) //only string type
+      };
 
        LAMBDA.invoke(params, function(err, data) {
         if (err) {
@@ -119,30 +119,44 @@ module.exports.createUser = (event, context, callback) => {
 module.exports.getUser = (event, context, callback) => {
 
   const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
+  //const parsedEvent = JSON.parse(stringedEvent);
+  //const userId = parsedEvent.queryStringParameters.userId;
+  console.log("event: " + event);
+  console.log("stringed: " + stringedEvent);
+
 
   const params = {
     TableName: 'users',
     Key: {
-      "userId":  parsedEvent.userId
+      "userId":  "3"
     },
     ProjectionExpression:"userId, firstName, lastName, username",
     KeyConditionExpression: "userId = :id",
     ExpressionAttributeValues: {
-        ":id": event.parsedEvent
+        ":id": "3"
     }
   };
 
   dynamoDb.get(params, (err, data) => {
+    const stringedData = JSON.stringify(data);
     if (err)
       console.log(err);
     else{
-      let response = data;
-      if(response == "")
+      if(data == "")
         console.log("User not found");
-      //console.log(response); //string with result
-      else
+      else{
+        const response = {
+          statusCode: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true
+          },
+          body: stringedData
+        };
         console.log("User successfully read");
+        callback(null, response);
+      }      
     }
   });
 };

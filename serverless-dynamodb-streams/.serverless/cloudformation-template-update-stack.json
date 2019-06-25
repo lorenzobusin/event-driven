@@ -142,7 +142,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561391875070-2019-06-24T15:57:55.070Z/serverless-dynamodb-streams.zip"
+          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561477611176-2019-06-25T15:46:51.176Z/serverless-dynamodb-streams.zip"
         },
         "FunctionName": "serverless-dynamodb-streams-dev-mediator",
         "Handler": "handler.mediator",
@@ -161,14 +161,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "MediatorLambdaVersion0p8BBWdmMZcF0xGbbPqjKsIQh4ZdU5eD9H9BuMwn4A8": {
+    "MediatorLambdaVersionYoon6omyBu8OHvMi6QMss95WMwXhp6kuHoyKqJhc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MediatorLambdaFunction"
         },
-        "CodeSha256": "JjTSXwJTw1lOYUfR1ll34TzUfSARv1vqFJYXs56FCjI="
+        "CodeSha256": "RrAwkb628H03omTXCYYlSROyC/jByW8XJ7v+vg8jCWQ="
       }
     },
     "UpdateUserLambdaFunction": {
@@ -178,7 +178,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561391875070-2019-06-24T15:57:55.070Z/serverless-dynamodb-streams.zip"
+          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561477611176-2019-06-25T15:46:51.176Z/serverless-dynamodb-streams.zip"
         },
         "FunctionName": "serverless-dynamodb-streams-dev-updateUser",
         "Handler": "handler.updateUser",
@@ -197,14 +197,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "UpdateUserLambdaVersionRppu8Bus4m1pLN68g6NEC3AXW83Cjng9y3q2vxNXX6Y": {
+    "UpdateUserLambdaVersionQeptIBHMXttQazqaGs3hW0LRPCoBJVzkR1o64A2VTjI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateUserLambdaFunction"
         },
-        "CodeSha256": "JjTSXwJTw1lOYUfR1ll34TzUfSARv1vqFJYXs56FCjI="
+        "CodeSha256": "RrAwkb628H03omTXCYYlSROyC/jByW8XJ7v+vg8jCWQ="
       }
     },
     "CreateUserLambdaFunction": {
@@ -214,7 +214,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561391875070-2019-06-24T15:57:55.070Z/serverless-dynamodb-streams.zip"
+          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561477611176-2019-06-25T15:46:51.176Z/serverless-dynamodb-streams.zip"
         },
         "FunctionName": "serverless-dynamodb-streams-dev-createUser",
         "Handler": "handler.createUser",
@@ -233,14 +233,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateUserLambdaVersionSeqkoYAwHwwLttbcvoyBI31Z74iqPgm3zhycMSOzals": {
+    "CreateUserLambdaVersionMQxhzKXyimfguUyToU76Y5OGGqV8vx04uvL5ttvzCtc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateUserLambdaFunction"
         },
-        "CodeSha256": "JjTSXwJTw1lOYUfR1ll34TzUfSARv1vqFJYXs56FCjI="
+        "CodeSha256": "RrAwkb628H03omTXCYYlSROyC/jByW8XJ7v+vg8jCWQ="
       }
     },
     "DeleteUserLambdaFunction": {
@@ -250,7 +250,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561391875070-2019-06-24T15:57:55.070Z/serverless-dynamodb-streams.zip"
+          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561477611176-2019-06-25T15:46:51.176Z/serverless-dynamodb-streams.zip"
         },
         "FunctionName": "serverless-dynamodb-streams-dev-deleteUser",
         "Handler": "handler.deleteUser",
@@ -269,14 +269,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "DeleteUserLambdaVersion45JIlKq6AbwQtfpWEelaKHgNjQhbzJuhBHjvBaLdA": {
+    "DeleteUserLambdaVersion3IuXBkahEaCYCEBzYY1KPHnZeYADs7nzsGrZsMpds": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteUserLambdaFunction"
         },
-        "CodeSha256": "JjTSXwJTw1lOYUfR1ll34TzUfSARv1vqFJYXs56FCjI="
+        "CodeSha256": "RrAwkb628H03omTXCYYlSROyC/jByW8XJ7v+vg8jCWQ="
       }
     },
     "GetUserLambdaFunction": {
@@ -286,7 +286,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561391875070-2019-06-24T15:57:55.070Z/serverless-dynamodb-streams.zip"
+          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561477611176-2019-06-25T15:46:51.176Z/serverless-dynamodb-streams.zip"
         },
         "FunctionName": "serverless-dynamodb-streams-dev-getUser",
         "Handler": "handler.getUser",
@@ -305,14 +305,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetUserLambdaVersionj2NNfLTknI5MYmeYuqf6VgxK0VJMCoIM3d2mEr3Z35w": {
+    "GetUserLambdaVersionr23iS8RRNEh9v1ek9yZkr9DPyCQLoCOuUlsmjPyS8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetUserLambdaFunction"
         },
-        "CodeSha256": "JjTSXwJTw1lOYUfR1ll34TzUfSARv1vqFJYXs56FCjI="
+        "CodeSha256": "RrAwkb628H03omTXCYYlSROyC/jByW8XJ7v+vg8jCWQ="
       }
     },
     "UploadEventToSQSLambdaFunction": {
@@ -322,7 +322,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561391875070-2019-06-24T15:57:55.070Z/serverless-dynamodb-streams.zip"
+          "S3Key": "serverless/serverless-dynamodb-streams/dev/1561477611176-2019-06-25T15:46:51.176Z/serverless-dynamodb-streams.zip"
         },
         "FunctionName": "serverless-dynamodb-streams-dev-uploadEventToSQS",
         "Handler": "handler.uploadEventToSQS",
@@ -341,14 +341,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "UploadEventToSQSLambdaVersionLVHAEb72wchqXjISwTin0GSYzR67LPUiUQaKyopgi0": {
+    "UploadEventToSQSLambdaVersion3jomjgA0xFVoBGYgXtOCuVunT04v34xjT1M9VLtQHdA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UploadEventToSQSLambdaFunction"
         },
-        "CodeSha256": "JjTSXwJTw1lOYUfR1ll34TzUfSARv1vqFJYXs56FCjI="
+        "CodeSha256": "RrAwkb628H03omTXCYYlSROyC/jByW8XJ7v+vg8jCWQ="
       }
     },
     "UsersDynamoDBTable": {
@@ -383,37 +383,37 @@
     "MediatorLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MediatorLambdaVersion0p8BBWdmMZcF0xGbbPqjKsIQh4ZdU5eD9H9BuMwn4A8"
+        "Ref": "MediatorLambdaVersionYoon6omyBu8OHvMi6QMss95WMwXhp6kuHoyKqJhc"
       }
     },
     "UpdateUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateUserLambdaVersionRppu8Bus4m1pLN68g6NEC3AXW83Cjng9y3q2vxNXX6Y"
+        "Ref": "UpdateUserLambdaVersionQeptIBHMXttQazqaGs3hW0LRPCoBJVzkR1o64A2VTjI"
       }
     },
     "CreateUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateUserLambdaVersionSeqkoYAwHwwLttbcvoyBI31Z74iqPgm3zhycMSOzals"
+        "Ref": "CreateUserLambdaVersionMQxhzKXyimfguUyToU76Y5OGGqV8vx04uvL5ttvzCtc"
       }
     },
     "DeleteUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteUserLambdaVersion45JIlKq6AbwQtfpWEelaKHgNjQhbzJuhBHjvBaLdA"
+        "Ref": "DeleteUserLambdaVersion3IuXBkahEaCYCEBzYY1KPHnZeYADs7nzsGrZsMpds"
       }
     },
     "GetUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetUserLambdaVersionj2NNfLTknI5MYmeYuqf6VgxK0VJMCoIM3d2mEr3Z35w"
+        "Ref": "GetUserLambdaVersionr23iS8RRNEh9v1ek9yZkr9DPyCQLoCOuUlsmjPyS8"
       }
     },
     "UploadEventToSQSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UploadEventToSQSLambdaVersionLVHAEb72wchqXjISwTin0GSYzR67LPUiUQaKyopgi0"
+        "Ref": "UploadEventToSQSLambdaVersion3jomjgA0xFVoBGYgXtOCuVunT04v34xjT1M9VLtQHdA"
       }
     }
   }

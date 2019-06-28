@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
-   <!-- <script src="js/fetch.js" charset="utf-8"></script> -->
 
   </head>
 
@@ -72,8 +71,7 @@
               <label>userId</label>
               <input type="text" class="form-control" name="userId" id="READ_userId"/>
           </div>
-          <button class="btn btn-success" type="submit">Search</button>
-          <button class="btn btn-success" id="RELOAD">Reload</button>
+          <button class="btn btn-success" id="READ">Search</button>
         <div>
           <p>First name: </p> <label id=GET_fn></label>
           <p>Last name: </p> <label id=GET_ln></label>
@@ -96,147 +94,12 @@
 <hr>
 
       </div>
-      
     </div>
 
-
-<script type="text/javascript">
-
-  const linkAPI_POST = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/";
-  const linkAPI_GET = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/getuser?userId=";
-
-  //CREATE
-  const createUser = document.getElementById('CREATE_USER');
-  createUser.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    fetch(linkAPI_POST, {
-      mode: 'no-cors',
-      method: "post",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify({
-        "typeEvent": "C",
-        "userId": document.getElementById('CREATE_userId').value.trim(),
-        "firstName": document.getElementById('CREATE_firstName').value.trim(),
-        "lastName": document.getElementById('CREATE_lastName').value.trim(),
-        "username": document.getElementById('CREATE_username').value.trim()
-      })
-    });
-
-    document.getElementById('CREATE_userId').value = "";
-    document.getElementById('CREATE_firstName').value = "";
-    document.getElementById('CREATE_lastName').value = "";
-    document.getElementById('CREATE_username').value = "";
-  });
-
-  //READ
-  /*const getUser = document.getElementById('READ_USER');
-  getUser.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    fetch(linkAPI_POST, {
-      mode: 'no-cors',
-      method: "post",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify({
-        "typeEvent": "R",
-        "userId": document.getElementById('READ_userId').value.trim()
-      })
-    }).then(response => response.json()).then(data => console.log(JSON.stringify(data)));
-
-    document.getElementById('READ_userId').value = "";
-  });*/
-
-  //UPDATE
-  const updateUser = document.getElementById('UPDATE_USER');
-  updateUser.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    fetch(linkAPI_POST, {
-      mode: 'no-cors',
-      method: "post",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify({
-        "typeEvent": "U",
-        "userId": document.getElementById('UPDATE_userId').value.trim(),
-        "firstName": document.getElementById('UPDATE_firstName').value.trim(),
-        "lastName": document.getElementById('UPDATE_lastName').value.trim(),
-        "username": document.getElementById('UPDATE_username').value.trim()
-      })
-    });
-
-    document.getElementById('UPDATE_userId').value = "";
-    document.getElementById('UPDATE_firstName').value = "";
-    document.getElementById('UPDATE_lastName').value = "";
-    document.getElementById('UPDATE_username').value = "";
-  });
-
-
-  //DELETE
-  const deleteUser = document.getElementById('DELETE_USER');
-  deleteUser.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    fetch(linkAPI_POST, {
-      mode: 'no-cors',
-      method: "post",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify({
-        "typeEvent": "D",
-        "userId": document.getElementById('DELETE_userId').value.trim()
-      })
-    });
-
-    document.getElementById('DELETE_userId').value = "";
-  });
-
-  //RELOAD
-  const reload = document.getElementById('RELOAD');
-  reload.addEventListener('click', function(e){
-    e.preventDefault();
-
-    fetch(linkAPI_GET + document.getElementById('READ_userId').value.trim(), {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(function(response){
-        const responseJSON = response.json();
-        console.log(responseJSON);
-        return responseJSON;
-    }).then(function(data){
-
-        const stringedResponse = JSON.stringify(data);
-        const parsedResponse = JSON.parse(stringedResponse);
-        const parsedBody = JSON.parse(parsedResponse.body);
-
-        document.getElementById('READ_userId').value = "";
-        document.getElementById('GET_fn').textContent  = parsedBody.Item.firstName;
-        document.getElementById('GET_ln').textContent  = parsedBody.Item.lastName;
-        document.getElementById('GET_u').textContent  = parsedBody.Item.username;
-    });
-
-  });
-
-
-</script>
-
+  <script type="text/javascript" src="js/create.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/read.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/update.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/delete.js" charset="utf-8"></script>
 
   </body>
 </html>

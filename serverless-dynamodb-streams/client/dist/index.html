@@ -6,12 +6,10 @@
     <title>User Management</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js" charset="utf-8"></script>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
    <!-- <script src="js/fetch.js" charset="utf-8"></script> -->
 
   </head>
-
 
   <body ng-controller='MainCtrl' class="container">
 
@@ -77,9 +75,9 @@
           <button class="btn btn-success" type="submit">Search</button>
           <button class="btn btn-success" id="RELOAD">Reload</button>
         <div>
-          <p>First name: </p>
-          <p>Last name: </p>
-          <p>Username: </p>
+          <p>First name: </p> <label id=GET_fn></label>
+          <p>Last name: </p> <label id=GET_ln></label>
+          <p>Username: </p> <label id=GET_u></label>
         </div>
       </form>
 
@@ -219,12 +217,24 @@
         'Content-Type': 'application/json'
       }
     }).then(function(response){
-        const stringedResponse = JSON.stringify(response);
+        const responseJSON = response.json();
+        console.log(responseJSON);
+        return responseJSON;
+    }).then(function(data){
+
+        const stringedResponse = JSON.stringify(data);
         const parsedResponse = JSON.parse(stringedResponse);
-        console.log("RES: " + stringedResponse);
-        console.log(response);
+        const parsedBody = JSON.parse(parsedResponse.body);
+
+        document.getElementById('READ_userId').value = "";
+        document.getElementById('GET_fn').textContent  = parsedBody.Item.firstName;
+        document.getElementById('GET_ln').textContent  = parsedBody.Item.lastName;
+        document.getElementById('GET_u').textContent  = parsedBody.Item.username;
     });
+
   });
+
+
 </script>
 
 

@@ -119,21 +119,17 @@ module.exports.createUser = (event, context, callback) => {
 module.exports.getUser = (event, context, callback) => {
 
   const stringedEvent = JSON.stringify(event);
-  //const parsedEvent = JSON.parse(stringedEvent);
-  //const userId = parsedEvent.queryStringParameters.userId;
-  console.log("event: " + event);
-  console.log("stringed: " + stringedEvent);
-
+  const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
     TableName: 'users',
     Key: {
-      "userId":  "3"
+      "userId": parsedEvent.userId
     },
     ProjectionExpression:"userId, firstName, lastName, username",
     KeyConditionExpression: "userId = :id",
     ExpressionAttributeValues: {
-        ":id": "3"
+        ":id": parsedEvent.userId
     }
   };
 

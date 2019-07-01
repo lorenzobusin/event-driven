@@ -133,17 +133,6 @@
                       },
                       {
                         "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
-                      },
-                      {
-                        "Effect": "Allow",
-                        "Action": [
-                          "sqs:ReceiveMessage",
-                          "sqs:DeleteMessage",
-                          "sqs:GetQueueAttributes"
-                        ],
-                        "Resource": [
-                          "arn:aws:sqs:eu-central-1:582373673306:eventQueue"
-                        ]
                       }
                     ]
                   }
@@ -172,7 +161,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561719312094-2019-06-28T10:55:12.094Z/serverless-dynamodb-streams.zip"
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561728077849-2019-06-28T13:21:17.849Z/serverless-dynamodb-streams.zip"
               },
               "FunctionName": "serverless-dynamodb-streams-dev-mediator",
               "Handler": "handler.mediator",
@@ -191,14 +180,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "MediatorLambdaVersionSCnoMOxsYMzzf4J4TL5QTyyDL6UGiSK39pkYfwln5eA": {
+          "MediatorLambdaVersionl9HcicPtcLYNyLv4mLigKavtVjqsSc0w1HKzQvk": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "MediatorLambdaFunction"
               },
-              "CodeSha256": "uWJZJlOaHvVqLdUbmPVAUaKEle1u8m2KnJXxFRaUTA4="
+              "CodeSha256": "Vf58SypYHQ8j47bWVANfSvvrxg29ixQwpg0USi+wSxI="
             }
           },
           "UpdateUserLambdaFunction": {
@@ -208,7 +197,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561719312094-2019-06-28T10:55:12.094Z/serverless-dynamodb-streams.zip"
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561728077849-2019-06-28T13:21:17.849Z/serverless-dynamodb-streams.zip"
               },
               "FunctionName": "serverless-dynamodb-streams-dev-updateUser",
               "Handler": "handler.updateUser",
@@ -227,14 +216,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "UpdateUserLambdaVersionxiNpDDgoEmlmoOZpahf1mVRv5hlI2k42GG3Lndwc": {
+          "UpdateUserLambdaVersionHXU8idETBHUUGlrZuAzreTIwtyGu9pUluoX3O8W9K5w": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateUserLambdaFunction"
               },
-              "CodeSha256": "uWJZJlOaHvVqLdUbmPVAUaKEle1u8m2KnJXxFRaUTA4="
+              "CodeSha256": "Vf58SypYHQ8j47bWVANfSvvrxg29ixQwpg0USi+wSxI="
             }
           },
           "CreateUserLambdaFunction": {
@@ -244,7 +233,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561719312094-2019-06-28T10:55:12.094Z/serverless-dynamodb-streams.zip"
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561728077849-2019-06-28T13:21:17.849Z/serverless-dynamodb-streams.zip"
               },
               "FunctionName": "serverless-dynamodb-streams-dev-createUser",
               "Handler": "handler.createUser",
@@ -263,14 +252,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "CreateUserLambdaVersionvtRj76wVN0e0KMlMcYjeq3PEx0QwjGHwOdBfKwIWLI": {
+          "CreateUserLambdaVersion1oLkgbzHB9nVUMrM4tYelF7oKgwRTwSZ8CL5mTtd0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateUserLambdaFunction"
               },
-              "CodeSha256": "uWJZJlOaHvVqLdUbmPVAUaKEle1u8m2KnJXxFRaUTA4="
+              "CodeSha256": "Vf58SypYHQ8j47bWVANfSvvrxg29ixQwpg0USi+wSxI="
             }
           },
           "DeleteUserLambdaFunction": {
@@ -280,7 +269,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561719312094-2019-06-28T10:55:12.094Z/serverless-dynamodb-streams.zip"
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561728077849-2019-06-28T13:21:17.849Z/serverless-dynamodb-streams.zip"
               },
               "FunctionName": "serverless-dynamodb-streams-dev-deleteUser",
               "Handler": "handler.deleteUser",
@@ -299,14 +288,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "DeleteUserLambdaVersionUHQj8vWmOZnm0wPh2n6n2qhMNWWr58IlPDnjoTlrkxc": {
+          "DeleteUserLambdaVersionZq1YL4E278IYUxbqqg8lHjeollDduj7gI73PS4zdDBE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteUserLambdaFunction"
               },
-              "CodeSha256": "uWJZJlOaHvVqLdUbmPVAUaKEle1u8m2KnJXxFRaUTA4="
+              "CodeSha256": "Vf58SypYHQ8j47bWVANfSvvrxg29ixQwpg0USi+wSxI="
             }
           },
           "GetUserLambdaFunction": {
@@ -316,7 +305,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561719312094-2019-06-28T10:55:12.094Z/serverless-dynamodb-streams.zip"
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561728077849-2019-06-28T13:21:17.849Z/serverless-dynamodb-streams.zip"
               },
               "FunctionName": "serverless-dynamodb-streams-dev-getUser",
               "Handler": "handler.getUser",
@@ -335,14 +324,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetUserLambdaVersionaf2b33PGAEZCE8dhWm3GqmSui7O1qgCMDAj3PZtM4": {
+          "GetUserLambdaVersionyXNT2bn54bs4TDil5hBYomt7N5M1NRlLLgSzrewzU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetUserLambdaFunction"
               },
-              "CodeSha256": "uWJZJlOaHvVqLdUbmPVAUaKEle1u8m2KnJXxFRaUTA4="
+              "CodeSha256": "Vf58SypYHQ8j47bWVANfSvvrxg29ixQwpg0USi+wSxI="
             }
           },
           "UploadEventToSQSLambdaFunction": {
@@ -352,7 +341,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561719312094-2019-06-28T10:55:12.094Z/serverless-dynamodb-streams.zip"
+                "S3Key": "serverless/serverless-dynamodb-streams/dev/1561728077849-2019-06-28T13:21:17.849Z/serverless-dynamodb-streams.zip"
               },
               "FunctionName": "serverless-dynamodb-streams-dev-uploadEventToSQS",
               "Handler": "handler.uploadEventToSQS",
@@ -371,339 +360,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "UploadEventToSQSLambdaVersionoscgM7DJ7Uci5bQtm67deSsQ0i5dmB5oZlWzecHlOhw": {
+          "UploadEventToSQSLambdaVersiongPOgnL1nKDd5dwdER0R89f5mCDVukgMglJMXXhDCjQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UploadEventToSQSLambdaFunction"
               },
-              "CodeSha256": "uWJZJlOaHvVqLdUbmPVAUaKEle1u8m2KnJXxFRaUTA4="
-            }
-          },
-          "ApiGatewayRestApi": {
-            "Type": "AWS::ApiGateway::RestApi",
-            "Properties": {
-              "Name": "dev-serverless-dynamodb-streams",
-              "EndpointConfiguration": {
-                "Types": [
-                  "EDGE"
-                ]
-              }
-            }
-          },
-          "ApiGatewayResourceGetuser": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "PathPart": "getUser",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayResourceUploadeventtosqs": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "PathPart": "uploadeventtosqs",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayMethodGetuserOptions": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true,
-                    "method.response.header.Access-Control-Allow-Credentials": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'",
-                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceGetuser"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayMethodUploadeventtosqsOptions": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true,
-                    "method.response.header.Access-Control-Allow-Credentials": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
-                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceUploadeventtosqs"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayMethodGetuserGet": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "GET",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceGetuser"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "GetUserLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": []
-            }
-          },
-          "ApiGatewayMethodUploadeventtosqsPost": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "POST",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceUploadeventtosqs"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "UploadEventToSQSLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": []
-            }
-          },
-          "ApiGatewayDeployment1561719304886": {
-            "Type": "AWS::ApiGateway::Deployment",
-            "Properties": {
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "StageName": "dev"
-            },
-            "DependsOn": [
-              "ApiGatewayMethodGetuserOptions",
-              "ApiGatewayMethodUploadeventtosqsOptions",
-              "ApiGatewayMethodGetuserGet",
-              "ApiGatewayMethodUploadeventtosqsPost"
-            ]
-          },
-          "GetUserLambdaPermissionApiGateway": {
-            "Type": "AWS::Lambda::Permission",
-            "Properties": {
-              "FunctionName": {
-                "Fn::GetAtt": [
-                  "GetUserLambdaFunction",
-                  "Arn"
-                ]
-              },
-              "Action": "lambda:InvokeFunction",
-              "Principal": "apigateway.amazonaws.com",
-              "SourceArn": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":execute-api:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    ":",
-                    {
-                      "Ref": "ApiGatewayRestApi"
-                    },
-                    "/*/*"
-                  ]
-                ]
-              }
-            }
-          },
-          "UploadEventToSQSLambdaPermissionApiGateway": {
-            "Type": "AWS::Lambda::Permission",
-            "Properties": {
-              "FunctionName": {
-                "Fn::GetAtt": [
-                  "UploadEventToSQSLambdaFunction",
-                  "Arn"
-                ]
-              },
-              "Action": "lambda:InvokeFunction",
-              "Principal": "apigateway.amazonaws.com",
-              "SourceArn": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":execute-api:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    ":",
-                    {
-                      "Ref": "ApiGatewayRestApi"
-                    },
-                    "/*/*"
-                  ]
-                ]
-              }
-            }
-          },
-          "MediatorEventSourceMappingSQSEventQueue": {
-            "Type": "AWS::Lambda::EventSourceMapping",
-            "DependsOn": "IamRoleLambdaExecution",
-            "Properties": {
-              "BatchSize": 10,
-              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:eventQueue",
-              "FunctionName": {
-                "Fn::GetAtt": [
-                  "MediatorLambdaFunction",
-                  "Arn"
-                ]
-              },
-              "Enabled": "True"
+              "CodeSha256": "Vf58SypYHQ8j47bWVANfSvvrxg29ixQwpg0USi+wSxI="
             }
           },
           "UsersDynamoDBTable": {
@@ -738,60 +402,37 @@
           "MediatorLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "MediatorLambdaVersionSCnoMOxsYMzzf4J4TL5QTyyDL6UGiSK39pkYfwln5eA"
+              "Ref": "MediatorLambdaVersionl9HcicPtcLYNyLv4mLigKavtVjqsSc0w1HKzQvk"
             }
           },
           "UpdateUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateUserLambdaVersionxiNpDDgoEmlmoOZpahf1mVRv5hlI2k42GG3Lndwc"
+              "Ref": "UpdateUserLambdaVersionHXU8idETBHUUGlrZuAzreTIwtyGu9pUluoX3O8W9K5w"
             }
           },
           "CreateUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateUserLambdaVersionvtRj76wVN0e0KMlMcYjeq3PEx0QwjGHwOdBfKwIWLI"
+              "Ref": "CreateUserLambdaVersion1oLkgbzHB9nVUMrM4tYelF7oKgwRTwSZ8CL5mTtd0"
             }
           },
           "DeleteUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteUserLambdaVersionUHQj8vWmOZnm0wPh2n6n2qhMNWWr58IlPDnjoTlrkxc"
+              "Ref": "DeleteUserLambdaVersionZq1YL4E278IYUxbqqg8lHjeollDduj7gI73PS4zdDBE"
             }
           },
           "GetUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetUserLambdaVersionaf2b33PGAEZCE8dhWm3GqmSui7O1qgCMDAj3PZtM4"
+              "Ref": "GetUserLambdaVersionyXNT2bn54bs4TDil5hBYomt7N5M1NRlLLgSzrewzU"
             }
           },
           "UploadEventToSQSLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UploadEventToSQSLambdaVersionoscgM7DJ7Uci5bQtm67deSsQ0i5dmB5oZlWzecHlOhw"
-            }
-          },
-          "ServiceEndpoint": {
-            "Description": "URL of the service endpoint",
-            "Value": {
-              "Fn::Join": [
-                "",
-                [
-                  "https://",
-                  {
-                    "Ref": "ApiGatewayRestApi"
-                  },
-                  ".execute-api.",
-                  {
-                    "Ref": "AWS::Region"
-                  },
-                  ".",
-                  {
-                    "Ref": "AWS::URLSuffix"
-                  },
-                  "/dev"
-                ]
-              ]
+              "Ref": "UploadEventToSQSLambdaVersiongPOgnL1nKDd5dwdER0R89f5mCDVukgMglJMXXhDCjQ"
             }
           }
         }
@@ -839,13 +480,7 @@
     "functions": {
       "mediator": {
         "handler": "handler.mediator",
-        "events": [
-          {
-            "sqs": {
-              "arn": "arn:aws:sqs:eu-central-1:582373673306:eventQueue"
-            }
-          }
-        ],
+        "events": [],
         "name": "serverless-dynamodb-streams-dev-mediator",
         "package": {},
         "memory": 1024,
@@ -885,34 +520,7 @@
       },
       "getUser": {
         "handler": "handler.getUser",
-        "events": [
-          {
-            "http": {
-              "path": "getUser",
-              "method": "get",
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "GET"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "integration": "AWS_PROXY"
-            }
-          }
-        ],
+        "events": [],
         "name": "serverless-dynamodb-streams-dev-getUser",
         "package": {},
         "memory": 1024,
@@ -922,34 +530,7 @@
       },
       "uploadEventToSQS": {
         "handler": "handler.uploadEventToSQS",
-        "events": [
-          {
-            "http": {
-              "path": "uploadeventtosqs",
-              "method": "post",
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "POST"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "integration": "AWS_PROXY"
-            }
-          }
-        ],
+        "events": [],
         "name": "serverless-dynamodb-streams-dev-uploadEventToSQS",
         "package": {},
         "memory": 1024,
@@ -990,7 +571,7 @@
     "artifact": "C:\\Users\\loren\\Desktop\\Stage\\event-driven\\serverless-dynamodb-streams\\.serverless\\serverless-dynamodb-streams.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-dynamodb-streams/dev/1561719312094-2019-06-28T10:55:12.094Z",
+    "artifactDirectoryName": "serverless/serverless-dynamodb-streams/dev/1561728077849-2019-06-28T13:21:17.849Z",
     "artifact": "serverless-dynamodb-streams.zip"
   }
 }

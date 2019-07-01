@@ -10,96 +10,55 @@
 
   </head>
 
-  <body ng-controller='MainCtrl' class="container">
-
-    <div class="row form-section">
-      <div class="col-md-12">
-        <div class="create_update">
-
-        
-        <form class="form" id="CREATE_USER">
-          <div class="form row">
-            <h3 class="crud_title">Create user</h3>
-            <div class="form-group col-md-3">
-              <label>userId</label>
-              <input type="text" class="form-control" name="userId" id="CREATE_userId"/>
-            </div>
-            <div class="form-group col-md-6">
-              <label>firstName</label>
-              <input type="text" class="form-control" name="firstName" id="CREATE_firstName"/>
-            </div>
-            <div class="form-group col-md-6">
-              <label>lastName</label>
-              <input type="text" class="form-control" name="lastName" id="CREATE_lastName"/>
-            </div>
-            <div class="form-group col-md-6">
-              <label>username</label>
-              <input type="text" class="form-control" name="username" id="CREATE_username"/>
-            </div>
+  <body>
+    <div class="navbar">
+      <ul>
+        <li>
+          <div class="dropdown">
+            <a href="USER.html" class="dropitem active">Users</a>
+            <div class="dropdown-content">
+              <a href="CREATE_user.html">Create</a>
+              <a href="READ_user.html">Read</a>
+              <a href="UPDATE_user.html">Update</a>
+              <a href="DELETE_user.html">Delete</a>
           </div>
-        <button class="btn btn-success" type="submit">Create</button>
-      </form>
-      
-        <form class="form" id="UPDATE_USER">
-          <div class="form row">
-            <h3 class="crud_title">Update user</h3>
-            <div class="form-group col-md-3">
-              <label>userId</label>
-              <input type="text" class="form-control" name="userId" id="UPDATE_userId"/>
-            </div>
-            <div class="form-group col-md-6">
-              <label>firstName</label>
-              <input type="text" class="form-control" name="firstName" id="UPDATE_firstName"/>
-            </div>
-            <div class="form-group col-md-6">
-              <label>lastName</label>
-              <input type="text" class="form-control" name="lastName" id="UPDATE_lastName"/>
-            </div>
-            <div class="form-group col-md-6">
-              <label>username</label>
-              <input type="text" class="form-control" name="username" id="UPDATE_username"/>
-            </div>
-          </div>
-        <button class="btn btn-success" type="submit">Update</button>
-      </form>
-    </div>
-
-<hr>
-        <form class="form" id="READ_USER">
-          <h3 class="crud_title">Search by ID</h3>
-          <div class="form-group col-md-6">
-              <label>userId</label>
-              <input type="text" class="form-control" name="userId" id="READ_userId"/>
-          </div>
-          <button class="btn btn-success" id="READ">Search</button>
-        <div>
-          <p>First name: </p> <label id=GET_fn></label>
-          <p>Last name: </p> <label id=GET_ln></label>
-          <p>Username: </p> <label id=GET_u></label>
         </div>
-      </form>
-
-
-<hr>
- 
-        <form class="form" id="DELETE_USER">
-          <h3 class="crud_title">Delete by ID</h3>
-          <div class="form-group col-md-6">
-              <label>userId</label>
-              <input type="text" class="form-control" name="userId" id="DELETE_userId"/>
+      </li>
+      <li>
+        <div class="dropdown">
+            <a href="#users" class="dropitem">Roles</a>
+            <div class="dropdown-content">
+              <a href="#">Create</a>
+              <a href="#">Read</a>
+              <a href="#">Update</a>
+              <a href="#">Delete</a>
           </div>
-          <button class="btn btn-success" type="submit">Delete</button>
-        </form>
-
-<hr>
-
-      </div>
-    </div>
-
-  <script type="text/javascript" src="js/create.js" charset="utf-8"></script>
-  <script type="text/javascript" src="js/read.js" charset="utf-8"></script>
-  <script type="text/javascript" src="js/update.js" charset="utf-8"></script>
-  <script type="text/javascript" src="js/delete.js" charset="utf-8"></script>
+        </div>
+      </li>
+      <li>
+        <div class="dropdown">
+            <a href="#users" class="dropitem">Autorizations</a>
+            <div class="dropdown-content">
+              <a href="#">Create</a>
+              <a href="#">Read</a>
+              <a href="#">Update</a>
+              <a href="#">Delete</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="dropdown">
+            <a href="#users" class="dropitem">Groups</a>
+            <div class="dropdown-content">
+              <a href="#">Create</a>
+              <a href="#">Read</a>
+              <a href="#">Update</a>
+              <a href="#">Delete</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
 
   </body>
 </html>

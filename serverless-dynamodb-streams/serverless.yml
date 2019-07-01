@@ -42,9 +42,9 @@ functions:
 
   mediator:
     handler: handler.mediator
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:eventQueue
+    #events:
+     # - sqs:
+        #  arn: arn:aws:sqs:eu-central-1:582373673306:eventQueue
 
   updateUser:
     handler: handler.updateUser
@@ -57,17 +57,17 @@ functions:
 
   getUser: 
     handler: handler.getUser
-    events: 
-      - http: 
-          path: /getUser
-          method: get
-          cors: true
+    #events: 
+    #  - http: 
+      #    path: /getUser
+      #    method: get
+      #    cors: true
 
   uploadEventToSQS: 
     handler: handler.uploadEventToSQS 
-    events: 
-      - http:
-          path: /uploadeventtosqs
-          method: post
-          cors: true
+    #events: 
+    #  - http:
+        #  path: /uploadeventtosqs
+        #  method: post
+        #  cors: true
 

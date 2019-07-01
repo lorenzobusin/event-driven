@@ -116,7 +116,7 @@ module.exports.createUser = (event, context, callback) => {
 
 };
 
-module.exports.getUser = (event, context, callback) => {
+module.exports.readUser = (event, context, callback) => {
 
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
@@ -207,7 +207,7 @@ module.exports.deleteUser = (event, context, callback) => {
     });
 };
 
-module.exports.uploadEventToSQS = (event, context, callback) => {
+module.exports.pushEventUserToSQS = (event, context, callback) => {
 
   var params = {
     MessageBody: JSON.stringify(event),

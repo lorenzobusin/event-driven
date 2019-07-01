@@ -1,0 +1,16 @@
+{
+  "name": "serverless-user-management",
+  "version": "1.0.0",
+  "description": "Serverless application to manage users, roles, autorizations and groups",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Lorenzo Busin",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "serverless-http": "^2.0.2"
+  }
+}

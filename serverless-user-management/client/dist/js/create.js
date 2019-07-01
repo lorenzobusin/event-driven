@@ -18,7 +18,7 @@ createUser.addEventListener('submit', function(e){
 
     body: JSON.stringify({
       "typeEvent": "C",
-      "userId": generateRowId(4),
+      "userId": document.getElementById('CREATE_userId').value.trim(),
       "firstName": document.getElementById('CREATE_firstName').value.trim(),
       "lastName": document.getElementById('CREATE_lastName').value.trim(),
       "username": document.getElementById('CREATE_username').value.trim()
@@ -30,13 +30,3 @@ createUser.addEventListener('submit', function(e){
   document.getElementById('CREATE_lastName').value = "";
   document.getElementById('CREATE_username').value = "";
 });
-
-
-function generateRowId(shardId) {
-  var CUSTOMEPOCH = 1300000000000;  // artificial epoch
-  var ts = new Date().getTime() - CUSTOMEPOCH; // limit to recent
-  var randid = Math.floor(Math.random() * 512);
-  ts = (ts * 64);   // bit-shift << 6
-  ts = ts + shardId;
-  return ((ts * 512) + (randid % 512)).toString();
-};

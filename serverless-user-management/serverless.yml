@@ -1,0 +1,120 @@
+service: serverless-user-management
+
+plugins:
+ # - serverless-finch  #plugin to create html app
+
+custom:
+  client:
+    bucketName: serverless-bucket-s3-public
+    indexDocument: index.html
+    errorDocument: error.html
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: eu-central-1
+  stage: dev
+  iamRoleStatements:
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - "dynamodb:*"
+
+resources:
+  Resources:
+  
+    UsersDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: user
+
+    RolesDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: roleId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: roleId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: role
+
+    AutorizationsDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: autorizationId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: autorizationId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: autorization
+
+    GroupsDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: groupId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: groupId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: group
+
+      
+
+functions:
+
+  mediator:
+    handler: handler.mediator
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:userQueue #set ARN of an existing queue
+
+  updateUser:
+    handler: handler.updateUser
+
+  createUser:
+    handler: handler.createUser
+
+  deleteUser: 
+    handler: handler.deleteUser
+
+  getUser: 
+    handler: handler.getUser
+    events: 
+      - http: 
+          path: /getUser
+          method: get
+          cors: true
+
+  pushEventUserToSQS: 
+    handler: handler.pushEventUserToSQS 
+    events: 
+      - http:
+          path: /pusheventusertosqs
+          method: post
+          cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "userId": "$input.params("userId")" }'
+

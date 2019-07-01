@@ -5,7 +5,7 @@ const SQS = new AWS.SQS();
 const LAMBDA = new AWS.Lambda();
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-module.exports.mediator = (event, context, callback) => {
+module.exports.mediatorUser = (event, context, callback) => {
 
   const body = event.Records[0].body.toString('utf-8'); //read new event body from SQS
   const bodyParsed = JSON.parse(body);
@@ -13,14 +13,16 @@ module.exports.mediator = (event, context, callback) => {
     "userId": bodyParsed.userId,
     "firstName": bodyParsed.firstName,
     "lastName": bodyParsed.lastName,
-    "username": bodyParsed.username
+    "date": bodyParsed.date,
+    "email": bodyParsed.email,
+    "password": bodyParsed.password,
   };
 
   switch(bodyParsed.typeEvent){
     case("C"): {
       console.log("Event type: CREATE");
       var params = {
-        FunctionName: "serverless-dynamodb-streams-dev-createUser", 
+        FunctionName: "serverless-user-management-dev-createUser", 
         InvocationType: "Event", 
         LogType: "Tail", 
         Payload: JSON.stringify(userParams) //only string type
@@ -39,7 +41,7 @@ module.exports.mediator = (event, context, callback) => {
    /* case("R"): {
       console.log("Event type: READ");
       var params = {
-        FunctionName: "serverless-dynamodb-streams-dev-getUser", 
+        FunctionName: "serverless-user-management-dev-getUser", 
         InvocationType: "Event", 
         LogType: "Tail", 
         Payload: JSON.stringify(userParams) //only string type
@@ -58,7 +60,7 @@ module.exports.mediator = (event, context, callback) => {
     case("U"): {
       console.log("Event type: UPDATE");
       var params = {
-        FunctionName: "serverless-dynamodb-streams-dev-updateUser", 
+        FunctionName: "serverless-user-management-dev-updateUser", 
         InvocationType: "Event", 
         LogType: "Tail", 
         Payload: JSON.stringify(userParams) //only string type
@@ -77,7 +79,7 @@ module.exports.mediator = (event, context, callback) => {
     case("D"): {
       console.log("Event type: DELETE");
       var params = {
-        FunctionName: "serverless-dynamodb-streams-dev-deleteUser", 
+        FunctionName: "serverless-user-management-dev-deleteUser", 
         InvocationType: "Event", 
         LogType: "Tail", 
         Payload: JSON.stringify(userParams) //only string type
@@ -103,7 +105,7 @@ module.exports.mediator = (event, context, callback) => {
 module.exports.createUser = (event, context, callback) => {
 
   const params = {
-    TableName: 'users',
+    TableName: 'user',
     Item: event
   };
 
@@ -122,11 +124,11 @@ module.exports.readUser = (event, context, callback) => {
   const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
-    TableName: 'users',
+    TableName: 'user',
     Key: {
       "userId": parsedEvent.userId
     },
-    ProjectionExpression:"userId, firstName, lastName, username",
+    ProjectionExpression:"*",
     KeyConditionExpression: "userId = :id",
     ExpressionAttributeValues: {
         ":id": parsedEvent.userId
@@ -208,17 +210,20 @@ module.exports.deleteUser = (event, context, callback) => {
 };
 
 module.exports.pushEventUserToSQS = (event, context, callback) => {
+  
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
 
-  var params = {
-    MessageBody: JSON.stringify(event),
-    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/eventQueue"
+  const params = {
+    MessageBody: parsedEvent.body,
+    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/userQueue"
   };
 
   SQS.sendMessage(params, function(err,data){
     if(err) {
       console.log(err);
     }else{
-      console.log('Event successfully put in SQS');
+      console.log('userEvent successfully put in userQueue');
     }
   });
 };

@@ -1,7 +1,6 @@
 
 //define API link
 const linkAPI_POST = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/";
-const linkAPI_GET = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/getuser?userId=";
 
 //CREATE
 const createUser = document.getElementById('CREATE_USER');

@@ -1,9 +1,5 @@
-
-//define API link
-const linkAPI_POST = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/";
-const linkAPI_GET = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/getuser?userId=";
-
 //CREATE
+
 const createUser = document.getElementById('CREATE_USER');
 createUser.addEventListener('submit', function(e){
   e.preventDefault();
@@ -18,15 +14,23 @@ createUser.addEventListener('submit', function(e){
 
     body: JSON.stringify({
       "typeEvent": "C",
-      "userId": document.getElementById('CREATE_userId').value.trim(),
+      "userId": generateUUID(),
       "firstName": document.getElementById('CREATE_firstName').value.trim(),
       "lastName": document.getElementById('CREATE_lastName').value.trim(),
-      "username": document.getElementById('CREATE_username').value.trim()
+      "date": document.getElementById('CREATE_date').value.trim(),
+      "email": document.getElementById('CREATE_email').value.trim(),
+      "password": document.getElementById('CREATE_password').value.trim(),
+     // "role": document.getElementById('CREATE_role').value.trim(),
+     // "group": document.getElementById('CREATE_group').value.trim()
     })
   });
-
-  document.getElementById('CREATE_userId').value = "";
+  
   document.getElementById('CREATE_firstName').value = "";
   document.getElementById('CREATE_lastName').value = "";
-  document.getElementById('CREATE_username').value = "";
+  document.getElementById('CREATE_date').value = "";
+  document.getElementById('CREATE_email').value = "";
+  document.getElementById('CREATE_password').value = "";
+  document.getElementById('confirmPassword').value = "";
+  //document.getElementById('CREATE_role').value = "";
+  //document.getElementById('CREATE_group').value = "";
 });

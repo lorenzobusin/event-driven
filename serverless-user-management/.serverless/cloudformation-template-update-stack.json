@@ -16,10 +16,10 @@
         }
       }
     },
-    "MediatorLogGroup": {
+    "MediatorUserLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/serverless-user-management-dev-mediator"
+        "LogGroupName": "/aws/lambda/serverless-user-management-dev-mediatorUser"
       }
     },
     "UpdateUserLogGroup": {
@@ -112,7 +112,11 @@
                   "Effect": "Allow",
                   "Resource": "*",
                   "Action": [
-                    "dynamodb:*"
+                    "dynamodb:*",
+                    "sqs:*",
+                    "lambda:*",
+                    "cloudwatch:*",
+                    "apigateway:*"
                   ]
                 },
                 {
@@ -146,17 +150,17 @@
         }
       }
     },
-    "MediatorLambdaFunction": {
+    "MediatorUserLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1561986160596-2019-07-01T13:02:40.596Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
         },
-        "FunctionName": "serverless-user-management-dev-mediator",
-        "Handler": "handler.mediator",
+        "FunctionName": "serverless-user-management-dev-mediatorUser",
+        "Handler": "handler.mediatorUser",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -168,18 +172,18 @@
         "Timeout": 6
       },
       "DependsOn": [
-        "MediatorLogGroup",
+        "MediatorUserLogGroup",
         "IamRoleLambdaExecution"
       ]
     },
-    "MediatorLambdaVersioncnMrWJmRpIuEodN0oeKaTvgycY6f9a9REAyfGVc4yTo": {
+    "MediatorUserLambdaVersionnha2pgHPmQRfXqw1C0rTHxpccDMyNxxCOC2Htd1KsI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "MediatorLambdaFunction"
+          "Ref": "MediatorUserLambdaFunction"
         },
-        "CodeSha256": "OF8+bOZl3kP2F2gaQtNsX8QSSB8UwEbgScUFkHC6PRA="
+        "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
       }
     },
     "UpdateUserLambdaFunction": {
@@ -189,7 +193,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1561986160596-2019-07-01T13:02:40.596Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-updateUser",
         "Handler": "handler.updateUser",
@@ -208,14 +212,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "UpdateUserLambdaVersionBXuAWlYcP38B5w7MIz9t3bC5hJ6t5GzqYxFDnoO8I": {
+    "UpdateUserLambdaVersioncIykhQbnr56RwsLbK8uhaXw0YGlJrP1grRTr8GMwMzc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateUserLambdaFunction"
         },
-        "CodeSha256": "OF8+bOZl3kP2F2gaQtNsX8QSSB8UwEbgScUFkHC6PRA="
+        "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
       }
     },
     "CreateUserLambdaFunction": {
@@ -225,7 +229,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1561986160596-2019-07-01T13:02:40.596Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-createUser",
         "Handler": "handler.createUser",
@@ -244,14 +248,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateUserLambdaVersionOhLoelgyCUKoCBe9cqrtsigXY8lkTDq03BZHV8w": {
+    "CreateUserLambdaVersionCfRPJFl5ZzBdOcgUpR5YNvJRfYvUO27qUOU1TQRMZI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateUserLambdaFunction"
         },
-        "CodeSha256": "OF8+bOZl3kP2F2gaQtNsX8QSSB8UwEbgScUFkHC6PRA="
+        "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
       }
     },
     "DeleteUserLambdaFunction": {
@@ -261,7 +265,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1561986160596-2019-07-01T13:02:40.596Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-deleteUser",
         "Handler": "handler.deleteUser",
@@ -280,14 +284,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "DeleteUserLambdaVersionhKEfD06enXGukx04ALwBTHY8CaE2MTNeuOFLIcbZo40": {
+    "DeleteUserLambdaVersionIcR621udred1dsN5hzfUOnscL9ugoRIhdyzgHJc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteUserLambdaFunction"
         },
-        "CodeSha256": "OF8+bOZl3kP2F2gaQtNsX8QSSB8UwEbgScUFkHC6PRA="
+        "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
       }
     },
     "GetUserLambdaFunction": {
@@ -297,7 +301,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1561986160596-2019-07-01T13:02:40.596Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-getUser",
         "Handler": "handler.getUser",
@@ -316,14 +320,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetUserLambdaVersion63j7hgc4nmcxiE7xZ1KuY5tfRciaki97tKNyBDGzCH0": {
+    "GetUserLambdaVersionVJhlfnX1JeCHyHKC6D0Ew2eMK7F8Ovs5iVTuhxYosWM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetUserLambdaFunction"
         },
-        "CodeSha256": "OF8+bOZl3kP2F2gaQtNsX8QSSB8UwEbgScUFkHC6PRA="
+        "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
       }
     },
     "PushEventUserToSQSLambdaFunction": {
@@ -333,7 +337,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1561986160596-2019-07-01T13:02:40.596Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushEventUserToSQS",
         "Handler": "handler.pushEventUserToSQS",
@@ -352,14 +356,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "PushEventUserToSQSLambdaVersionk6SRlOyhAQZTNLj5cyRoxXSW5NY6Fqps86HfAWXo": {
+    "PushEventUserToSQSLambdaVersionlV31pek23n7jc2WS5hHF0xgzMsvMvNTkO4oU2OZJY": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PushEventUserToSQSLambdaFunction"
         },
-        "CodeSha256": "OF8+bOZl3kP2F2gaQtNsX8QSSB8UwEbgScUFkHC6PRA="
+        "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
       }
     },
     "ApiGatewayRestApi": {
@@ -450,53 +454,6 @@
         }
       }
     },
-    "ApiGatewayMethodPusheventusertosqsOptions": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "AuthorizationType": "NONE",
-        "HttpMethod": "OPTIONS",
-        "MethodResponses": [
-          {
-            "StatusCode": "200",
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Access-Control-Allow-Headers": true,
-              "method.response.header.Access-Control-Allow-Methods": true,
-              "method.response.header.Access-Control-Allow-Credentials": true
-            },
-            "ResponseModels": {}
-          }
-        ],
-        "RequestParameters": {},
-        "Integration": {
-          "Type": "MOCK",
-          "RequestTemplates": {
-            "application/json": "{statusCode:200}"
-          },
-          "ContentHandling": "CONVERT_TO_TEXT",
-          "IntegrationResponses": [
-            {
-              "StatusCode": "200",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
-                "method.response.header.Access-Control-Allow-Credentials": "'false'"
-              },
-              "ResponseTemplates": {
-                "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-              }
-            }
-          ]
-        },
-        "ResourceId": {
-          "Ref": "ApiGatewayResourcePusheventusertosqs"
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
     "ApiGatewayMethodGetuserGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
@@ -504,49 +461,6 @@
         "RequestParameters": {},
         "ResourceId": {
           "Ref": "ApiGatewayResourceGetuser"
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
-        "Integration": {
-          "IntegrationHttpMethod": "POST",
-          "Type": "AWS_PROXY",
-          "Uri": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition"
-                },
-                ":apigateway:",
-                {
-                  "Ref": "AWS::Region"
-                },
-                ":lambda:path/2015-03-31/functions/",
-                {
-                  "Fn::GetAtt": [
-                    "GetUserLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "/invocations"
-              ]
-            ]
-          }
-        },
-        "MethodResponses": []
-      }
-    },
-    "ApiGatewayMethodPusheventusertosqsPost": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "HttpMethod": "POST",
-        "RequestParameters": {},
-        "ResourceId": {
-          "Ref": "ApiGatewayResourcePusheventusertosqs"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -571,7 +485,7 @@
                 ":lambda:path/2015-03-31/functions/",
                 {
                   "Fn::GetAtt": [
-                    "PushEventUserToSQSLambdaFunction",
+                    "GetUserLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -726,7 +640,50 @@
         ]
       }
     },
-    "ApiGatewayDeployment1561986156522": {
+    "ApiGatewayMethodPusheventusertosqsPost": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourcePusheventusertosqs"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "PushEventUserToSQSLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      }
+    },
+    "ApiGatewayDeployment1561994632541": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -736,7 +693,6 @@
       },
       "DependsOn": [
         "ApiGatewayMethodGetuserOptions",
-        "ApiGatewayMethodPusheventusertosqsOptions",
         "ApiGatewayMethodGetuserGet",
         "ApiGatewayMethodPusheventusertosqsPost"
       ]
@@ -815,7 +771,7 @@
         }
       }
     },
-    "MediatorEventSourceMappingSQSUserQueue": {
+    "MediatorUserEventSourceMappingSQSUserQueue": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": "IamRoleLambdaExecution",
       "Properties": {
@@ -823,7 +779,7 @@
         "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:userQueue",
         "FunctionName": {
           "Fn::GetAtt": [
-            "MediatorLambdaFunction",
+            "MediatorUserLambdaFunction",
             "Arn"
           ]
         },
@@ -874,18 +830,18 @@
         "TableName": "role"
       }
     },
-    "AutorizationsDynamoDBTable": {
+    "AuthorizationsDynamoDBTable": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "AttributeDefinitions": [
           {
-            "AttributeName": "autorizationId",
+            "AttributeName": "authorizationId",
             "AttributeType": "S"
           }
         ],
         "KeySchema": [
           {
-            "AttributeName": "autorizationId",
+            "AttributeName": "authorizationId",
             "KeyType": "HASH"
           }
         ],
@@ -893,7 +849,7 @@
           "ReadCapacityUnits": 5,
           "WriteCapacityUnits": 5
         },
-        "TableName": "autorization"
+        "TableName": "authorization"
       }
     },
     "GroupsDynamoDBTable": {
@@ -925,40 +881,40 @@
         "Ref": "ServerlessDeploymentBucket"
       }
     },
-    "MediatorLambdaFunctionQualifiedArn": {
+    "MediatorUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MediatorLambdaVersioncnMrWJmRpIuEodN0oeKaTvgycY6f9a9REAyfGVc4yTo"
+        "Ref": "MediatorUserLambdaVersionnha2pgHPmQRfXqw1C0rTHxpccDMyNxxCOC2Htd1KsI"
       }
     },
     "UpdateUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateUserLambdaVersionBXuAWlYcP38B5w7MIz9t3bC5hJ6t5GzqYxFDnoO8I"
+        "Ref": "UpdateUserLambdaVersioncIykhQbnr56RwsLbK8uhaXw0YGlJrP1grRTr8GMwMzc"
       }
     },
     "CreateUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateUserLambdaVersionOhLoelgyCUKoCBe9cqrtsigXY8lkTDq03BZHV8w"
+        "Ref": "CreateUserLambdaVersionCfRPJFl5ZzBdOcgUpR5YNvJRfYvUO27qUOU1TQRMZI"
       }
     },
     "DeleteUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteUserLambdaVersionhKEfD06enXGukx04ALwBTHY8CaE2MTNeuOFLIcbZo40"
+        "Ref": "DeleteUserLambdaVersionIcR621udred1dsN5hzfUOnscL9ugoRIhdyzgHJc"
       }
     },
     "GetUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetUserLambdaVersion63j7hgc4nmcxiE7xZ1KuY5tfRciaki97tKNyBDGzCH0"
+        "Ref": "GetUserLambdaVersionVJhlfnX1JeCHyHKC6D0Ew2eMK7F8Ovs5iVTuhxYosWM"
       }
     },
     "PushEventUserToSQSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PushEventUserToSQSLambdaVersionk6SRlOyhAQZTNLj5cyRoxXSW5NY6Fqps86HfAWXo"
+        "Ref": "PushEventUserToSQSLambdaVersionlV31pek23n7jc2WS5hHF0xgzMsvMvNTkO4oU2OZJY"
       }
     },
     "ServiceEndpoint": {

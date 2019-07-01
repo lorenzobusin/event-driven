@@ -1,8 +1,5 @@
 //UPDATE
 
-//define API link
-const linkAPI_POST = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/";
-
 const updateUser = document.getElementById('UPDATE_USER');
 updateUser.addEventListener('submit', function(e){
   e.preventDefault();

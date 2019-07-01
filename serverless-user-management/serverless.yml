@@ -19,6 +19,10 @@ provider:
       Resource: "*"
       Action:
         - "dynamodb:*"
+        - "sqs:*"
+        - "lambda:*"
+        - "cloudwatch:*"
+        - "apigateway:*"
 
 resources:
   Resources:
@@ -51,19 +55,19 @@ resources:
           WriteCapacityUnits: 5
         TableName: role
 
-    AutorizationsDynamoDBTable:
+    AuthorizationsDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
         AttributeDefinitions:
-          - AttributeName: autorizationId
+          - AttributeName: authorizationId
             AttributeType: S
         KeySchema:
-          - AttributeName: autorizationId
+          - AttributeName: authorizationId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-        TableName: autorization
+        TableName: authorization
 
     GroupsDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
@@ -83,8 +87,8 @@ resources:
 
 functions:
 
-  mediator:
-    handler: handler.mediator
+  mediatorUser:
+    handler: handler.mediatorUser
     events:
       - sqs:
           arn: arn:aws:sqs:eu-central-1:582373673306:userQueue #set ARN of an existing queue
@@ -105,6 +109,10 @@ functions:
           path: /getUser
           method: get
           cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "userId": "$input.params("userId")" }'
 
   pushEventUserToSQS: 
     handler: handler.pushEventUserToSQS 
@@ -112,9 +120,4 @@ functions:
       - http:
           path: /pusheventusertosqs
           method: post
-          cors: true
-          integration: lambda
-          request:
-            template:
-              application/json: '{ "userId": "$input.params("userId")" }'
 

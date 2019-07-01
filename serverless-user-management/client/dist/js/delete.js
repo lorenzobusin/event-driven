@@ -1,8 +1,4 @@
 //DELETE
-
-//define API link
-const linkAPI_POST = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/uploadeventtosqs/";
-
 const deleteUser = document.getElementById('DELETE_USER');
 deleteUser.addEventListener('submit', function(e){
   e.preventDefault();

@@ -1,8 +1,5 @@
   //READ
-
-  //define API link
-const linkAPI_GET = "https://mrh8oqh3li.execute-api.eu-central-1.amazonaws.com/prod/getuser?userId=";
-
+  
   //Mi serve avere un evento per ogni operazione di lettura e gestirlo tramite una coda?
   const reload = document.getElementById('READ');
   reload.addEventListener('click', function(e){

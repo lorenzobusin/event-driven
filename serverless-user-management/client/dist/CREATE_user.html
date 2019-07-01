@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+    <script type="text/javascript" src="js/utils.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
   </head>
 
@@ -37,7 +39,7 @@
       </li>
       <li>
         <div class="dropdown">
-            <a href="#users" class="dropitem">Autorizations</a>
+            <a href="#users" class="dropitem">Authorizations</a>
             <div class="dropdown-content">
               <a href="#">Create</a>
               <a href="#">Read</a>
@@ -65,19 +67,24 @@
                 <h3 class="crud_title">Create user</h3>
                 </br>
                 <div class="form-group">
-                  <label>userId</label>
-                  <input type="text" class="form-control" name="userId" id="CREATE_userId"/>
-                  <label>firstName</label>
+                  <label>First name</label>
                   <input type="text" class="form-control" name="firstName" id="CREATE_firstName"/>
-                  <label>lastName</label>
+                  <label>Last name</label>
                   <input type="text" class="form-control" name="lastName" id="CREATE_lastName"/>
-                  <label>username</label>
-                  <input type="text" class="form-control" name="username" id="CREATE_username"/>
+                  <label>Date of birth</label>
+                  <input type="text" class="form-control" name="date" id="CREATE_date"/>
+                  <label>Email</label>
+                  <input type="text" class="form-control" name="email" id="CREATE_email"/>
+                  <label>Password</label>
+                  <input type="text" class="form-control" name="password" id="CREATE_password"/>
+                  <label>Confirm password</label>
+                  <input type="text" class="form-control" name="confirmPassword" id="confirmPassword"/>
                 </div>
               <button class="btn btn-success" type="submit">Create</button>
             </form>
     </div>
 
+  
   <script type="text/javascript" src="js/create.js" charset="utf-8"></script>
 
   </body>

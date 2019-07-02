@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+    <script type="text/javascript" src="js/utils.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
   </head>
 
@@ -37,7 +39,7 @@
       </li>
       <li>
         <div class="dropdown">
-            <a href="#users" class="dropitem">Autorizations</a>
+            <a href="#users" class="dropitem">Authorizations</a>
             <div class="dropdown-content">
               <a href="#">Create</a>
               <a href="#">Read</a>
@@ -61,23 +63,32 @@
   </div>
 
   <div class="row form-section">
-        <form class="form col-md-6" id="READ_USER">
-          <h3 class="crud_title">Search by ID</h3>
-          <div class="form-group">
-              <label>userId</label>
-              <input type="text" class="form-control" name="userId" id="READ_userId"/>
-          </div>
-          <button class="btn btn-success" id="READ">Search</button>
-        </form>
-          
-        <div class="col-md-4">
-          <p>First name: </p> <label id=GET_fn></label>
-          <p>Last name: </p> <label id=GET_ln></label>
-          <p>Username: </p> <label id=GET_u></label>
+      <form class="form col-md-4" id="READ_USER">
+        <div class="form-group">
+            <h3 class="crud_title">Search by ID</h3>
+            <label>userId</label>
+            <input type="text" class="form-control" name="userId" id="READ_userId"/>
+            <button class="btn btn-success" id="READ">Search</button>
+            <span class="messageSuccess" id='messageSuccessREAD'></span>
         </div>
+      </form>
   </div>
 
-  <script type="text/javascript" src="js/utils.js" charset="utf-8"></script>
+  <div class="row">
+    <div class="col-md-8">
+      <table id="tableResult">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+
   <script type="text/javascript" src="js/read.js" charset="utf-8"></script>
 
   </body>

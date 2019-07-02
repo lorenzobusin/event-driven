@@ -9,7 +9,7 @@ var crypto = require('crypto'),
     password = 'd6F3Efeq';
 
 function encrypt(text){
-  var cipher = crypto.createCipher(algorithm,password)
+  var cipher = crypto.createCipher(algorithm, password)
   var crypted = cipher.update(text,'utf8','hex')
   crypted += cipher.final('hex');
   return crypted;
@@ -26,18 +26,22 @@ module.exports.mediatorUser = (event, context, callback) => {
 
   const body = event.Records[0].body.toString('utf-8'); //read new event body from SQS
   const bodyParsed = JSON.parse(body);
-  const userParams = {
-    "userId": bodyParsed.userId,
-    "firstName": bodyParsed.firstName,
-    "lastName": bodyParsed.lastName,
-    "date": bodyParsed.date,
-    "email": bodyParsed.email,
-    "password": encrypt(bodyParsed.password),
-  };
+
+  console.log("print: " + body);
 
   switch(bodyParsed.typeEvent){
     case("C"): {
       console.log("Event type: CREATE");
+
+      const userParams = {
+        "userId": bodyParsed.userId,
+        "firstName": bodyParsed.firstName,
+        "lastName": bodyParsed.lastName,
+        "date": bodyParsed.date,
+        "email": bodyParsed.email,
+        "password": encrypt(bodyParsed.password)
+      };
+
       var params = {
         FunctionName: "serverless-user-management-dev-createUser", 
         InvocationType: "Event", 
@@ -76,6 +80,16 @@ module.exports.mediatorUser = (event, context, callback) => {
 
     case("U"): {
       console.log("Event type: UPDATE");
+
+      const userParams = {
+        "userId": bodyParsed.userId,
+        "firstName": bodyParsed.firstName,
+        "lastName": bodyParsed.lastName,
+        "date": bodyParsed.date,
+        "email": bodyParsed.email,
+        "password": bodyParsed.password
+      };
+
       var params = {
         FunctionName: "serverless-user-management-dev-updateUser", 
         InvocationType: "Event", 
@@ -95,6 +109,11 @@ module.exports.mediatorUser = (event, context, callback) => {
 
     case("D"): {
       console.log("Event type: DELETE");
+
+      const userParams = {
+        "userId": bodyParsed.userId
+      };
+
       var params = {
         FunctionName: "serverless-user-management-dev-deleteUser", 
         InvocationType: "Event", 
@@ -145,7 +164,10 @@ module.exports.readUser = (event, context, callback) => {
     Key: {
       "userId": parsedEvent.userId
     },
-    ProjectionExpression:"*",
+    ExpressionAttributeNames:{
+      "#birthdate": "date" //date is a reserved keyword
+    },
+    ProjectionExpression: "firstName, lastName, #birthdate, email",
     KeyConditionExpression: "userId = :id",
     ExpressionAttributeValues: {
         ":id": parsedEvent.userId
@@ -182,15 +204,20 @@ module.exports.updateUser = (event, context, callback) => {
   const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
-    TableName: 'users',
+    TableName: 'user',
     Key: {
       "userId":  parsedEvent.userId
     },
-    UpdateExpression: "set firstName = :fn, lastName=:ln, username=:u",
+    ExpressionAttributeNames:{
+      "#birthdate": "date" //date is a reserved keyword
+    },
+    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, email=:e, password=:p",
     ExpressionAttributeValues:{
         ":fn": parsedEvent.firstName,
         ":ln": parsedEvent.lastName,
-        ":u": parsedEvent.username
+        ":d": parsedEvent.date,
+        ":e": parsedEvent.email,
+        ":p": parsedEvent.password
     }   
   };
 
@@ -208,7 +235,7 @@ module.exports.deleteUser = (event, context, callback) => {
   const parsedEvent = JSON.parse(stringedEvent);
   
   const params = {
-    TableName: 'users',
+    TableName: 'user',
     Key:{
       "userId": parsedEvent.userId
     },
@@ -230,6 +257,8 @@ module.exports.pushEventUserToSQS = (event, context, callback) => {
   
   const stringedEvent = JSON.stringify(event);
   //const parsedEvent = JSON.parse(stringedEvent);
+
+  console.log("print: " + stringedEvent);
 
   const params = {
     MessageBody: stringedEvent,

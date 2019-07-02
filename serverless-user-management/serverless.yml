@@ -102,11 +102,11 @@ functions:
   deleteUser: 
     handler: handler.deleteUser
 
-  getUser: 
-    handler: handler.getUser
+  readUser: 
+    handler: handler.readUser
     events: 
       - http: 
-          path: /getUser
+          path: /readUser
           method: get
           cors: true
           integration: lambda

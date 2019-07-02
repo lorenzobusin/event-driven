@@ -67,10 +67,10 @@
               "LogGroupName": "/aws/lambda/serverless-user-management-dev-deleteUser"
             }
           },
-          "GetUserLogGroup": {
+          "ReadUserLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-getUser"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-readUser"
             }
           },
           "PushEventUserToSQSLogGroup": {
@@ -176,7 +176,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-mediatorUser",
               "Handler": "handler.mediatorUser",
@@ -195,14 +195,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "MediatorUserLambdaVersion8juolgxlkJKkaA9vvi6Q4doNsjqE8bUPzX7zTn7g": {
+          "MediatorUserLambdaVersionKczU8HNi81bjx0xHGPuiCZ3MNQeUf8g3Re4S7s9tZw": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "MediatorUserLambdaFunction"
               },
-              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
+              "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
             }
           },
           "UpdateUserLambdaFunction": {
@@ -212,7 +212,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-updateUser",
               "Handler": "handler.updateUser",
@@ -231,14 +231,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "UpdateUserLambdaVersion8DwOPhxYH34xbBN6NBPOTK0HY9AgaUunE1VfjJCbK6A": {
+          "UpdateUserLambdaVersion2TLzlWCtbBkoRw5TbJdBQKqZewzxjH2Ua77w32y7So8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateUserLambdaFunction"
               },
-              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
+              "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
             }
           },
           "CreateUserLambdaFunction": {
@@ -248,7 +248,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-createUser",
               "Handler": "handler.createUser",
@@ -267,14 +267,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "CreateUserLambdaVersion6Hn68btDV5PWe33U4TyuVYpJPvRtoYppjLNrBK8UvU": {
+          "CreateUserLambdaVersiontVUxu6wU6RxPxtdqmFcmTXbomvrLM69gk7AnWSZFE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateUserLambdaFunction"
               },
-              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
+              "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
             }
           },
           "DeleteUserLambdaFunction": {
@@ -284,7 +284,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-deleteUser",
               "Handler": "handler.deleteUser",
@@ -303,27 +303,27 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "DeleteUserLambdaVersionUgaIJfcD5y9GrZGv9X8zgJ0G5XtPq15iblJ8DPuA": {
+          "DeleteUserLambdaVersionOUTbRIQBMfmwJ5t8osgXLaCInoVcHEc19yk7lJvvvQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteUserLambdaFunction"
               },
-              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
+              "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
             }
           },
-          "GetUserLambdaFunction": {
+          "ReadUserLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-getUser",
-              "Handler": "handler.getUser",
+              "FunctionName": "serverless-user-management-dev-readUser",
+              "Handler": "handler.readUser",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -335,18 +335,18 @@
               "Timeout": 6
             },
             "DependsOn": [
-              "GetUserLogGroup",
+              "ReadUserLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "GetUserLambdaVersionYQi8CROzeZzHBS1RyOjui3SDmSULAJ1g2XZFbxR7Os": {
+          "ReadUserLambdaVersionHEVOIoWBgEPklVKUANC5oZiQgYQ4oDDrTcedW29l2c": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "GetUserLambdaFunction"
+                "Ref": "ReadUserLambdaFunction"
               },
-              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
+              "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
             }
           },
           "PushEventUserToSQSLambdaFunction": {
@@ -356,7 +356,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-pushEventUserToSQS",
               "Handler": "handler.pushEventUserToSQS",
@@ -375,14 +375,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PushEventUserToSQSLambdaVersionCXn1djiqHdqaSpORIj8zPm4DBXWYhY5Sgns5WonROOg": {
+          "PushEventUserToSQSLambdaVersionzf3YGuFcJeJwMqNWHY7YwUzB6N0jGl42p33dedOWSI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PushEventUserToSQSLambdaFunction"
               },
-              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
+              "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
             }
           },
           "ApiGatewayRestApi": {
@@ -396,7 +396,7 @@
               }
             }
           },
-          "ApiGatewayResourceGetuser": {
+          "ApiGatewayResourceReaduser": {
             "Type": "AWS::ApiGateway::Resource",
             "Properties": {
               "ParentId": {
@@ -405,7 +405,7 @@
                   "RootResourceId"
                 ]
               },
-              "PathPart": "getUser",
+              "PathPart": "readUser",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -426,7 +426,7 @@
               }
             }
           },
-          "ApiGatewayMethodGetuserOptions": {
+          "ApiGatewayMethodReaduserOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "AuthorizationType": "NONE",
@@ -466,20 +466,20 @@
                 ]
               },
               "ResourceId": {
-                "Ref": "ApiGatewayResourceGetuser"
+                "Ref": "ApiGatewayResourceReaduser"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
             }
           },
-          "ApiGatewayMethodGetuserGet": {
+          "ApiGatewayMethodReaduserGet": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "GET",
               "RequestParameters": {},
               "ResourceId": {
-                "Ref": "ApiGatewayResourceGetuser"
+                "Ref": "ApiGatewayResourceReaduser"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -504,7 +504,7 @@
                       ":lambda:path/2015-03-31/functions/",
                       {
                         "Fn::GetAtt": [
-                          "GetUserLambdaFunction",
+                          "ReadUserLambdaFunction",
                           "Arn"
                         ]
                       },
@@ -702,7 +702,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1562060989633": {
+          "ApiGatewayDeployment1562080093851": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -711,17 +711,17 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodGetuserOptions",
-              "ApiGatewayMethodGetuserGet",
+              "ApiGatewayMethodReaduserOptions",
+              "ApiGatewayMethodReaduserGet",
               "ApiGatewayMethodPusheventusertosqsPost"
             ]
           },
-          "GetUserLambdaPermissionApiGateway": {
+          "ReadUserLambdaPermissionApiGateway": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "GetUserLambdaFunction",
+                  "ReadUserLambdaFunction",
                   "Arn"
                 ]
               },
@@ -903,37 +903,37 @@
           "MediatorUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "MediatorUserLambdaVersion8juolgxlkJKkaA9vvi6Q4doNsjqE8bUPzX7zTn7g"
+              "Ref": "MediatorUserLambdaVersionKczU8HNi81bjx0xHGPuiCZ3MNQeUf8g3Re4S7s9tZw"
             }
           },
           "UpdateUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateUserLambdaVersion8DwOPhxYH34xbBN6NBPOTK0HY9AgaUunE1VfjJCbK6A"
+              "Ref": "UpdateUserLambdaVersion2TLzlWCtbBkoRw5TbJdBQKqZewzxjH2Ua77w32y7So8"
             }
           },
           "CreateUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateUserLambdaVersion6Hn68btDV5PWe33U4TyuVYpJPvRtoYppjLNrBK8UvU"
+              "Ref": "CreateUserLambdaVersiontVUxu6wU6RxPxtdqmFcmTXbomvrLM69gk7AnWSZFE"
             }
           },
           "DeleteUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteUserLambdaVersionUgaIJfcD5y9GrZGv9X8zgJ0G5XtPq15iblJ8DPuA"
+              "Ref": "DeleteUserLambdaVersionOUTbRIQBMfmwJ5t8osgXLaCInoVcHEc19yk7lJvvvQ"
             }
           },
-          "GetUserLambdaFunctionQualifiedArn": {
+          "ReadUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetUserLambdaVersionYQi8CROzeZzHBS1RyOjui3SDmSULAJ1g2XZFbxR7Os"
+              "Ref": "ReadUserLambdaVersionHEVOIoWBgEPklVKUANC5oZiQgYQ4oDDrTcedW29l2c"
             }
           },
           "PushEventUserToSQSLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PushEventUserToSQSLambdaVersionCXn1djiqHdqaSpORIj8zPm4DBXWYhY5Sgns5WonROOg"
+              "Ref": "PushEventUserToSQSLambdaVersionzf3YGuFcJeJwMqNWHY7YwUzB6N0jGl42p33dedOWSI"
             }
           },
           "ServiceEndpoint": {
@@ -1046,12 +1046,12 @@
         "runtime": "nodejs10.x",
         "vpc": {}
       },
-      "getUser": {
-        "handler": "handler.getUser",
+      "readUser": {
+        "handler": "handler.readUser",
         "events": [
           {
             "http": {
-              "path": "getUser",
+              "path": "readUser",
               "method": "get",
               "cors": {
                 "origins": [
@@ -1113,7 +1113,7 @@
             }
           }
         ],
-        "name": "serverless-user-management-dev-getUser",
+        "name": "serverless-user-management-dev-readUser",
         "package": {},
         "memory": 1024,
         "timeout": 6,
@@ -1237,7 +1237,7 @@
     "artifact": "C:\\Users\\loren\\Desktop\\Stage\\event-driven\\serverless-user-management\\.serverless\\serverless-user-management.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z",
+    "artifactDirectoryName": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z",
     "artifact": "serverless-user-management.zip"
   }
 }

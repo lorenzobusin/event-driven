@@ -3,7 +3,7 @@
 const createUser = document.getElementById('CREATE_USER');
 createUser.addEventListener('submit', function(e){
   e.preventDefault();
-  if(document.getElementById('CREATE_password').value == document.getElementById('confirmPassword').value){
+  if(document.getElementById('CREATE_password').value == document.getElementById('CREATE_confirmPassword').value){
     fetch(linkAPI_POST, {
       mode: 'no-cors',
       method: "post",
@@ -33,14 +33,14 @@ createUser.addEventListener('submit', function(e){
     document.getElementById('CREATE_date').value = "";
     document.getElementById('CREATE_email').value = "";
     document.getElementById('CREATE_password').value = "";
-    document.getElementById('confirmPassword').value = "";
-    document.getElementById('checkPassword').innerHTML = "";
+    document.getElementById('CREATE_confirmPassword').value = "";
+    document.getElementById('CREATE_checkPassword').innerHTML = "";
     //document.getElementById('CREATE_role').value = "";
     //document.getElementById('CREATE_group').value = "";
   }
   else{
     document.getElementById('messageSuccessCREATE').style.color = 'red';
-    document.getElementById('messageSuccessCREATE').innerHTML = 'User nor created';
+    document.getElementById('messageSuccessCREATE').innerHTML = 'User not created';
   }
   
 });

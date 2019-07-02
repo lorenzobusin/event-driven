@@ -17,5 +17,7 @@ deleteUser.addEventListener('submit', function(e){
     })
   });
 
+  document.getElementById('messageSuccessDELETE').style.color = 'green';
+  document.getElementById('messageSuccessDELETE').innerHTML = "User deleted";
   document.getElementById('DELETE_userId').value = "";
 });

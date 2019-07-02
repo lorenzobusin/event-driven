@@ -105,7 +105,6 @@ body{
 
 .form-section{
   margin: 1em;
-  display: inline;
 }
 
 .crud_title{
@@ -118,7 +117,7 @@ body{
   padding-right: 2em;
 }
 
-#checkPassword{
+.checkPassword{
   position: absolute; 
   z-index: -1;
 }
@@ -128,6 +127,31 @@ body{
   z-index: -1;
   margin-top: 2.5em;
   margin-left: 1em;
+}
+
+#tableResult {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-left: 3em;
+  visibility: hidden;
+}
+
+#tableResult td, #tableResult th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#tableResult tr:nth-child(even){background-color: #f2f2f2;}
+
+#tableResult tr:hover {background-color: #ddd;}
+
+#tableResult th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
 }
 
 h1 {
@@ -169,4 +193,3 @@ h4 {
   font-weight: normal;
   font-family: 'Orienta', sans-serif;
 }
-

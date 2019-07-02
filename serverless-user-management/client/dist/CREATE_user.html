@@ -81,8 +81,8 @@
                     </div>
                     <div class="col-md-6">
                       <label>Confirm password</label>
-                      <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" onkeyup='check();'/>
-                      <span id='checkPassword'></span>
+                      <input type="password" class="form-control" name="confirmPassword" id="CREATE_confirmPassword" onkeyup='check("CREATE_password", "CREATE_confirmPassword", "CREATE_checkPassword");' required/>
+                      <span class="checkPassword" id='CREATE_checkPassword'></span>
                     </div>
                   </div>
                   <button class="btn btn-success" type="submit">Create</button>

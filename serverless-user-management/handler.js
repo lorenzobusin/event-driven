@@ -4,6 +4,23 @@ const AWS = require('aws-sdk');
 const SQS = new AWS.SQS();
 const LAMBDA = new AWS.Lambda();
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
+var crypto = require('crypto'),
+    algorithm = 'aes-256-ctr',
+    password = 'd6F3Efeq';
+
+function encrypt(text){
+  var cipher = crypto.createCipher(algorithm,password)
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+function decrypt(text){
+  var decipher = crypto.createDecipher(algorithm,password)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
 
 module.exports.mediatorUser = (event, context, callback) => {
 
@@ -15,7 +32,7 @@ module.exports.mediatorUser = (event, context, callback) => {
     "lastName": bodyParsed.lastName,
     "date": bodyParsed.date,
     "email": bodyParsed.email,
-    "password": bodyParsed.password,
+    "password": encrypt(bodyParsed.password),
   };
 
   switch(bodyParsed.typeEvent){
@@ -212,10 +229,10 @@ module.exports.deleteUser = (event, context, callback) => {
 module.exports.pushEventUserToSQS = (event, context, callback) => {
   
   const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
+  //const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
-    MessageBody: parsedEvent.body,
+    MessageBody: stringedEvent,
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/userQueue"
   };
 

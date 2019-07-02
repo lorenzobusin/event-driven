@@ -176,7 +176,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-mediatorUser",
               "Handler": "handler.mediatorUser",
@@ -195,14 +195,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "MediatorUserLambdaVersionnha2pgHPmQRfXqw1C0rTHxpccDMyNxxCOC2Htd1KsI": {
+          "MediatorUserLambdaVersion8juolgxlkJKkaA9vvi6Q4doNsjqE8bUPzX7zTn7g": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "MediatorUserLambdaFunction"
               },
-              "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
+              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
             }
           },
           "UpdateUserLambdaFunction": {
@@ -212,7 +212,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-updateUser",
               "Handler": "handler.updateUser",
@@ -231,14 +231,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "UpdateUserLambdaVersioncIykhQbnr56RwsLbK8uhaXw0YGlJrP1grRTr8GMwMzc": {
+          "UpdateUserLambdaVersion8DwOPhxYH34xbBN6NBPOTK0HY9AgaUunE1VfjJCbK6A": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "UpdateUserLambdaFunction"
               },
-              "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
+              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
             }
           },
           "CreateUserLambdaFunction": {
@@ -248,7 +248,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-createUser",
               "Handler": "handler.createUser",
@@ -267,14 +267,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "CreateUserLambdaVersionCfRPJFl5ZzBdOcgUpR5YNvJRfYvUO27qUOU1TQRMZI": {
+          "CreateUserLambdaVersion6Hn68btDV5PWe33U4TyuVYpJPvRtoYppjLNrBK8UvU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateUserLambdaFunction"
               },
-              "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
+              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
             }
           },
           "DeleteUserLambdaFunction": {
@@ -284,7 +284,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-deleteUser",
               "Handler": "handler.deleteUser",
@@ -303,14 +303,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "DeleteUserLambdaVersionIcR621udred1dsN5hzfUOnscL9ugoRIhdyzgHJc": {
+          "DeleteUserLambdaVersionUgaIJfcD5y9GrZGv9X8zgJ0G5XtPq15iblJ8DPuA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DeleteUserLambdaFunction"
               },
-              "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
+              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
             }
           },
           "GetUserLambdaFunction": {
@@ -320,7 +320,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-getUser",
               "Handler": "handler.getUser",
@@ -339,14 +339,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GetUserLambdaVersionVJhlfnX1JeCHyHKC6D0Ew2eMK7F8Ovs5iVTuhxYosWM": {
+          "GetUserLambdaVersionYQi8CROzeZzHBS1RyOjui3SDmSULAJ1g2XZFbxR7Os": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetUserLambdaFunction"
               },
-              "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
+              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
             }
           },
           "PushEventUserToSQSLambdaFunction": {
@@ -356,7 +356,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-pushEventUserToSQS",
               "Handler": "handler.pushEventUserToSQS",
@@ -375,14 +375,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PushEventUserToSQSLambdaVersionlV31pek23n7jc2WS5hHF0xgzMsvMvNTkO4oU2OZJY": {
+          "PushEventUserToSQSLambdaVersionCXn1djiqHdqaSpORIj8zPm4DBXWYhY5Sgns5WonROOg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "PushEventUserToSQSLambdaFunction"
               },
-              "CodeSha256": "PiNPIKOv7vvbUWOioIaYkeHONZgB6cozkPe7mxKcdKs="
+              "CodeSha256": "T8hqxVzsGp4p4ODGwbqiprgYiTKtcWLX46uqjAXuWkY="
             }
           },
           "ApiGatewayRestApi": {
@@ -702,7 +702,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1561994632541": {
+          "ApiGatewayDeployment1562060989633": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -903,37 +903,37 @@
           "MediatorUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "MediatorUserLambdaVersionnha2pgHPmQRfXqw1C0rTHxpccDMyNxxCOC2Htd1KsI"
+              "Ref": "MediatorUserLambdaVersion8juolgxlkJKkaA9vvi6Q4doNsjqE8bUPzX7zTn7g"
             }
           },
           "UpdateUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "UpdateUserLambdaVersioncIykhQbnr56RwsLbK8uhaXw0YGlJrP1grRTr8GMwMzc"
+              "Ref": "UpdateUserLambdaVersion8DwOPhxYH34xbBN6NBPOTK0HY9AgaUunE1VfjJCbK6A"
             }
           },
           "CreateUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateUserLambdaVersionCfRPJFl5ZzBdOcgUpR5YNvJRfYvUO27qUOU1TQRMZI"
+              "Ref": "CreateUserLambdaVersion6Hn68btDV5PWe33U4TyuVYpJPvRtoYppjLNrBK8UvU"
             }
           },
           "DeleteUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DeleteUserLambdaVersionIcR621udred1dsN5hzfUOnscL9ugoRIhdyzgHJc"
+              "Ref": "DeleteUserLambdaVersionUgaIJfcD5y9GrZGv9X8zgJ0G5XtPq15iblJ8DPuA"
             }
           },
           "GetUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetUserLambdaVersionVJhlfnX1JeCHyHKC6D0Ew2eMK7F8Ovs5iVTuhxYosWM"
+              "Ref": "GetUserLambdaVersionYQi8CROzeZzHBS1RyOjui3SDmSULAJ1g2XZFbxR7Os"
             }
           },
           "PushEventUserToSQSLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "PushEventUserToSQSLambdaVersionlV31pek23n7jc2WS5hHF0xgzMsvMvNTkO4oU2OZJY"
+              "Ref": "PushEventUserToSQSLambdaVersionCXn1djiqHdqaSpORIj8zPm4DBXWYhY5Sgns5WonROOg"
             }
           },
           "ServiceEndpoint": {
@@ -1237,7 +1237,7 @@
     "artifact": "C:\\Users\\loren\\Desktop\\Stage\\event-driven\\serverless-user-management\\.serverless\\serverless-user-management.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-user-management/dev/1561994636921-2019-07-01T15:23:56.921Z",
+    "artifactDirectoryName": "serverless/serverless-user-management/dev/1562060994974-2019-07-02T09:49:54.974Z",
     "artifact": "serverless-user-management.zip"
   }
 }

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+    <script type="text/javascript" src="js/utils.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
   </head>
 
@@ -37,7 +39,7 @@
       </li>
       <li>
         <div class="dropdown">
-            <a href="#users" class="dropitem">Autorizations</a>
+            <a href="#users" class="dropitem">Authorizations</a>
             <div class="dropdown-content">
               <a href="#">Create</a>
               <a href="#">Read</a>
@@ -62,16 +64,17 @@
 
   <div class="row form-section">
     <form class="form col-md-6" id="DELETE_USER">
-      <h3 class="crud_title">Delete by ID</h3>
         <div class="form-group">
+          <h3 class="crud_title">Delete by ID</h3>
           <label>userId</label>
-          <input type="text" class="form-control" name="userId" id="DELETE_userId"/>
+          <input type="text" class="form-control" name="userId" id="DELETE_userId" required/>
+          <button class="btn btn-success" type="submit">Delete</button>
+          <span class="messageSuccess" id='messageSuccessDELETE'></span>
       </div>
-      <button class="btn btn-success" type="submit">Delete</button>
     </form>
   </div>
 
-  <script type="text/javascript" src="js/utils.js" charset="utf-8"></script>
+
   <script type="text/javascript" src="js/delete.js" charset="utf-8"></script>
 
   </body>

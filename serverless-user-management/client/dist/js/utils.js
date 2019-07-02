@@ -10,3 +10,14 @@ function generateUUID() {
   }
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 };
+
+var check = function() {
+  if (document.getElementById('CREATE_password').value ==
+    document.getElementById('confirmPassword').value) {
+    document.getElementById('checkPassword').style.color = 'green';
+    document.getElementById('checkPassword').innerHTML = 'matching';
+  } else {
+    document.getElementById('checkPassword').style.color = 'red';
+    document.getElementById('checkPassword').innerHTML = 'not matching';
+  }
+}

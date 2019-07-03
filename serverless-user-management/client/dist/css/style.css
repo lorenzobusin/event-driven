@@ -135,11 +135,14 @@ body{
   width: 100%;
   margin-left: 3em;
   visibility: hidden;
+  table-layout: fixed;
+  width: 100%; 
 }
 
 #tableResult td, #tableResult th {
   border: 1px solid #ddd;
   padding: 8px;
+  overflow-x: auto
 }
 
 #tableResult tr:nth-child(even){background-color: #f2f2f2;}
@@ -192,4 +195,92 @@ h4 {
   line-height: 20px;
   font-weight: normal;
   font-family: 'Orienta', sans-serif;
+}
+
+.index_title{
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 2%;
+}
+
+.button {
+  padding-top: 3%;
+  padding-bottom: 3%;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 20px;
+  border: none;
+  text-align: center;
+  font-size: 40px;
+  width: 300px;
+  transition: all 0.4s;
+  cursor: pointer;
+  margin: 1%;
+}
+
+.button span:after {
+  content: '\00bb';
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.4s;
+  color: white;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.index_aggregate{
+  margin-left: 10%;
+  margin-top: 7%;
+}
+
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.button2 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.button2:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.button3 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+}
+
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
+
+.button4 {
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+}
+
+.button4:hover {
+  background-color: #555555;
+  color: white;
 }

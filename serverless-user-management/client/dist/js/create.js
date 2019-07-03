@@ -5,7 +5,6 @@ createUser.addEventListener('submit', function(e){
   e.preventDefault();
   if(document.getElementById('CREATE_password').value == document.getElementById('CREATE_confirmPassword').value){
     fetch(linkAPI_POST, {
-      mode: 'no-cors',
       method: "post",
       headers: {
         'Accept': 'application/json',

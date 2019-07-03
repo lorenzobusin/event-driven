@@ -6,7 +6,6 @@ updateUser.addEventListener('submit', function(e){
 
   if(document.getElementById('UPDATE_password').value == document.getElementById('UPDATE_confirmPassword').value){
     fetch(linkAPI_POST, {
-      mode: 'no-cors',
       method: "post",
       headers: {
         'Accept': 'application/json',

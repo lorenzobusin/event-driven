@@ -4,7 +4,6 @@ deleteUser.addEventListener('submit', function(e){
   e.preventDefault();
 
   fetch(linkAPI_POST, {
-    mode: 'no-cors',
     method: "post",
     headers: {
       'Accept': 'application/json',

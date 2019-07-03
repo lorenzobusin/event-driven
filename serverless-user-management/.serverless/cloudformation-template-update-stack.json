@@ -157,7 +157,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1562166048467-2019-07-03T15:00:48.467Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-mediatorUser",
         "Handler": "handler.mediatorUser",
@@ -176,14 +176,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "MediatorUserLambdaVersionKczU8HNi81bjx0xHGPuiCZ3MNQeUf8g3Re4S7s9tZw": {
+    "MediatorUserLambdaVersionL5ePB4OlbwGYmelPUOvV7g6HwwSWGHN2gqB9M5XdmBQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MediatorUserLambdaFunction"
         },
-        "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
+        "CodeSha256": "BSZ+CPwUUf707e2ROI03/EIW3bpCcuc8m+kVqzOQTAI="
       }
     },
     "UpdateUserLambdaFunction": {
@@ -193,7 +193,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1562166048467-2019-07-03T15:00:48.467Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-updateUser",
         "Handler": "handler.updateUser",
@@ -212,14 +212,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "UpdateUserLambdaVersion2TLzlWCtbBkoRw5TbJdBQKqZewzxjH2Ua77w32y7So8": {
+    "UpdateUserLambdaVersion6nyHphPl2T9FzLm9VGecdvN8q4Ob2JRspkIxQyNHHKo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateUserLambdaFunction"
         },
-        "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
+        "CodeSha256": "BSZ+CPwUUf707e2ROI03/EIW3bpCcuc8m+kVqzOQTAI="
       }
     },
     "CreateUserLambdaFunction": {
@@ -229,7 +229,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1562166048467-2019-07-03T15:00:48.467Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-createUser",
         "Handler": "handler.createUser",
@@ -248,14 +248,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateUserLambdaVersiontVUxu6wU6RxPxtdqmFcmTXbomvrLM69gk7AnWSZFE": {
+    "CreateUserLambdaVersionrGHgHmXuUbEG6CVC4nuVNGS1TIfCTADhDYzfWD6MRo4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateUserLambdaFunction"
         },
-        "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
+        "CodeSha256": "BSZ+CPwUUf707e2ROI03/EIW3bpCcuc8m+kVqzOQTAI="
       }
     },
     "DeleteUserLambdaFunction": {
@@ -265,7 +265,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1562166048467-2019-07-03T15:00:48.467Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-deleteUser",
         "Handler": "handler.deleteUser",
@@ -284,14 +284,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "DeleteUserLambdaVersionOUTbRIQBMfmwJ5t8osgXLaCInoVcHEc19yk7lJvvvQ": {
+    "DeleteUserLambdaVersionRaEuZcouy7p89SiN7LakITQSz2aD7fDHZJ9qVcwtd9k": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteUserLambdaFunction"
         },
-        "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
+        "CodeSha256": "BSZ+CPwUUf707e2ROI03/EIW3bpCcuc8m+kVqzOQTAI="
       }
     },
     "ReadUserLambdaFunction": {
@@ -301,7 +301,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1562166048467-2019-07-03T15:00:48.467Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-readUser",
         "Handler": "handler.readUser",
@@ -320,14 +320,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "ReadUserLambdaVersionHEVOIoWBgEPklVKUANC5oZiQgYQ4oDDrTcedW29l2c": {
+    "ReadUserLambdaVersionhBcLKDjpvjzkh28Dh6VxyYQgCxdkv7wz8t2NEUrwgQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ReadUserLambdaFunction"
         },
-        "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
+        "CodeSha256": "BSZ+CPwUUf707e2ROI03/EIW3bpCcuc8m+kVqzOQTAI="
       }
     },
     "PushEventUserToSQSLambdaFunction": {
@@ -337,7 +337,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1562080097827-2019-07-02T15:08:17.827Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1562166048467-2019-07-03T15:00:48.467Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushEventUserToSQS",
         "Handler": "handler.pushEventUserToSQS",
@@ -356,14 +356,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "PushEventUserToSQSLambdaVersionzf3YGuFcJeJwMqNWHY7YwUzB6N0jGl42p33dedOWSI": {
+    "PushEventUserToSQSLambdaVersionwv23VkOdvLXQ69TgckY3RcsnoJORUfMglpe23j8Qw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "PushEventUserToSQSLambdaFunction"
         },
-        "CodeSha256": "d2mdE0pB5IyVjzUdBYhurK5j9q3QWKpVbmsyAjc6XN4="
+        "CodeSha256": "BSZ+CPwUUf707e2ROI03/EIW3bpCcuc8m+kVqzOQTAI="
       }
     },
     "ApiGatewayRestApi": {
@@ -448,6 +448,53 @@
         },
         "ResourceId": {
           "Ref": "ApiGatewayResourceReaduser"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodPusheventusertosqsOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Credentials": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
+                "method.response.header.Access-Control-Allow-Credentials": "'false'"
+              },
+              "ResponseTemplates": {
+                "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourcePusheventusertosqs"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -655,7 +702,7 @@
         "AuthorizationType": "NONE",
         "Integration": {
           "IntegrationHttpMethod": "POST",
-          "Type": "AWS_PROXY",
+          "Type": "AWS",
           "Uri": {
             "Fn::Join": [
               "",
@@ -678,12 +725,155 @@
                 "/invocations"
               ]
             ]
-          }
+          },
+          "PassthroughBehavior": "NEVER",
+          "RequestTemplates": {
+            "application/json": "\n    #set( $body = $input.json(\"$\") )\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  ",
+            "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+          },
+          "IntegrationResponses": [
+            {
+              "StatusCode": 200,
+              "SelectionPattern": "",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 400,
+              "SelectionPattern": "[\\s\\S]*\\[400\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 401,
+              "SelectionPattern": "[\\s\\S]*\\[401\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 403,
+              "SelectionPattern": "[\\s\\S]*\\[403\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 404,
+              "SelectionPattern": "[\\s\\S]*\\[404\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 422,
+              "SelectionPattern": "[\\s\\S]*\\[422\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 500,
+              "SelectionPattern": "[\\s\\S]*(Process\\s?exited\\s?before\\s?completing\\s?request|\\[500\\])[\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 502,
+              "SelectionPattern": "[\\s\\S]*\\[502\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 504,
+              "SelectionPattern": "([\\s\\S]*\\[504\\][\\s\\S]*)|(.*Task timed out after \\d+\\.\\d+ seconds$)",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            }
+          ]
         },
-        "MethodResponses": []
+        "MethodResponses": [
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 200
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 400
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 401
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 403
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 404
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 422
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 500
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 502
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 504
+          }
+        ]
       }
     },
-    "ApiGatewayDeployment1562080093851": {
+    "ApiGatewayDeployment1562166044510": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -693,6 +883,7 @@
       },
       "DependsOn": [
         "ApiGatewayMethodReaduserOptions",
+        "ApiGatewayMethodPusheventusertosqsOptions",
         "ApiGatewayMethodReaduserGet",
         "ApiGatewayMethodPusheventusertosqsPost"
       ]
@@ -884,37 +1075,37 @@
     "MediatorUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MediatorUserLambdaVersionKczU8HNi81bjx0xHGPuiCZ3MNQeUf8g3Re4S7s9tZw"
+        "Ref": "MediatorUserLambdaVersionL5ePB4OlbwGYmelPUOvV7g6HwwSWGHN2gqB9M5XdmBQ"
       }
     },
     "UpdateUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateUserLambdaVersion2TLzlWCtbBkoRw5TbJdBQKqZewzxjH2Ua77w32y7So8"
+        "Ref": "UpdateUserLambdaVersion6nyHphPl2T9FzLm9VGecdvN8q4Ob2JRspkIxQyNHHKo"
       }
     },
     "CreateUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateUserLambdaVersiontVUxu6wU6RxPxtdqmFcmTXbomvrLM69gk7AnWSZFE"
+        "Ref": "CreateUserLambdaVersionrGHgHmXuUbEG6CVC4nuVNGS1TIfCTADhDYzfWD6MRo4"
       }
     },
     "DeleteUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteUserLambdaVersionOUTbRIQBMfmwJ5t8osgXLaCInoVcHEc19yk7lJvvvQ"
+        "Ref": "DeleteUserLambdaVersionRaEuZcouy7p89SiN7LakITQSz2aD7fDHZJ9qVcwtd9k"
       }
     },
     "ReadUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ReadUserLambdaVersionHEVOIoWBgEPklVKUANC5oZiQgYQ4oDDrTcedW29l2c"
+        "Ref": "ReadUserLambdaVersionhBcLKDjpvjzkh28Dh6VxyYQgCxdkv7wz8t2NEUrwgQ"
       }
     },
     "PushEventUserToSQSLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PushEventUserToSQSLambdaVersionzf3YGuFcJeJwMqNWHY7YwUzB6N0jGl42p33dedOWSI"
+        "Ref": "PushEventUserToSQSLambdaVersionwv23VkOdvLXQ69TgckY3RcsnoJORUfMglpe23j8Qw"
       }
     },
     "ServiceEndpoint": {

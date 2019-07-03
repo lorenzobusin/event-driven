@@ -26,7 +26,7 @@ provider:
 
 resources:
   Resources:
-  
+    #USER TABLE
     UsersDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
@@ -41,6 +41,7 @@ resources:
           WriteCapacityUnits: 5
         TableName: user
 
+    #ROLE TABLE
     RolesDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
@@ -55,6 +56,7 @@ resources:
           WriteCapacityUnits: 5
         TableName: role
 
+    #AUTHORIZATION TABLE
     AuthorizationsDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
@@ -69,6 +71,7 @@ resources:
           WriteCapacityUnits: 5
         TableName: authorization
 
+    #GROUP TABLE
     GroupsDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
@@ -86,7 +89,7 @@ resources:
       
 
 functions:
-
+  # ------------------------------- USER FUNCTIONS ------------------------------- #
   mediatorUser:
     handler: handler.mediatorUser
     events:
@@ -119,6 +122,44 @@ functions:
     events: 
       - http:
           path: /pusheventusertosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  # ------------------------------- ROLE FUNCTIONS ------------------------------- #
+
+  mediatorRole:
+    handler: handler.mediatorRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:roleQueue #create new queue and set the ARN
+
+  updateRole:
+    handler: handler.updateRole
+
+  createRole:
+    handler: handler.createRole
+
+  deleteRole: 
+    handler: handler.deleteRole
+
+  readRole: 
+    handler: handler.readRole
+    events: 
+      - http: 
+          path: /readRole
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "roleId": "$input.params("roleId")" }'
+
+  pushEventRoleToSQS: 
+    handler: handler.pushEventRoleToSQS 
+    events: 
+      - http:
+          path: /pusheventroletosqs
           method: post
           cors: true
           integration: lambda

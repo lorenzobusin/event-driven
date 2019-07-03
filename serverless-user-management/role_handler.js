@@ -1,24 +1,23 @@
-module.exports.pushEventUserToSQS = (event, context, callback) => {
+module.exports.pushEventRoleToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
   const stringedEvent = JSON.stringify(event);
 
   const params = {
     MessageBody: stringedEvent,
-    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/userQueue"
+    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/roleQueue"
   };
 
   SQS.sendMessage(params, function(err,data){
     if(err) {
       console.log(err);
     }else{
-      console.log('userEvent successfully put in userQueue');
+      console.log('roleEvent successfully put in roleQueue');
     }
   });
 };
 
-
-module.exports.mediatorUser = (event, context, callback) => {
+module.exports.mediatorRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const LAMBDA = new AWS.Lambda();
   var utils = require('./utils.js');
@@ -31,20 +30,17 @@ module.exports.mediatorUser = (event, context, callback) => {
   switch(bodyParsed.body.typeEvent){
     case("C"): {
       //console.log("Event type: CREATE");
-      const userParams = {
-        "userId": bodyParsed.body.userId,
-        "firstName": bodyParsed.body.firstName,
-        "lastName": bodyParsed.body.lastName,
-        "date": bodyParsed.body.date,
-        "email": bodyParsed.body.email,
-        "password": utils.encrypt(bodyParsed.body.password)
+      const roleParams = {
+        "roleId": bodyParsed.body.roleId,
+        "name": bodyParsed.body.name,
+        "desc": bodyParsed.body.desc
       };
 
       var params = {
-        FunctionName: "serverless-user-management-dev-createUser", 
+        FunctionName: "serverless-user-management-dev-createRole", 
         InvocationType: "Event", 
         LogType: "Tail", 
-        Payload: JSON.stringify(userParams) //only string type
+        Payload: JSON.stringify(roleParams) //only string type
        };
 
        LAMBDA.invoke(params, function(err, data) {
@@ -78,20 +74,17 @@ module.exports.mediatorUser = (event, context, callback) => {
 
     case("U"): {
       //console.log("Event type: UPDATE");
-      const userParams = {
-        "userId": bodyParsed.body.userId,
-        "firstName": bodyParsed.body.firstName,
-        "lastName": bodyParsed.body.lastName,
-        "date": bodyParsed.body.date,
-        "email": bodyParsed.body.email,
-        "password": utils.encrypt(bodyParsed.body.password)
+      const roleParams = {
+        "roleId": bodyParsed.body.roleId,
+        "name": bodyParsed.body.name,
+        "desc": bodyParsed.body.desc
       };
 
       var params = {
-        FunctionName: "serverless-user-management-dev-updateUser", 
+        FunctionName: "serverless-user-management-dev-updateRole", 
         InvocationType: "Event", 
         LogType: "Tail", 
-        Payload: JSON.stringify(userParams) //only string type
+        Payload: JSON.stringify(roleParams) //only string type
        };
 
        LAMBDA.invoke(params, function(err, data) {
@@ -106,15 +99,15 @@ module.exports.mediatorUser = (event, context, callback) => {
 
     case("D"): {
       //console.log("Event type: DELETE");
-      const userParams = {
-        "userId": bodyParsed.body.userId
+      const roleParams = {
+        "roleId": bodyParsed.body.roleId
       };
 
       var params = {
-        FunctionName: "serverless-user-management-dev-deleteUser", 
+        FunctionName: "serverless-user-management-dev-deletRole", 
         InvocationType: "Event", 
         LogType: "Tail", 
-        Payload: JSON.stringify(userParams) //only string type
+        Payload: JSON.stringify(roleParams) //only string type
       };
 
        LAMBDA.invoke(params, function(err, data) {
@@ -133,12 +126,12 @@ module.exports.mediatorUser = (event, context, callback) => {
 
 };
 
-module.exports.createUser = (event, context, callback) => {
+module.exports.createRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
   const params = {
-    TableName: 'user',
+    TableName: 'role',
     Item: event
   };
 
@@ -150,7 +143,7 @@ module.exports.createUser = (event, context, callback) => {
   });
 };
 
-module.exports.readUser = (event, context, callback) => {
+module.exports.readRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -158,17 +151,14 @@ module.exports.readUser = (event, context, callback) => {
   const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
-    TableName: 'user',
+    TableName: 'role',
     Key: {
-      "userId": parsedEvent.userId
+      "roleId": parsedEvent.roleId
     },
-    ExpressionAttributeNames:{
-      "#birthdate": "date" //date is a reserved keyword
-    },
-    ProjectionExpression: "firstName, lastName, #birthdate, email",
-    KeyConditionExpression: "userId = :id",
+    ProjectionExpression: "name, desc",
+    KeyConditionExpression: "roleId = :id",
     ExpressionAttributeValues: {
-        ":id": parsedEvent.userId
+        ":id": parsedEvent.roleId
     }
   };
 
@@ -178,7 +168,7 @@ module.exports.readUser = (event, context, callback) => {
       console.log(err);
     else{
       if(data == "")
-        console.log("User not found");
+        console.log("Role not found");
       else{
         const response = {
           statusCode: 200,
@@ -189,14 +179,14 @@ module.exports.readUser = (event, context, callback) => {
           },
           body: stringedData
         };
-        console.log("User successfully read");
+        console.log("Role successfully read");
         callback(null, response);
       }      
     }
   });
 };
 
-module.exports.updateUser = (event, context, callback) => {
+module.exports.updateRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -204,20 +194,14 @@ module.exports.updateUser = (event, context, callback) => {
   const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
-    TableName: 'user',
+    TableName: 'role',
     Key: {
-      "userId":  parsedEvent.userId
+      "roleId":  parsedEvent.roleId
     },
-    ExpressionAttributeNames:{
-      "#birthdate": "date" //date is a reserved keyword
-    },
-    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, email=:e, password=:p",
+    UpdateExpression: "set name = :n, desc=:d",
     ExpressionAttributeValues:{
-        ":fn": parsedEvent.firstName,
-        ":ln": parsedEvent.lastName,
-        ":d": parsedEvent.date,
-        ":e": parsedEvent.email,
-        ":p": parsedEvent.password
+        ":n": parsedEvent.name,
+        ":d": parsedEvent.desc
     }   
   };
 
@@ -225,11 +209,11 @@ module.exports.updateUser = (event, context, callback) => {
     if (err)
       console.log(err);
     else
-      console.log('User successfully updated');
+      console.log('Role successfully updated');
   });
 };
 
-module.exports.deleteUser = (event, context, callback) => {
+module.exports.deleteRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -237,13 +221,13 @@ module.exports.deleteUser = (event, context, callback) => {
   const parsedEvent = JSON.parse(stringedEvent);
   
   const params = {
-    TableName: 'user',
+    TableName: 'role',
     Key:{
-      "userId": parsedEvent.userId
+      "roleId": parsedEvent.roleId
     },
-    ConditionExpression:"userId = :val",
+    ConditionExpression:"roleId = :val",
     ExpressionAttributeValues: {
-        ":val": parsedEvent.userId
+        ":val": parsedEvent.roleId
     }
   };
 
@@ -251,7 +235,7 @@ module.exports.deleteUser = (event, context, callback) => {
     if (err)
       console.log(err);
     else
-    console.log('User successfully deleted');
+    console.log('Role successfully deleted');
     });
 };
 

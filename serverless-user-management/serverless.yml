@@ -154,6 +154,24 @@ functions:
           request:
             template:
               application/json: '{ "roleId": "$input.params("roleId")" }'
+  
+  getAllRoles: 
+    handler: handler.getAllRoles
+    events: 
+      - http: 
+          path: /getAllRoles
+          method: get
+          cors: true
+          integration: lambda
+
+  getAllGroups: 
+    handler: handler.getAllGroups
+    events: 
+      - http: 
+          path: /getAllGroups
+          method: get
+          cors: true
+          integration: lambda
 
   pushEventRoleToSQS: 
     handler: handler.pushEventRoleToSQS 

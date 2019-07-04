@@ -188,6 +188,41 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
       }
     });
   };
+
+  module.exports.getAllGroups = (event, context, callback) => {
+    const AWS = require('aws-sdk');
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  
+    const params = {
+      TableName: 'group',
+      ExpressionAttributeNames:{
+        "#groupname": "name" //name is a reserved keyword
+      },
+      ProjectionExpression: "#groupname"
+    };
+  
+    dynamoDb.scan(params, (err, data) => {
+      const stringedData = JSON.stringify(data);
+      if (err)
+        console.log(err);
+      else{
+        if(data == "")
+          console.log("Groups not found");
+        else{
+          const response = {
+            statusCode: 200,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Credentials': true
+            },
+            body: stringedData
+          };
+          callback(null, response);
+        }      
+      }
+    });
+  };
   
   module.exports.updateGroup = (event, context, callback) => {
     const AWS = require('aws-sdk');

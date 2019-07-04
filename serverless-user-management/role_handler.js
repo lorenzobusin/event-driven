@@ -189,6 +189,42 @@ module.exports.readRole = (event, context, callback) => {
   });
 };
 
+module.exports.getAllRoles = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const params = {
+    TableName: 'role',
+    ExpressionAttributeNames:{
+      "#rolename": "name" //name is a reserved keyword
+    },
+    ProjectionExpression: "#rolename"
+  };
+
+  dynamoDb.scan(params, (err, data) => {
+    const stringedData = JSON.stringify(data);
+    if (err)
+      console.log(err);
+    else{
+      if(data == "")
+        console.log("Roles not found");
+      else{
+        const response = {
+          statusCode: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true
+          },
+          body: stringedData
+        };
+        callback(null, response);
+      }      
+    }
+  });
+};
+
+
 module.exports.updateRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();

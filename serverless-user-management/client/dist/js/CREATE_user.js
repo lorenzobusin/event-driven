@@ -17,9 +17,10 @@ createUser.addEventListener('submit', function(e){
         "firstName": document.getElementById('CREATE_firstName').value.trim(),
         "lastName": document.getElementById('CREATE_lastName').value.trim(),
         "date": document.getElementById('CREATE_date').value.trim(),
+        "role": document.getElementById('CREATE_role').value,
+        "group": document.getElementById('CREATE_group').value,
         "email": document.getElementById('CREATE_email').value.trim(),
-        "password": document.getElementById('CREATE_password').value.trim(),
-       // "role": document.getElementById('CREATE_role').value.trim(),
+        "password": document.getElementById('CREATE_password').value.trim()
        // "group": document.getElementById('CREATE_group').value.trim()
       })
     });
@@ -34,7 +35,6 @@ createUser.addEventListener('submit', function(e){
     document.getElementById('CREATE_password').value = "";
     document.getElementById('CREATE_confirmPassword').value = "";
     document.getElementById('CREATE_checkPassword').innerHTML = "";
-    //document.getElementById('CREATE_role').value = "";
     //document.getElementById('CREATE_group').value = "";
   }
   else{

@@ -36,6 +36,8 @@ module.exports.mediatorUser = (event, context, callback) => {
         "firstName": bodyParsed.body.firstName,
         "lastName": bodyParsed.body.lastName,
         "date": bodyParsed.body.date,
+        "role": bodyParsed.body.role,
+        "group": bodyParsed.body.group,
         "email": bodyParsed.body.email,
         "password": utils.encrypt(bodyParsed.body.password)
       };
@@ -83,6 +85,8 @@ module.exports.mediatorUser = (event, context, callback) => {
         "firstName": bodyParsed.body.firstName,
         "lastName": bodyParsed.body.lastName,
         "date": bodyParsed.body.date,
+        "role": bodyParsed.body.role,
+        "group": bodyParsed.body.group,
         "email": bodyParsed.body.email,
         "password": utils.encrypt(bodyParsed.body.password)
       };
@@ -163,9 +167,10 @@ module.exports.readUser = (event, context, callback) => {
       "userId": parsedEvent.userId
     },
     ExpressionAttributeNames:{
-      "#birthdate": "date" //date is a reserved keyword
+      "#birthdate": "date", //date is a reserved keyword
+      "#userrole": "role"
     },
-    ProjectionExpression: "firstName, lastName, #birthdate, email",
+    ProjectionExpression: "firstName, lastName, #birthdate, #userrole, group, email",
     KeyConditionExpression: "userId = :id",
     ExpressionAttributeValues: {
         ":id": parsedEvent.userId
@@ -209,13 +214,16 @@ module.exports.updateUser = (event, context, callback) => {
       "userId":  parsedEvent.userId
     },
     ExpressionAttributeNames:{
-      "#birthdate": "date" //date is a reserved keyword
+      "#birthdate": "date", //date is a reserved keyword
+      "#userrole": "role" //role is a reserved keyword
     },
-    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, email=:e, password=:p",
+    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, #userrole=:r, group=:g email=:e, password=:p",
     ExpressionAttributeValues:{
         ":fn": parsedEvent.firstName,
         ":ln": parsedEvent.lastName,
         ":d": parsedEvent.date,
+        ":r": parsedEvent.role,
+        ":g": parsedEvent.group,
         ":e": parsedEvent.email,
         ":p": parsedEvent.password
     }   

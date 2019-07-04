@@ -20,7 +20,6 @@ module.exports.pushEventRoleToSQS = (event, context, callback) => {
 module.exports.mediatorRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const LAMBDA = new AWS.Lambda();
-  var utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);

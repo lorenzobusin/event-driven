@@ -61,15 +61,15 @@ resources:
       Type: 'AWS::DynamoDB::Table'
       Properties:
         AttributeDefinitions:
-          - AttributeName: authorizationId
+          - AttributeName: authId
             AttributeType: S
         KeySchema:
-          - AttributeName: authorizationId
+          - AttributeName: authId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-        TableName: authorization
+        TableName: auth
 
     #GROUP TABLE
     GroupsDynamoDBTable:
@@ -164,3 +164,40 @@ functions:
           cors: true
           integration: lambda
 
+  # ------------------------------- AUTHORIZATION FUNCTIONS ------------------------------- #
+
+  mediatorAuth:
+    handler: handler.mediatorAuth
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:authQueue #create new queue and set the ARN
+
+  updateAuth:
+    handler: handler.updateAuth
+
+  createAuth:
+    handler: handler.createAuth
+
+  deleteAuth: 
+    handler: handler.deleteAuth
+
+  readAuth: 
+    handler: handler.readAuth
+    events: 
+      - http: 
+          path: /readAuth
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "authId": "$input.params("authId")" }'
+
+  pushEventAuthToSQS: 
+    handler: handler.pushEventAuthToSQS 
+    events: 
+      - http:
+          path: /pusheventauthtosqs
+          method: post
+          cors: true
+          integration: lambda

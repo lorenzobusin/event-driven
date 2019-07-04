@@ -28,7 +28,7 @@
       </li>
       <li>
         <div class="dropdown">
-            <a href="ROLE.html" class="dropitem active">Roles</a>
+            <a href="ROLE.html" class="dropitem">Roles</a>
             <div class="dropdown-content">
               <a href="CREATE_role.html">Create</a>
               <a href="READ_role.html">Read</a>
@@ -39,7 +39,7 @@
       </li>
       <li>
         <div class="dropdown">
-            <a href="AUTH.html" class="dropitem">Authorizations</a>
+            <a href="AUTH.html" class="dropitem active">Authorizations</a>
             <div class="dropdown-content">
               <a href="CREATE_auth.html">Create</a>
               <a href="READ_auth.html">Read</a>
@@ -62,22 +62,26 @@
     </ul>
   </div>
 
-    <div class="row form-section">
-            <form class="form col-md-4" id="CREATE_ROLE">
-                <div class="form-group">
-                  <h3 class="crud_title">Create role</h3>
+    <div class="row form-section">  
+          <form class="form col-md-4" id="UPDATE_AUTH">
+              <div class="form-group">
+                <h3 class="crud_title">Update authorization</h3>
+                <label>authId</label>
+                <input type="text" class="form-control" name="authId" id="UPDATE_authId"/>
+
+                <h2>Insert new info</h2>
+
                   <label>Name</label>
-                  <input type="text" class="form-control" name="name" id="CREATE_name" required/>
+                  <input type="text" class="form-control" name="name" id="UPDATE_name" required/>
                   <label>Description</label>
-                  <textarea class="form-control" name="desc" id="CREATE_desc" required></textarea>
-                  <button class="btn btn-success" type="submit">Create</button>
-                  <span class="messageSuccess" id='messageSuccessCREATE'></span>
-                </div>
-            </form>
+                  <input type="text" class="form-control" name="desc" id="UPDATE_desc" required/>
+                <button class="btn btn-success" type="submit">Update</button>
+                <span class="messageSuccess" id='messageSuccessUPDATE'></span>
+            </div>
+        </form>
     </div>
 
-  
-  <script type="text/javascript" src="js/CREATE_role.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/UPDATE_auth.js" charset="utf-8"></script>
 
   </body>
 </html>

@@ -1,26 +1,22 @@
   //READ
   
-function addRow(fn, ln, d, e) { //attributes
+function addRow(n, d) { //attributes
   const table = document.getElementById("tableResult");
   const row = table.insertRow(-1);
 
   var cell1 = row.insertCell(0);
   var cell2 = row.insertCell(1);
-  var cell3 = row.insertCell(2);
-  var cell4 = row.insertCell(3);
 
-  cell1.innerHTML = fn;
-  cell2.innerHTML = ln;
-  cell3.innerHTML = d;
-  cell4.innerHTML = e;
+  cell1.innerHTML = n;
+  cell2.innerHTML = d;
 };
 
   //Mi serve avere un evento per ogni operazione di lettura e gestirlo tramite una coda?
-  const readUser = document.getElementById('READ_USER');
-  readUser.addEventListener('submit', function(e){
+  const readAuth = document.getElementById('READ_AUTH');
+  readAuth.addEventListener('submit', function(e){
     e.preventDefault();
 
-    fetch(linkUserAPI_GET + document.getElementById('READ_userId').value.trim(), {
+    fetch(linkAuthAPI_GET + document.getElementById('READ_authId').value.trim(), {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
@@ -35,12 +31,12 @@ function addRow(fn, ln, d, e) { //attributes
         const parsedBody = JSON.parse(parsedResponse.body);
 
         document.getElementById('messageSuccessREAD').style.color = 'green';
-        document.getElementById('messageSuccessREAD').innerHTML = 'User read';
+        document.getElementById('messageSuccessREAD').innerHTML = 'Authorization read';
 
-        document.getElementById('READ_userId').value = "";
+        document.getElementById('READ_authId').value = "";
         document.getElementById("tableResult").style.visibility = "visible";
 
-        addRow(parsedBody.Item.firstName, parsedBody.Item.lastName, parsedBody.Item.date, parsedBody.Item.email);
+        addRow(parsedBody.Item.name, parsedBody.Item.desc);
     });
 
   });

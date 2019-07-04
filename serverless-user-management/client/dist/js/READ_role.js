@@ -12,8 +12,8 @@ function addRow(n, d) { //attributes
 };
 
   //Mi serve avere un evento per ogni operazione di lettura e gestirlo tramite una coda?
-  const readRole = document.getElementById('READ');
-  readRole.addEventListener('click', function(e){
+  const readRole = document.getElementById('READ_ROLE');
+  readRole.addEventListener('submit', function(e){
     e.preventDefault();
 
     fetch(linkRoleAPI_GET + document.getElementById('READ_roleId').value.trim(), {

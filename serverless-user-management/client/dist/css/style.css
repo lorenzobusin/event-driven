@@ -222,13 +222,12 @@ h4 {
   content: '\00bb';
   opacity: 0;
   top: 0;
-  right: -20px;
   transition: 0.4s;
   color: white;
 }
 
 .button:hover span {
-  padding-right: 25px;
+  padding-right: 30px;
 }
 
 .button:hover span:after {

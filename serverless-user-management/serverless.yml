@@ -201,3 +201,41 @@ functions:
           method: post
           cors: true
           integration: lambda
+
+  # ------------------------------- GROUP FUNCTIONS ------------------------------- #
+
+  mediatorGroup:
+    handler: handler.mediatorGroup
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:groupQueue #create new queue and set the ARN
+
+  updateGroup:
+    handler: handler.updateGroup
+
+  createGroup:
+    handler: handler.createGroup
+
+  deleteGroup: 
+    handler: handler.deleteGroup
+
+  readGroup: 
+    handler: handler.readGroup
+    events: 
+      - http: 
+          path: /readGroup
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "groupId": "$input.params("groupId")" }'
+
+  pushEventGroupToSQS: 
+    handler: handler.pushEventGroupToSQS 
+    events: 
+      - http:
+          path: /pusheventgrouptosqs
+          method: post
+          cors: true
+          integration: lambda

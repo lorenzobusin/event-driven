@@ -5,6 +5,8 @@ const linkRoleAPI_POST = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.
 const linkRoleAPI_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/readRole?roleId=";
 const linkAuthAPI_POST = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/pusheventauthtosqs";
 const linkAuthAPI_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/readAuth?authId=";
+const linkGroupAPI_POST = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/pusheventgrouptosqs";
+const linkGroupAPI_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/readGroup?groupId=";
 
 function generateUUID() {
   function s4() {

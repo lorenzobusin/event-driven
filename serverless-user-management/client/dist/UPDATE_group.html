@@ -17,7 +17,7 @@
       <ul>
         <li>
           <div class="dropdown">
-            <a href="USER.html" class="dropitem active">Users</a>
+            <a href="USER.html" class="dropitem">Users</a>
             <div class="dropdown-content">
               <a href="CREATE_user.html">Create</a>
               <a href="READ_user.html">Read</a>
@@ -50,7 +50,7 @@
       </li>
       <li>
         <div class="dropdown">
-            <a href="GROUP.html" class="dropitem">Groups</a>
+            <a href="GROUP.html" class="dropitem active">Groups</a>
             <div class="dropdown-content">
               <a href="CREATE_group.html">Create</a>
               <a href="READ_group.html">Read</a>
@@ -62,20 +62,26 @@
     </ul>
   </div>
 
-  <div class="row form-section">
-    <form class="form col-md-4" id="DELETE_USER">
-        <div class="form-group">
-          <h3 class="crud_title">DELETE USER</h3>
-          <label>userId</label>
-          <input type="text" class="form-control" name="userId" id="DELETE_userId" required/>
-          <button class="btn btn-success" type="submit">Delete</button>
-          <span class="messageSuccess" id='messageSuccessDELETE'></span>
-      </div>
-    </form>
-  </div>
+    <div class="row form-section">  
+          <form class="form col-md-4" id="UPDATE_GROUP">
+              <div class="form-group">
+                <h3 class="crud_title">Update group</h3>
+                <label>groupId</label>
+                <input type="text" class="form-control" name="groupId" id="UPDATE_groupId"/>
 
+                <h2>Insert new info</h2>
 
-  <script type="text/javascript" src="js/DELETE_user.js" charset="utf-8"></script>
+                <label>Name</label>
+                <input type="text" class="form-control" name="name" id="UPDATE_name" required/>
+                <label>Description</label>
+                <textarea class="form-control" name="desc" id="UPDATE_desc" required/></textarea>
+                <button class="btn btn-success" type="submit">Update</button>
+                <span class="messageSuccess" id='messageSuccessUPDATE'></span>
+            </div>
+        </form>
+    </div>
+
+  <script type="text/javascript" src="js/UPDATE_group.js" charset="utf-8"></script>
 
   </body>
 </html>

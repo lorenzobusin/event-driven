@@ -138,7 +138,7 @@ module.exports.createRole = (event, context, callback) => {
     if (error)
       console.log(error);
     else
-    console.log('User successfully created');
+    console.log('Role successfully created');
   });
 };
 

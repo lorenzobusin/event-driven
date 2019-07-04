@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+  <head>
+    <meta charset="utf-8">
+    <title>User Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+    <script type="text/javascript" src="js/utils.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <ul>
+        <li>
+          <div class="dropdown">
+            <a href="USER.html" class="dropitem">Users</a>
+            <div class="dropdown-content">
+              <a href="CREATE_user.html">Create</a>
+              <a href="READ_user.html">Read</a>
+              <a href="UPDATE_user.html">Update</a>
+              <a href="DELETE_user.html">Delete</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="dropdown">
+            <a href="ROLE.html" class="dropitem active">Roles</a>
+            <div class="dropdown-content">
+              <a href="CREATE_role.html">Create</a>
+              <a href="READ_role.html">Read</a>
+              <a href="UPDATE_role.html">Update</a>
+              <a href="DELETE_role.html">Delete</a>
+            </div>
+        </div>
+      </li>
+      <li>
+        <div class="dropdown">
+            <a href="AUTH.html" class="dropitem">Authorizations</a>
+            <div class="dropdown-content">
+              <a href="CREATE_auth.html">Create</a>
+              <a href="READ_auth.html">Read</a>
+              <a href="UPDATE_auth.html">Update</a>
+              <a href="DELETE_auth.html">Delete</a>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="dropdown">
+            <a href="GROUP.html" class="dropitem">Groups</a>
+            <div class="dropdown-content">
+              <a href="CREATE_group.html">Create</a>
+              <a href="READ_group">Read</a>
+              <a href="UPDATE_group.html">Update</a>
+              <a href="DELETE_group.html">Delete</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="row form-section">
+    <form class="form col-md-4" id="DELETE_ROLE">
+        <div class="form-group">
+          <h3 class="crud_title">DELETE ROLE</h3>
+          <label>roleId</label>
+          <input type="text" class="form-control" name="roleId" id="DELETE_roleId" required/>
+          <button class="btn btn-success" type="submit">Delete</button>
+          <span class="messageSuccess" id='messageSuccessDELETE'></span>
+      </div>
+    </form>
+  </div>
+
+
+  <script type="text/javascript" src="js/DELETE_role.js" charset="utf-8"></script>
+
+  </body>
+</html>

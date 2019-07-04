@@ -104,7 +104,7 @@ module.exports.mediatorRole = (event, context, callback) => {
       };
 
       var params = {
-        FunctionName: "serverless-user-management-dev-deletRole", 
+        FunctionName: "serverless-user-management-dev-deleteRole", 
         InvocationType: "Event", 
         LogType: "Tail", 
         Payload: JSON.stringify(roleParams) //only string type
@@ -155,7 +155,11 @@ module.exports.readRole = (event, context, callback) => {
     Key: {
       "roleId": parsedEvent.roleId
     },
-    ProjectionExpression: "name, desc",
+    ExpressionAttributeNames:{
+      "#rolename": "name", //name is a reserved keyword
+      "#roledesc": "desc"  //desc is a reserved keyword
+    },
+    ProjectionExpression: "#rolename, #roledesc",
     KeyConditionExpression: "roleId = :id",
     ExpressionAttributeValues: {
         ":id": parsedEvent.roleId
@@ -198,7 +202,11 @@ module.exports.updateRole = (event, context, callback) => {
     Key: {
       "roleId":  parsedEvent.roleId
     },
-    UpdateExpression: "set name = :n, desc=:d",
+    ExpressionAttributeNames:{
+      "#rolename": "name", //name is a reserved keyword
+      "#roledesc": "desc"  //desc is a reserved keyword
+    },
+    UpdateExpression: "set #rolename=:n, #roledesc=:d",
     ExpressionAttributeValues:{
         ":n": parsedEvent.name,
         ":d": parsedEvent.desc

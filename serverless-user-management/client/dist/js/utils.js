@@ -1,6 +1,8 @@
 //define API link
-const linkAPI_POST = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/pusheventusertosqs";
-const linkAPI_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/readUser?userId=";
+const linkUserAPI_POST = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/pusheventusertosqs";
+const linkUserAPI_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/readUser?userId=";
+const linkRoleAPI_POST = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/pusheventroletosqs";
+const linkRoleAPI_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/readRole?roleId=";
 
 function generateUUID() {
   function s4() {

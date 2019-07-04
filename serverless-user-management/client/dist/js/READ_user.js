@@ -16,11 +16,11 @@ function addRow(fn, ln, d, e) { //attributes
 };
 
   //Mi serve avere un evento per ogni operazione di lettura e gestirlo tramite una coda?
-  const reload = document.getElementById('READ');
-  reload.addEventListener('click', function(e){
+  const readUser = document.getElementById('READ');
+  readUser.addEventListener('click', function(e){
     e.preventDefault();
 
-    fetch(linkAPI_GET + document.getElementById('READ_userId').value.trim(), {
+    fetch(linkUserAPI_GET + document.getElementById('READ_userId').value.trim(), {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'

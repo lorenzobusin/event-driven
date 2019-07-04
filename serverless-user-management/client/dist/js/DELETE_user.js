@@ -3,7 +3,7 @@ const deleteUser = document.getElementById('DELETE_USER');
 deleteUser.addEventListener('submit', function(e){
   e.preventDefault();
 
-  fetch(linkAPI_POST, {
+  fetch(linkUserAPI_POST, {
     method: "post",
     headers: {
       'Accept': 'application/json',

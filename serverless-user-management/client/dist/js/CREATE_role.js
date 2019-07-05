@@ -6,7 +6,7 @@ createRole.addEventListener('submit', function(e){
 
   var str=document.getElementById('CREATE_auth').value;
   document.getElementById('CREATE_auth').value = str.substring(0, str.length - 1) //remove last character to validate JSON
-  document.getElementById('CREATE_auth').value += ("] }"); //close brackets JSON
+  document.getElementById('CREATE_auth').value += (" ] }"); //close brackets JSON
 
   fetch(linkRoleAPI_POST, {
     method: "post",
@@ -29,6 +29,6 @@ createRole.addEventListener('submit', function(e){
 
   document.getElementById('CREATE_name').value = "";
   document.getElementById('CREATE_desc').value = "";
-  document.getElementById('CREATE_auth').value = "";
+  resetAuth("CREATE_auth", "ul-Auth");
   
 });

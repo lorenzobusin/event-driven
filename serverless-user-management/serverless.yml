@@ -164,15 +164,6 @@ functions:
           cors: true
           integration: lambda
 
-  getAllGroups: 
-    handler: handler.getAllGroups
-    events: 
-      - http: 
-          path: /getAllGroups
-          method: get
-          cors: true
-          integration: lambda
-
   pushEventRoleToSQS: 
     handler: handler.pushEventRoleToSQS 
     events: 
@@ -210,6 +201,15 @@ functions:
           request:
             template:
               application/json: '{ "authId": "$input.params("authId")" }'
+    
+  getAllAuths: 
+    handler: handler.getAllAuths
+    events: 
+      - http: 
+          path: /getAllAuths
+          method: get
+          cors: true
+          integration: lambda
 
   pushEventAuthToSQS: 
     handler: handler.pushEventAuthToSQS 
@@ -248,6 +248,15 @@ functions:
           request:
             template:
               application/json: '{ "groupId": "$input.params("groupId")" }'
+
+  getAllGroups: 
+    handler: handler.getAllGroups
+    events: 
+      - http: 
+          path: /getAllGroups
+          method: get
+          cors: true
+          integration: lambda
 
   pushEventGroupToSQS: 
     handler: handler.pushEventGroupToSQS 

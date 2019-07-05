@@ -4,6 +4,10 @@ const updateRole = document.getElementById('UPDATE_ROLE');
 updateRole.addEventListener('submit', function(e){
   e.preventDefault();
 
+  var str=document.getElementById('UPDATE_auth').value;
+  document.getElementById('UPDATE_auth').value = str.substring(0, str.length - 1) //remove last character to validate JSON
+  document.getElementById('UPDATE_auth').value += (" ] }"); //close brackets JSON
+
   fetch(linkRoleAPI_POST, {
     method: "post",
     headers: {
@@ -26,5 +30,5 @@ updateRole.addEventListener('submit', function(e){
   document.getElementById('UPDATE_roleId').value = "";
   document.getElementById('UPDATE_name').value = "";
   document.getElementById('UPDATE_desc').value = "";
-  document.getElementById('UPDATE_auth').value = "";
+  resetAuth("UPDATE_auth", "ul-Auth");
 });

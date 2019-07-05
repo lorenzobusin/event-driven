@@ -12,7 +12,7 @@
 
   </head>
 
-  <body>
+  <body onload='getAllAuths("UPDATE_auth")'>
     <div class="navbar">
       <ul>
         <li>
@@ -75,15 +75,23 @@
                 <input type="text" class="form-control" name="name" id="UPDATE_name" required/>
                 <label>Description</label>
                 <textarea class="form-control" name="desc" id="UPDATE_desc" required/></textarea>
-                <label>Authorizations</label>
-                <textarea class="form-control" name="auth" id="UPDATE_auth" required></textarea>
-                <button class="btn btn-success" type="submit">Update</button>
+                <label>Authorizations JSON</label>
+                <textarea class="form-control" name="auth" id="UPDATE_auth" readonly required>{&#10;&#09;"Authorizations":  [</textarea>
+                <button class="btn btn-success" type="submit">Create</button>
                 <span class="messageSuccess" id='messageSuccessUPDATE'></span>
             </div>
         </form>
+
+        <div class="col-md-6 addAuth">
+              <h2>Available authorizations</h2>
+              <ul id="ul-Auth"></ul>
+              <input type="button" class="btn btn-success" value="Reset" id="btn-reset" onclick='resetAuth("UPDATE_auth", "ul-Auth")'/>
+        </div>
+
     </div>
 
   <script type="text/javascript" src="js/UPDATE_role.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/getAllAuths.js" charset="utf-8"></script>
 
   </body>
 </html>

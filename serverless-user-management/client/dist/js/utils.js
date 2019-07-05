@@ -9,6 +9,7 @@ const linkGroupAPI_POST = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws
 const linkGroupAPI_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/readGroup?groupId=";
 const linkGetAllRoles_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/getAllRoles";
 const linkGetAllGroups_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/getAllGroups";
+const linkGetAllAuths_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/getAllAuths";
 
 function generateUUID() {
   function s4() {
@@ -35,10 +36,19 @@ var check = function(passId, confirmPassId, checkPassId) {
 };
 
 function addAuth(elementId, nameAuth, btnId){
-  document.getElementById(elementId).value += ("\n\t\"" + nameAuth + "\",");
-  document.getElementById(btnId).setAttribute('disabled','disabled');
+  document.getElementById(elementId).value += ("\n\t\t\"" + nameAuth + "\",");
+  document.getElementById(btnId).disabled = true;
 };
 
-function resetAuth(elementId){
+function resetAuth(elementId, ulId){
+  const numAuthBtn = document.getElementById(ulId).getElementsByTagName("li").length;
   document.getElementById(elementId).value = "{" + "\n\t\"Authorizations\":  [";
+  enableBtns(numAuthBtn);
+};
+
+function enableBtns(numAuthBtn){
+  for(var i = 0; i < numAuthBtn; i++){
+    var authBtnId = "btn-auth-" + i;
+    document.getElementById(authBtnId).disabled = false;
+  }
 };

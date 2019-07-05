@@ -101,7 +101,7 @@ module.exports.pushEventAuthToSQS = (event, context, callback) => {
         const authParams = {
           "authId": bodyParsed.body.authId
         };
-  var ciao ="";
+
         var params = {
           FunctionName: "serverless-user-management-dev-deleteAuth", 
           InvocationType: "Event", 
@@ -183,6 +183,41 @@ module.exports.pushEventAuthToSQS = (event, context, callback) => {
             body: stringedData
           };
           console.log("Authorization successfully read");
+          callback(null, response);
+        }      
+      }
+    });
+  };
+
+  module.exports.getAllAuths = (event, context, callback) => {
+    const AWS = require('aws-sdk');
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  
+    const params = {
+      TableName: 'auth',
+      ExpressionAttributeNames:{
+        "#authname": "name" //name is a reserved keyword
+      },
+      ProjectionExpression: "#authname"
+    };
+  
+    dynamoDb.scan(params, (err, data) => {
+      const stringedData = JSON.stringify(data);
+      if (err)
+        console.log(err);
+      else{
+        if(data == "")
+          console.log("Authorizations not found");
+        else{
+          const response = {
+            statusCode: 200,
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Credentials': true
+            },
+            body: stringedData
+          };
           callback(null, response);
         }      
       }

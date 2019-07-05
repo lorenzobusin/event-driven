@@ -32,7 +32,8 @@ module.exports.mediatorRole = (event, context, callback) => {
       const roleParams = {
         "roleId": bodyParsed.body.roleId,
         "name": bodyParsed.body.name,
-        "desc": bodyParsed.body.desc
+        "desc": bodyParsed.body.desc,
+        "auth": bodyParsed.body.auth
       };
 
       var params = {
@@ -76,7 +77,8 @@ module.exports.mediatorRole = (event, context, callback) => {
       const roleParams = {
         "roleId": bodyParsed.body.roleId,
         "name": bodyParsed.body.name,
-        "desc": bodyParsed.body.desc
+        "desc": bodyParsed.body.desc,
+        "auth": bodyParsed.body.auth
       };
 
       var params = {
@@ -156,9 +158,10 @@ module.exports.readRole = (event, context, callback) => {
     },
     ExpressionAttributeNames:{
       "#rolename": "name", //name is a reserved keyword
-      "#roledesc": "desc"  //desc is a reserved keyword
+      "#roledesc": "desc", //desc is a reserved keyword
+      "#roleauth": "auth"  //auth is a reserved keyword
     },
-    ProjectionExpression: "#rolename, #roledesc",
+    ProjectionExpression: "#rolename, #roledesc, #roleauth",
     KeyConditionExpression: "roleId = :id",
     ExpressionAttributeValues: {
         ":id": parsedEvent.roleId
@@ -239,12 +242,14 @@ module.exports.updateRole = (event, context, callback) => {
     },
     ExpressionAttributeNames:{
       "#rolename": "name", //name is a reserved keyword
-      "#roledesc": "desc"  //desc is a reserved keyword
+      "#roledesc": "desc",  //desc is a reserved keyword
+      "#roleauth": "auth" //auth is a reserved keyword
     },
-    UpdateExpression: "set #rolename=:n, #roledesc=:d",
+    UpdateExpression: "set #rolename=:n, #roledesc=:d, #roleauth=:a",
     ExpressionAttributeValues:{
         ":n": parsedEvent.name,
-        ":d": parsedEvent.desc
+        ":d": parsedEvent.desc,
+        ":a": parsedEvent.auth
     }   
   };
 

@@ -18,10 +18,10 @@ updateUser.addEventListener('submit', function(e){
         "firstName": document.getElementById('UPDATE_firstName').value.trim(),
         "lastName": document.getElementById('UPDATE_lastName').value.trim(),
         "date": document.getElementById('UPDATE_date').value.trim(),
+        "role": document.getElementById('UPDATE_role').value,
+        "group": document.getElementById('UPDATE_group').value,
         "email": document.getElementById('UPDATE_email').value.trim(),
-        "password": document.getElementById('UPDATE_password').value.trim(),
-       // "role": document.getElementById('CREATE_role').value.trim(),
-       // "group": document.getElementById('CREATE_group').value.trim()
+        "password": document.getElementById('UPDATE_password').value.trim()
       })
     });
 
@@ -36,8 +36,6 @@ updateUser.addEventListener('submit', function(e){
     document.getElementById('UPDATE_password').value = "";
     document.getElementById('UPDATE_confirmPassword').value = "";
     document.getElementById('UPDATE_checkPassword').innerHTML = "";
-    //document.getElementById('CREATE_role').value = "";
-    //document.getElementById('CREATE_group').value = "";
   }
   else{
     document.getElementById('messageSuccessUPDATE').style.color = 'red';

@@ -12,7 +12,7 @@
 
   </head>
 
-  <body>
+  <body onload='getAllRoles("UPDATE_role"); getAllGroups("UPDATE_group");'>
     <div class="navbar">
       <ul>
         <li>
@@ -77,6 +77,19 @@
                   <input type="text" class="form-control" name="lastName" id="UPDATE_lastName" required/>
                   <label>Date of birth</label>
                   <input type="date" class="form-control" name="date" id="UPDATE_date" required/>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Role</label>
+                      </br>
+                      <select id="UPDATE_role" class="select-css"></select>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Group</label>
+                      </br>
+                      <select id="UPDATE_group" class="select-css"></select>
+                    </div>
+                    </br>
+                  </div>
                   <label>Email</label>
                   <input type="text" class="form-control" name="email" id="UPDATE_email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Email does not respect the right format"/>
                   <div class="row">
@@ -97,6 +110,8 @@
     </div>
 
   <script type="text/javascript" src="js/UPDATE_user.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/getAllRoles.js" charset="utf-8"></script>
+  <script type="text/javascript" src="js/getAllGroups.js" charset="utf-8"></script>
 
   </body>
 </html>

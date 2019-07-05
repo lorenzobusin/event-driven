@@ -150,7 +150,7 @@ module.exports.createUser = (event, context, callback) => {
     if (error)
       console.log(error);
     else
-    console.log('User successfully created');
+      console.log('User successfully created');  
   });
 };
 
@@ -168,9 +168,10 @@ module.exports.readUser = (event, context, callback) => {
     },
     ExpressionAttributeNames:{
       "#birthdate": "date", //date is a reserved keyword
-      "#userrole": "role"
+      "#userrole": "role", //role is a reserved keyword
+      "#usergroup": "group" //group is a reserved keyword
     },
-    ProjectionExpression: "firstName, lastName, #birthdate, #userrole, group, email",
+    ProjectionExpression: "firstName, lastName, #birthdate, #userrole, #usergroup, email",
     KeyConditionExpression: "userId = :id",
     ExpressionAttributeValues: {
         ":id": parsedEvent.userId
@@ -215,9 +216,11 @@ module.exports.updateUser = (event, context, callback) => {
     },
     ExpressionAttributeNames:{
       "#birthdate": "date", //date is a reserved keyword
-      "#userrole": "role" //role is a reserved keyword
+      "#userrole": "role", //role is a reserved keyword
+      "#usergroup": "group" //group is a reserved keyword
+
     },
-    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, #userrole=:r, group=:g email=:e, password=:p",
+    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, #userrole=:r, #usergroup=:g, email=:e, password=:p",
     ExpressionAttributeValues:{
         ":fn": parsedEvent.firstName,
         ":ln": parsedEvent.lastName,

@@ -32,4 +32,13 @@ var check = function(passId, confirmPassId, checkPassId) {
     document.getElementById(checkPassId).style.color = 'red';
     document.getElementById(checkPassId).innerHTML = 'Not matching';
   }
-}
+};
+
+function addAuth(elementId, nameAuth, btnId){
+  document.getElementById(elementId).value += ("\n\t\"" + nameAuth + "\",");
+  document.getElementById(btnId).setAttribute('disabled','disabled');
+};
+
+function resetAuth(elementId){
+  document.getElementById(elementId).value = "{" + "\n\t\"Authorizations\":  [";
+};

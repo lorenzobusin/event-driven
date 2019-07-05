@@ -70,10 +70,23 @@
                   <input type="text" class="form-control" name="name" id="CREATE_name" required/>
                   <label>Description</label>
                   <textarea class="form-control" name="desc" id="CREATE_desc" required></textarea>
+                  <label>Authorizations JSON</label>
+                  <textarea class="form-control" name="auth" id="CREATE_auth" readonly required>{&#10;&#09;"Authorizations":  [</textarea>
                   <button class="btn btn-success" type="submit">Create</button>
                   <span class="messageSuccess" id='messageSuccessCREATE'></span>
                 </div>
             </form>
+
+            <div class="col-md-6 addAuth">
+              <h2>Available authorizations</h2>
+              <ul>
+                <li>
+                  <input type="button" value="+" id="btn-dbaccess" onclick='addAuth("CREATE_auth", "DbAccess", "btn-dbaccess")'/>
+                  <label>DbAccess</label>
+                </li>
+              </ul>
+              <input type="button" value="Reset" id="btn-reset" onclick='resetAuth("CREATE_auth")'/>
+            </div>
     </div>
 
   

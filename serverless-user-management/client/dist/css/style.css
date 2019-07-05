@@ -112,7 +112,7 @@ body{
 }
 
 .form-group button{
-  margin-top: 2em;
+  margin-top: 1em;
   padding-left: 2em;
   padding-right: 2em;
 }
@@ -125,7 +125,7 @@ body{
 .messageSuccess{
   position: absolute;
   z-index: -1;
-  margin-top: 2.5em;
+  margin-top: 1.5em;
   margin-left: 1em;
 }
 
@@ -136,7 +136,6 @@ body{
   margin-left: 3em;
   visibility: hidden;
   table-layout: fixed;
-  width: 100%; 
 }
 
 #tableResult td, #tableResult th {
@@ -169,7 +168,6 @@ h1 {
 }
 
 h2 {
-  margin: 1em 0 0.5em 0;
   color: #343434;
   font-weight: normal;
   font-size: 30px;
@@ -319,4 +317,30 @@ h4 {
 }
 .select-css option {
     font-weight:normal;
+}
+
+.row select{
+  margin-bottom: 1em;
+}
+
+#CREATE_auth{
+  height: 15em;
+}
+
+#CREATE_ROLE textarea{
+  margin-bottom: 0.5em;
+  background-color: white;
+}
+
+#UPDATE_auth{
+  height: 15em;
+}
+
+#UPDATE_ROLE textarea{
+  background-color: white;
+  margin-bottom: 0.5em;
+}
+
+.addAuth ul{
+  list-style-type: none;
 }

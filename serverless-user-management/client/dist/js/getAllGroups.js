@@ -1,4 +1,4 @@
-function getAllGroups(){
+function getAllGroups(elementId){
 
     fetch(linkGetAllGroups_GET, {
       method: "GET",
@@ -16,9 +16,9 @@ function getAllGroups(){
         var getItems;
 
         for (i = 0; i < parsedBody.Count; i++) {
-          getItems += "<option value=" + (parsedBody.Items[i].name).replace(/\s/g, '') + ">" + parsedBody.Items[i].name + "</option>";
+          getItems += "<option value=" + (parsedBody.Items[i].name).replace(/\s/g, '_') + ">" + parsedBody.Items[i].name + "</option>";
         }
-        document.getElementById("CREATE_group").innerHTML = getItems;
+        document.getElementById(elementId).innerHTML = getItems;
     });
 
 }

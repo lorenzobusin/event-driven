@@ -128,6 +128,7 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
   module.exports.createGroup = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const utils = require('./utils.js'); 
   
     const params = {
       TableName: 'group',
@@ -137,8 +138,31 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
     dynamoDb.put(params, (error, data) => {
       if (error)
         console.log(error);
-      else
-      console.log('Group successfully created');
+      else{
+        console.log('Group successfully created');
+  
+        const item = {
+          eventId: utils.generateUUID(),
+          aggregate: "group",
+          lambda: "serverless-user-management-dev-createGroup",
+          timestamp: Date.now(),
+          payload: event
+        }
+  
+
+  
+        const eventSourcingParams = {
+          TableName: 'eventStore',
+          Item: item
+        };
+  
+        dynamoDb.put(eventSourcingParams, (error, data) => {
+          if (error)
+            console.log(error);
+          else
+            console.log('Event successfully stored');
+        });
+      }
     });
   };
   
@@ -227,6 +251,7 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
   module.exports.updateGroup = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const utils = require('./utils.js');
   
     const stringedEvent = JSON.stringify(event);
     const parsedEvent = JSON.parse(stringedEvent);
@@ -250,14 +275,36 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
     dynamoDb.update(params, (err, data) => {
       if (err)
         console.log(err);
-      else
+      else{
         console.log('Group successfully updated');
+  
+        const item = {
+          eventId: utils.generateUUID(),
+          aggregate: "group",
+          lambda: "serverless-user-management-dev-updateGroup",
+          timestamp: Date.now(),
+          payload: event
+        }
+  
+        const eventSourcingParams = {
+          TableName: 'eventStore',
+          Item: item
+        };
+  
+        dynamoDb.put(eventSourcingParams, (error, data) => {
+          if (error)
+            console.log(error);
+          else
+            console.log('Event successfully stored');
+        });
+      }
     });
   };
   
   module.exports.deleteGroup = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const utils = require('./utils.js');
   
     const stringedEvent = JSON.stringify(event);
     const parsedEvent = JSON.parse(stringedEvent);
@@ -276,9 +323,30 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
     dynamoDb.delete(params, (err, data) => {
       if (err)
         console.log(err);
-      else
-      console.log('Group successfully deleted');
-      });
+      else{
+        console.log('Group successfully deleted');
+  
+        const item = {
+          eventId: utils.generateUUID(),
+          aggregate: "group",
+          lambda: "serverless-user-management-dev-deleteGroup",
+          timestamp: Date.now(),
+          payload: event
+        }
+  
+        const eventSourcingParams = {
+          TableName: 'eventStore',
+          Item: item
+        };
+  
+        dynamoDb.put(eventSourcingParams, (error, data) => {
+          if (error)
+            console.log(error);
+          else
+            console.log('Event successfully stored');
+        });
+      }
+    });
   };
   
   

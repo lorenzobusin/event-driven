@@ -86,6 +86,25 @@ resources:
           WriteCapacityUnits: 5
         TableName: group
 
+    #EVENT STORE TABLE
+    EventStoreDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: eventId
+            AttributeType: S
+          - AttributeName: timestamp
+            AttributeType: N
+        KeySchema:
+          - AttributeName: eventId
+            KeyType: HASH
+          - AttributeName: timestamp
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: eventStore
+
       
 
 functions:
@@ -142,6 +161,9 @@ functions:
 
   deleteRole: 
     handler: handler.deleteRole
+
+  deleteAllRoles: 
+    handler: handler.deleteAllRoles
 
   readRole: 
     handler: handler.readRole
@@ -266,3 +288,18 @@ functions:
           method: post
           cors: true
           integration: lambda
+
+# ------------------------------- EVENT SOURCING FUNCTIONS ------------------------------- #
+
+  recovery: 
+    handler: handler.recovery
+    events:
+      - http:
+          path: /pusheventrecovery
+          method: post
+          cors: true
+          integration: lambda
+
+  clearDB:
+    handler: handler.clearDB
+

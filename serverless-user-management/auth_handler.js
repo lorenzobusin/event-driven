@@ -128,6 +128,7 @@ module.exports.pushEventAuthToSQS = (event, context, callback) => {
   module.exports.createAuth = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const utils = require('./utils.js');
   
     const params = {
       TableName: 'auth',
@@ -137,8 +138,29 @@ module.exports.pushEventAuthToSQS = (event, context, callback) => {
     dynamoDb.put(params, (error, data) => {
       if (error)
         console.log(error);
-      else
-      console.log('Authorization successfully created');
+      else{
+        console.log('Authorization successfully created');
+  
+        const item = {
+          eventId: utils.generateUUID(),
+          aggregate: "auth",
+          lambda: "serverless-user-management-dev-createAuth",
+          timestamp: Date.now(),
+          payload: event
+        }
+  
+        const eventSourcingParams = {
+          TableName: 'eventStore',
+          Item: item
+        };
+  
+        dynamoDb.put(eventSourcingParams, (error, data) => {
+          if (error)
+            console.log(error);
+          else
+            console.log('Event successfully stored');
+        });
+      }
     });
   };
   
@@ -227,6 +249,7 @@ module.exports.pushEventAuthToSQS = (event, context, callback) => {
   module.exports.updateAuth = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const utils = require('./utils.js');
   
     const stringedEvent = JSON.stringify(event);
     const parsedEvent = JSON.parse(stringedEvent);
@@ -250,14 +273,36 @@ module.exports.pushEventAuthToSQS = (event, context, callback) => {
     dynamoDb.update(params, (err, data) => {
       if (err)
         console.log(err);
-      else
+      else{
         console.log('Autorization successfully updated');
+  
+        const item = {
+          eventId: utils.generateUUID(),
+          aggregate: "auth",
+          lambda: "serverless-user-management-dev-updateAuth",
+          timestamp: Date.now(),
+          payload: event
+        }
+  
+        const eventSourcingParams = {
+          TableName: 'eventStore',
+          Item: item
+        };
+  
+        dynamoDb.put(eventSourcingParams, (error, data) => {
+          if (error)
+            console.log(error);
+          else
+            console.log('Event successfully stored');
+        });
+      }
     });
   };
   
   module.exports.deleteAuth = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const utils = require('./utils.js');
   
     const stringedEvent = JSON.stringify(event);
     const parsedEvent = JSON.parse(stringedEvent);
@@ -276,9 +321,30 @@ module.exports.pushEventAuthToSQS = (event, context, callback) => {
     dynamoDb.delete(params, (err, data) => {
       if (err)
         console.log(err);
-      else
-      console.log('Authorization successfully deleted');
-      });
+      else{
+        console.log('Authorization successfully deleted');
+  
+        const item = {
+          eventId: utils.generateUUID(),
+          aggregate: "auth",
+          lambda: "serverless-user-management-dev-deleteAuth",
+          timestamp: Date.now(),
+          payload: event
+        }
+  
+        const eventSourcingParams = {
+          TableName: 'eventStore',
+          Item: item
+        };
+  
+        dynamoDb.put(eventSourcingParams, (error, data) => {
+          if (error)
+            console.log(error);
+          else
+            console.log('Event successfully stored');
+        });
+      }
+    });
   };
   
   

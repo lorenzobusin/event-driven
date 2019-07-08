@@ -130,6 +130,7 @@ module.exports.mediatorRole = (event, context, callback) => {
 module.exports.createRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  const utils = require('./utils.js');
 
   const params = {
     TableName: 'role',
@@ -139,9 +140,32 @@ module.exports.createRole = (event, context, callback) => {
   dynamoDb.put(params, (error, data) => {
     if (error)
       console.log(error);
-    else
-    console.log('Role successfully created');
+    else{
+      console.log('Role successfully created');
+
+      const item = {
+        eventId: utils.generateUUID(),
+        aggregate: "role",
+        lambda: "serverless-user-management-dev-createRole",
+        timestamp: Date.now(),
+        payload: event
+      }
+
+      const eventSourcingParams = {
+        TableName: 'eventStore',
+        Item: item
+      };
+
+      dynamoDb.put(eventSourcingParams, (error, data) => {
+        if (error)
+          console.log(error);
+        else
+          console.log('Event successfully stored');
+      });
+    }
+    
   });
+
 };
 
 module.exports.readRole = (event, context, callback) => {
@@ -231,6 +255,7 @@ module.exports.getAllRoles = (event, context, callback) => {
 module.exports.updateRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  const utils = require('./utils.js');
 
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
@@ -256,14 +281,36 @@ module.exports.updateRole = (event, context, callback) => {
   dynamoDb.update(params, (err, data) => {
     if (err)
       console.log(err);
-    else
+    else{
       console.log('Role successfully updated');
+
+      const item = {
+        eventId: utils.generateUUID(),
+        aggregate: "role",
+        lambda: "serverless-user-management-dev-updateRole",
+        timestamp: Date.now(),
+        payload: event
+      }
+
+      const eventSourcingParams = {
+        TableName: 'eventStore',
+        Item: item
+      };
+
+      dynamoDb.put(eventSourcingParams, (error, data) => {
+        if (error)
+          console.log(error);
+        else
+          console.log('Event successfully stored');
+      });
+    }
   });
 };
 
 module.exports.deleteRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  const utils = require('./utils.js');
 
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
@@ -278,13 +325,40 @@ module.exports.deleteRole = (event, context, callback) => {
         ":val": parsedEvent.roleId
     }
   };
-
+  
   dynamoDb.delete(params, (err, data) => {
     if (err)
       console.log(err);
-    else
-    console.log('Role successfully deleted');
-    });
+    else{
+      console.log('Role successfully deleted');
+
+      const item = {
+        eventId: utils.generateUUID(),
+        aggregate: "role",
+        lambda: "serverless-user-management-dev-deleteRole",
+        timestamp: Date.now(),
+        payload: event
+      }
+
+      const eventSourcingParams = {
+        TableName: 'eventStore',
+        Item: item
+      };
+
+      dynamoDb.put(eventSourcingParams, (error, data) => {
+        if (error)
+          console.log(error);
+        else
+          console.log('Event successfully stored');
+      });
+    }
+  });
+};
+
+module.exports.deleteAllRoles = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
 };
 
 

@@ -291,15 +291,22 @@ functions:
 
 # ------------------------------- EVENT SOURCING FUNCTIONS ------------------------------- #
 
-  recovery: 
-    handler: handler.recovery
+  mediatorRecovery: 
+    handler: handler.mediatorRecovery
     events:
-      - http:
-          path: /pusheventrecovery
-          method: post
-          cors: true
-          integration: lambda
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:eventQueue #create new queue and set the ARN
 
   clearDB:
     handler: handler.clearDB
+
+  pushEventStoreToSQS: 
+    handler: handler.pushEventStoreToSQS 
+    timeout: 30
+    events: 
+      - http:
+          path: /pusheventstoretosqs
+          method: post
+          cors: true
+          integration: lambda
 

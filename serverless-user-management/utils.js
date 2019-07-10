@@ -37,3 +37,20 @@ module.exports.generateUUID = () => {
   }
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 };
+
+module.exports.invokeLambdas = async (arrayEvent) => {
+  const AWS = require('aws-sdk');
+  const LAMBDA = new AWS.Lambda();
+
+  for(var i = 0; i < arrayEvent.length; i++){
+   var params = {
+     FunctionName: arrayEvent[i].lambda, 
+     InvocationType: "Event", 
+     LogType: "Tail", 
+     Payload: JSON.stringify(arrayEvent[i].payload)
+   };
+   
+   await LAMBDA.invoke(params).promise();
+ };
+};
+

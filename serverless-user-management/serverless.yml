@@ -103,17 +103,22 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
+        StreamSpecification: 
+          StreamViewType: NEW_IMAGE
         TableName: eventStore
 
       
 
 functions:
   # ------------------------------- USER FUNCTIONS ------------------------------- #
-  mediatorUser:
-    handler: handler.mediatorUser
+  commandUser:
+    handler: handler.commandUser
     events:
       - sqs:
           arn: arn:aws:sqs:eu-central-1:582373673306:userQueue #set ARN of an existing queue
+
+  mediatorUser:
+    handler: handler.mediatorUser
 
   updateUser:
     handler: handler.updateUser
@@ -147,11 +152,14 @@ functions:
 
   # ------------------------------- ROLE FUNCTIONS ------------------------------- #
 
-  mediatorRole:
-    handler: handler.mediatorRole
+  commandRole:
+    handler: handler.commandRole
     events:
       - sqs:
           arn: arn:aws:sqs:eu-central-1:582373673306:roleQueue #create new queue and set the ARN
+
+  mediatorRole:
+    handler: handler.mediatorRole
 
   updateRole:
     handler: handler.updateRole
@@ -197,11 +205,14 @@ functions:
 
   # ------------------------------- AUTHORIZATION FUNCTIONS ------------------------------- #
 
-  mediatorAuth:
-    handler: handler.mediatorAuth
+  commandAuth:
+    handler: handler.commandAuth
     events:
       - sqs:
           arn: arn:aws:sqs:eu-central-1:582373673306:authQueue #create new queue and set the ARN
+
+  mediatorAuth:
+    handler: handler.mediatorAuth
 
   updateAuth:
     handler: handler.updateAuth
@@ -244,11 +255,14 @@ functions:
 
   # ------------------------------- GROUP FUNCTIONS ------------------------------- #
 
-  mediatorGroup:
-    handler: handler.mediatorGroup
+  commandGroup:
+    handler: handler.commandGroup
     events:
       - sqs:
           arn: arn:aws:sqs:eu-central-1:582373673306:groupQueue #create new queue and set the ARN
+
+  mediatorGroup:
+    handler: handler.mediatorGroup
 
   updateGroup:
     handler: handler.updateGroup
@@ -293,20 +307,21 @@ functions:
 
   mediatorRecovery: 
     handler: handler.mediatorRecovery
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:eventQueue #create new queue and set the ARN
-
-  clearDB:
-    handler: handler.clearDB
-
-  pushEventStoreToSQS: 
-    handler: handler.pushEventStoreToSQS 
-    timeout: 30
+    timeout: 10
     events: 
       - http:
-          path: /pusheventstoretosqs
+          path: /mediatorrecovery
           method: post
           cors: true
           integration: lambda
+
+  mediator:
+    handler: handler.mediator
+    events:
+        - stream: arn:aws:dynamodb:eu-central-1:582373673306:table/eventStore/stream/2019-07-10T08:02:22.059 #set the ARN of dynamodb stream
+
+  clearDB:
+    handler: handler.clearDB
+    
+    
 

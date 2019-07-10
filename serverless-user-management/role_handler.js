@@ -17,23 +17,87 @@ module.exports.pushEventRoleToSQS = (event, context, callback) => {
   });
 };
 
-module.exports.mediatorRole = (event, context, callback) => {
+module.exports.commandRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
-  const LAMBDA = new AWS.Lambda();
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
+  var item, lambdaName;
 
+  //check event
   switch(bodyParsed.body.typeEvent){
     case("C"): {
-      //console.log("Event type: CREATE");
-      const roleParams = {
-        "roleId": bodyParsed.body.roleId,
+      const groupParams = {
+        "groupId": bodyParsed.body.groupId,
         "name": bodyParsed.body.name,
-        "desc": bodyParsed.body.desc,
-        "auth": bodyParsed.body.auth
+        "desc": bodyParsed.body.desc
+      };
+
+      lambdaName = "serverless-user-management-dev-crateRole";
+    }
+    break;
+
+    case("U"): {
+      const groupParams = {
+        "groupId": bodyParsed.body.groupId,
+        "name": bodyParsed.body.name,
+        "desc": bodyParsed.body.desc
+      };
+
+      lambdaName = "serverless-user-management-dev-updateRole";
+    }
+    break;
+
+    case("D"): {
+      const groupParams = {
+        "groupId": bodyParsed.body.groupId
+      };
+
+      lambdaName = "serverless-user-management-dev-deleteRole";
+    }
+    break;
+    
+    default:
+      console.log("Undefined type event");
+  }
+
+  item = {
+    eventId: utils.generateUUID(),
+    aggregate: "role",
+    lambda: lambdaName,
+    timestamp: Date.now(),
+    payload: bodyParsed.body
+  };
+
+  const eventSourcingParams = {
+    TableName: 'eventStore',
+    Item: item
+  };
+
+  dynamoDb.put(eventSourcingParams, (error, data) => {
+    if (error)
+      console.log(error);
+  });
+};
+
+module.exports.mediatorRole = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const LAMBDA = new AWS.Lambda();
+
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+
+  switch(parsedEvent.typeEvent.S){
+    case("C"): {
+      const roleParams = {
+        "roleId": parsedEvent.roleId.S,
+        "name": parsedEvent.name.S,
+        "desc": parsedEvent.desc.S,
+        "auth": parsedEvent.auth.S
       };
 
       var params = {
@@ -44,41 +108,18 @@ module.exports.mediatorRole = (event, context, callback) => {
        };
 
        LAMBDA.invoke(params, function(err, data) {
-        if (err) {
+        if (err)
           console.log(err);
-        } else {
-          console.log('Payload sending...');
-        }
       });
     }
     break;
 
-   /* case("R"): {
-      console.log("Event type: READ");
-      var params = {
-        FunctionName: "serverless-user-management-dev-getUser", 
-        InvocationType: "Event", 
-        LogType: "Tail", 
-        Payload: JSON.stringify(userParams) //only string type
-       };
-
-       LAMBDA.invoke(params, function(err, data) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('Payload sending...');
-        }
-      });
-    }
-    break;*/
-
     case("U"): {
-      //console.log("Event type: UPDATE");
       const roleParams = {
-        "roleId": bodyParsed.body.roleId,
-        "name": bodyParsed.body.name,
-        "desc": bodyParsed.body.desc,
-        "auth": bodyParsed.body.auth
+        "roleId": parsedEvent.roleId.S,
+        "name": parsedEvent.name.S,
+        "desc": parsedEvent.desc.S,
+        "auth": parsedEvent.auth.S
       };
 
       var params = {
@@ -89,19 +130,15 @@ module.exports.mediatorRole = (event, context, callback) => {
        };
 
        LAMBDA.invoke(params, function(err, data) {
-        if (err) {
+        if (err)
           console.log(err);
-        } else {
-          console.log('Payload sending...');
-        }
       });
     }
     break;
 
     case("D"): {
-      //console.log("Event type: DELETE");
       const roleParams = {
-        "roleId": bodyParsed.body.roleId
+        "roleId": parsedEvent.roleId.S
       };
 
       var params = {
@@ -112,11 +149,8 @@ module.exports.mediatorRole = (event, context, callback) => {
       };
 
        LAMBDA.invoke(params, function(err, data) {
-        if (err) {
+        if (err)
           console.log(err);
-        } else {
-          console.log('Payload sending...');
-        }
       });
     }
     break;
@@ -130,7 +164,6 @@ module.exports.mediatorRole = (event, context, callback) => {
 module.exports.createRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
-  const utils = require('./utils.js');
 
   const params = {
     TableName: 'role',
@@ -140,33 +173,72 @@ module.exports.createRole = (event, context, callback) => {
   dynamoDb.put(params, (error, data) => {
     if (error)
       console.log(error);
-    else{
-      console.log('Role successfully created');
-
-      const item = {
-        eventId: utils.generateUUID(),
-        aggregate: "role",
-        lambda: "serverless-user-management-dev-createRole",
-        timestamp: Date.now(),
-        payload: event
-      }
-
-      const eventSourcingParams = {
-        TableName: 'eventStore',
-        Item: item
-      };
-
-      dynamoDb.put(eventSourcingParams, (error, data) => {
-        if (error)
-          console.log(error);
-        else
-          console.log('Event successfully stored');
-      });
-    }
-    
   });
 
 };
+
+module.exports.updateRole = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+
+  const params = {
+    TableName: 'role',
+    Key: {
+      "roleId":  parsedEvent.roleId
+    },
+    ExpressionAttributeNames:{
+      "#rolename": "name", //name is a reserved keyword
+      "#roledesc": "desc",  //desc is a reserved keyword
+      "#roleauth": "auth" //auth is a reserved keyword
+    },
+    UpdateExpression: "set #rolename=:n, #roledesc=:d, #roleauth=:a",
+    ExpressionAttributeValues:{
+        ":n": parsedEvent.name,
+        ":d": parsedEvent.desc,
+        ":a": parsedEvent.auth
+    }   
+  };
+
+  dynamoDb.update(params, (err, data) => {
+    if (err)
+      console.log(err);
+  });
+};
+
+module.exports.deleteRole = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+  
+  const params = {
+    TableName: 'role',
+    Key:{
+      "roleId": parsedEvent.roleId
+    },
+    ConditionExpression:"roleId = :val",
+    ExpressionAttributeValues: {
+        ":val": parsedEvent.roleId
+    }
+  };
+  
+  dynamoDb.delete(params, (err, data) => {
+    if (err)
+      console.log(err);
+  });
+};
+
+module.exports.deleteAllRoles = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+};
+
+//READ MODE LAMBDAs
 
 module.exports.readRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
@@ -249,116 +321,6 @@ module.exports.getAllRoles = (event, context, callback) => {
       }      
     }
   });
-};
-
-
-module.exports.updateRole = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-  const utils = require('./utils.js');
-
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
-
-  const params = {
-    TableName: 'role',
-    Key: {
-      "roleId":  parsedEvent.roleId
-    },
-    ExpressionAttributeNames:{
-      "#rolename": "name", //name is a reserved keyword
-      "#roledesc": "desc",  //desc is a reserved keyword
-      "#roleauth": "auth" //auth is a reserved keyword
-    },
-    UpdateExpression: "set #rolename=:n, #roledesc=:d, #roleauth=:a",
-    ExpressionAttributeValues:{
-        ":n": parsedEvent.name,
-        ":d": parsedEvent.desc,
-        ":a": parsedEvent.auth
-    }   
-  };
-
-  dynamoDb.update(params, (err, data) => {
-    if (err)
-      console.log(err);
-    else{
-      console.log('Role successfully updated');
-
-      const item = {
-        eventId: utils.generateUUID(),
-        aggregate: "role",
-        lambda: "serverless-user-management-dev-updateRole",
-        timestamp: Date.now(),
-        payload: event
-      }
-
-      const eventSourcingParams = {
-        TableName: 'eventStore',
-        Item: item
-      };
-
-      dynamoDb.put(eventSourcingParams, (error, data) => {
-        if (error)
-          console.log(error);
-        else
-          console.log('Event successfully stored');
-      });
-    }
-  });
-};
-
-module.exports.deleteRole = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-  const utils = require('./utils.js');
-
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
-  
-  const params = {
-    TableName: 'role',
-    Key:{
-      "roleId": parsedEvent.roleId
-    },
-    ConditionExpression:"roleId = :val",
-    ExpressionAttributeValues: {
-        ":val": parsedEvent.roleId
-    }
-  };
-  
-  dynamoDb.delete(params, (err, data) => {
-    if (err)
-      console.log(err);
-    else{
-      console.log('Role successfully deleted');
-
-      const item = {
-        eventId: utils.generateUUID(),
-        aggregate: "role",
-        lambda: "serverless-user-management-dev-deleteRole",
-        timestamp: Date.now(),
-        payload: event
-      }
-
-      const eventSourcingParams = {
-        TableName: 'eventStore',
-        Item: item
-      };
-
-      dynamoDb.put(eventSourcingParams, (error, data) => {
-        if (error)
-          console.log(error);
-        else
-          console.log('Event successfully stored');
-      });
-    }
-  });
-};
-
-module.exports.deleteAllRoles = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
 };
 
 

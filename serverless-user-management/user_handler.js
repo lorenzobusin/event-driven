@@ -17,29 +17,92 @@ module.exports.pushEventUserToSQS = (event, context, callback) => {
   });
 };
 
-
-module.exports.mediatorUser = (event, context, callback) => {
+module.exports.commandUser = (event, context, callback) => {
   const AWS = require('aws-sdk');
-  const LAMBDA = new AWS.Lambda();
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
+  var item, lambdaName;
 
+  //check event
   switch(bodyParsed.body.typeEvent){
     case("C"): {
-      //console.log("Event type: CREATE");
+      const groupParams = {
+        "groupId": bodyParsed.body.groupId,
+        "name": bodyParsed.body.name,
+        "desc": bodyParsed.body.desc
+      };
+
+      lambdaName = "serverless-user-management-dev-crateUser";
+    }
+    break;
+
+    case("U"): {
+      const groupParams = {
+        "groupId": bodyParsed.body.groupId,
+        "name": bodyParsed.body.name,
+        "desc": bodyParsed.body.desc
+      };
+
+      lambdaName = "serverless-user-management-dev-updateUser";
+    }
+    break;
+
+    case("D"): {
+      const groupParams = {
+        "groupId": bodyParsed.body.groupId
+      };
+
+      lambdaName = "serverless-user-management-dev-deleteUser";
+    }
+    break;
+    
+    default:
+      console.log("Undefined type event");
+  }
+
+  item = {
+    eventId: utils.generateUUID(),
+    aggregate: "user",
+    lambda: lambdaName,
+    timestamp: Date.now(),
+    payload: bodyParsed.body
+  };
+
+  const eventSourcingParams = {
+    TableName: 'eventStore',
+    Item: item
+  };
+
+  dynamoDb.put(eventSourcingParams, (error, data) => {
+    if (error)
+      console.log(error);
+  });
+};
+
+module.exports.mediatorUser = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const LAMBDA = new AWS.Lambda();
+  const utils = require('./utils.js');
+
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+
+  switch(parsedEvent.typeEvent.S){
+    case("C"): {
       const userParams = {
-        "userId": bodyParsed.body.userId,
-        "firstName": bodyParsed.body.firstName,
-        "lastName": bodyParsed.body.lastName,
-        "date": bodyParsed.body.date,
-        "role": bodyParsed.body.role,
-        "group": bodyParsed.body.group,
-        "email": bodyParsed.body.email,
-        "password": utils.encrypt(bodyParsed.body.password)
+        "userId": parsedEvent.userId.S,
+        "firstName": parsedEvent.firstName.S,
+        "lastName": parsedEvent.lastName.S,
+        "date": parsedEvent.date.S,
+        "role": parsedEvent.role.S,
+        "group": parsedEvent.group.S,
+        "email": parsedEvent.email.S,
+        "password": utils.encrypt(parsedEvent.password.S)
       };
 
       var params = {
@@ -50,45 +113,22 @@ module.exports.mediatorUser = (event, context, callback) => {
        };
 
        LAMBDA.invoke(params, function(err, data) {
-        if (err) {
+        if (err) 
           console.log(err);
-        } else {
-          console.log('Payload sending...');
-        }
       });
     }
     break;
 
-   /* case("R"): {
-      console.log("Event type: READ");
-      var params = {
-        FunctionName: "serverless-user-management-dev-getUser", 
-        InvocationType: "Event", 
-        LogType: "Tail", 
-        Payload: JSON.stringify(userParams) //only string type
-       };
-
-       LAMBDA.invoke(params, function(err, data) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('Payload sending...');
-        }
-      });
-    }
-    break;*/
-
     case("U"): {
-      //console.log("Event type: UPDATE");
       const userParams = {
-        "userId": bodyParsed.body.userId,
-        "firstName": bodyParsed.body.firstName,
-        "lastName": bodyParsed.body.lastName,
-        "date": bodyParsed.body.date,
-        "role": bodyParsed.body.role,
-        "group": bodyParsed.body.group,
-        "email": bodyParsed.body.email,
-        "password": utils.encrypt(bodyParsed.body.password)
+        "userId": parsedEvent.userId.S,
+        "firstName": parsedEvent.firstName.S,
+        "lastName": parsedEvent.lastName.S,
+        "date": parsedEvent.date.S,
+        "role": parsedEvent.role.S,
+        "group": parsedEvent.group.S,
+        "email": parsedEvent.email.S,
+        "password": utils.encrypt(parsedEvent.password.S)
       };
 
       var params = {
@@ -99,19 +139,15 @@ module.exports.mediatorUser = (event, context, callback) => {
        };
 
        LAMBDA.invoke(params, function(err, data) {
-        if (err) {
+        if (err) 
           console.log(err);
-        } else {
-          console.log('Payload sending...');
-        }
       });
     }
     break;
 
     case("D"): {
-      //console.log("Event type: DELETE");
       const userParams = {
-        "userId": bodyParsed.body.userId
+        "userId": parsedEvent.userId.S
       };
 
       var params = {
@@ -122,11 +158,8 @@ module.exports.mediatorUser = (event, context, callback) => {
       };
 
        LAMBDA.invoke(params, function(err, data) {
-        if (err) {
+        if (err) 
           console.log(err);
-        } else {
-          console.log('Payload sending...');
-        }
       });
     }
     break;
@@ -149,10 +182,70 @@ module.exports.createUser = (event, context, callback) => {
   dynamoDb.put(params, (error, data) => {
     if (error)
       console.log(error);
-    else
-      console.log('User successfully created');  
   });
 };
+
+module.exports.updateUser = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+
+  const params = {
+    TableName: 'user',
+    Key: {
+      "userId":  parsedEvent.userId
+    },
+    ExpressionAttributeNames:{
+      "#birthdate": "date", //date is a reserved keyword
+      "#userrole": "role", //role is a reserved keyword
+      "#usergroup": "group" //group is a reserved keyword
+
+    },
+    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, #userrole=:r, #usergroup=:g, email=:e, password=:p",
+    ExpressionAttributeValues:{
+        ":fn": parsedEvent.firstName,
+        ":ln": parsedEvent.lastName,
+        ":d": parsedEvent.date,
+        ":r": parsedEvent.role,
+        ":g": parsedEvent.group,
+        ":e": parsedEvent.email,
+        ":p": parsedEvent.password
+    }   
+  };
+
+  dynamoDb.update(params, (err, data) => {
+    if (err)
+      console.log(err);
+  });
+};
+
+module.exports.deleteUser = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+  
+  const params = {
+    TableName: 'user',
+    Key:{
+      "userId": parsedEvent.userId
+    },
+    ConditionExpression:"userId = :val",
+    ExpressionAttributeValues: {
+        ":val": parsedEvent.userId
+    }
+  };
+
+  dynamoDb.delete(params, (err, data) => {
+    if (err)
+      console.log(err);
+    });
+};
+
+//READ MODE LAMBDA
 
 module.exports.readUser = (event, context, callback) => {
   const AWS = require('aws-sdk');
@@ -200,70 +293,6 @@ module.exports.readUser = (event, context, callback) => {
       }      
     }
   });
-};
-
-module.exports.updateUser = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
-
-  const params = {
-    TableName: 'user',
-    Key: {
-      "userId":  parsedEvent.userId
-    },
-    ExpressionAttributeNames:{
-      "#birthdate": "date", //date is a reserved keyword
-      "#userrole": "role", //role is a reserved keyword
-      "#usergroup": "group" //group is a reserved keyword
-
-    },
-    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, #userrole=:r, #usergroup=:g, email=:e, password=:p",
-    ExpressionAttributeValues:{
-        ":fn": parsedEvent.firstName,
-        ":ln": parsedEvent.lastName,
-        ":d": parsedEvent.date,
-        ":r": parsedEvent.role,
-        ":g": parsedEvent.group,
-        ":e": parsedEvent.email,
-        ":p": parsedEvent.password
-    }   
-  };
-
-  dynamoDb.update(params, (err, data) => {
-    if (err)
-      console.log(err);
-    else
-      console.log('User successfully updated');
-  });
-};
-
-module.exports.deleteUser = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
-  
-  const params = {
-    TableName: 'user',
-    Key:{
-      "userId": parsedEvent.userId
-    },
-    ConditionExpression:"userId = :val",
-    ExpressionAttributeValues: {
-        ":val": parsedEvent.userId
-    }
-  };
-
-  dynamoDb.delete(params, (err, data) => {
-    if (err)
-      console.log(err);
-    else
-    console.log('User successfully deleted');
-    });
 };
 
 

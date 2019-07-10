@@ -1,8 +1,8 @@
-module.exports.pushEventStoreToSQS = (event, context, callback) => {
+
+module.exports.mediatorRecovery = (event, context, callback) => {
   const AWS = require('aws-sdk');
-  const SQS = new AWS.SQS();
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
-  const LAMBDA = new AWS.Lambda();
+  const utils = require('./utils.js');
 
   const queryParams = {
     TableName: 'eventStore',
@@ -31,57 +31,10 @@ module.exports.pushEventStoreToSQS = (event, context, callback) => {
           return 0;
         });
 
-        async function invokeLambdas() {
-          var i = 0;
-          while(i < events.length){
-            var params = {
-              FunctionName: events[i].lambda, 
-              InvocationType: "Event", 
-              LogType: "Tail", 
-              Payload: JSON.stringify(events[i].payload)
-            };
-            
-            await LAMBDA.invoke(params).promise();
-            i++;
-          };
-        };
-      
-        invokeLambdas();
-      /*loop = async () => {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      console.log(i);
-      LAMBDA.invoke(params);
-      loop();*/
-        
+        utils.invokeLambdas(events); 
         }
-      }
-
-     
-});
-};
-
-
-
-
-module.exports.mediatorRecovery = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const LAMBDA = new AWS.Lambda();
-
-  const stringedBody = event.Records[0].body.toString('utf-8'); //read new event from SQS
-  const parsedBody = JSON.parse(stringedBody);
-  console.log("body: " + stringedBody);
-
-  var params = {
-    FunctionName: parsedBody.FunctionName, 
-    InvocationType: "Event", 
-    LogType: "Tail", 
-    Payload: JSON.stringify(parsedBody.Payload) //only string type
-   };
-
-   LAMBDA.invoke(params, function(err, data) {
-    if (err) 
-      console.log(err);
-    }); 
+      } 
+  });
 };
 
 
@@ -119,3 +72,55 @@ module.exports.clearDB = (event, context, callback) => {
   });
 
 };
+
+
+
+module.exports.mediator = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const LAMBDA = new AWS.Lambda();
+  console.log("event: " + JSON.stringify(event));
+
+  const typeAggregate = event.Records[0].dynamodb.NewImage.aggregate.S; //read type of aggregate from event
+  const payload = JSON.stringify(event.Records[0].dynamodb.NewImage.payload.M);
+  var mediatorLambda;
+  console.log("type: " + typeAggregate);
+
+  switch(typeAggregate){
+    case("user"): {
+      mediatorLambda = "serverless-user-management-dev-mediatorUser";
+    }
+    break;
+
+    case("role"): {
+      mediatorLambda = "serverless-user-management-dev-mediatorRole";
+    }
+    break;
+
+    case("group"): {
+      mediatorLambda = "serverless-user-management-dev-mediatorGroup";
+    }
+    break;
+
+    case("auth"): {
+      mediatorLambda = "serverless-user-management-dev-mediatorAuth";
+    }
+    break;
+
+    default:
+        console.log("Undefined type event");
+  }
+
+  const params = {
+    FunctionName: mediatorLambda, 
+    InvocationType: "Event", 
+    LogType: "Tail", 
+    Payload: payload //only string type
+   };
+
+  LAMBDA.invoke(params, function(err, data) {
+    if (err)
+      console.log(err);
+  });
+};
+
+

@@ -1,4 +1,4 @@
-module.exports.pushEventGroupToSQS = (event, context, callback) => {
+  module.exports.pushEventGroupToSQS = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const SQS = new AWS.SQS();
     const stringedEvent = JSON.stringify(event);
@@ -16,23 +16,87 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
       }
     });
   };
-  
-  module.exports.mediatorGroup = (event, context, callback) => {
+
+  module.exports.commandGroup = (event, context, callback) => {
     const AWS = require('aws-sdk');
-    const LAMBDA = new AWS.Lambda();
-  
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const utils = require('./utils.js');
+
     const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
     const eventParsed = JSON.parse(stringedEvent);
     const stringedBody = JSON.stringify(eventParsed);
     const bodyParsed = JSON.parse(stringedBody);
-  
+    var item, lambdaName;
+
+    //check event
     switch(bodyParsed.body.typeEvent){
       case("C"): {
-        //console.log("Event type: CREATE");
         const groupParams = {
           "groupId": bodyParsed.body.groupId,
           "name": bodyParsed.body.name,
           "desc": bodyParsed.body.desc
+        };
+
+        lambdaName = "serverless-user-management-dev-crateGroup";
+      }
+      break;
+  
+      case("U"): {
+        const groupParams = {
+          "groupId": bodyParsed.body.groupId,
+          "name": bodyParsed.body.name,
+          "desc": bodyParsed.body.desc
+        };
+
+        lambdaName = "serverless-user-management-dev-updateGroup";
+      }
+      break;
+  
+      case("D"): {
+        const groupParams = {
+          "groupId": bodyParsed.body.groupId
+        };
+
+        lambdaName = "serverless-user-management-dev-deleteGroup";
+      }
+      break;
+      
+      default:
+        console.log("Undefined type event");
+    }
+
+    item = {
+      eventId: utils.generateUUID(),
+      aggregate: "group",
+      lambda: lambdaName,
+      timestamp: Date.now(),
+      payload: bodyParsed.body
+    };
+
+    const eventSourcingParams = {
+      TableName: 'eventStore',
+      Item: item
+    };
+
+    dynamoDb.put(eventSourcingParams, (error, data) => {
+      if (error)
+        console.log(error);
+    });
+  };
+  
+  module.exports.mediatorGroup = (event, context, callback) => {
+    const AWS = require('aws-sdk');
+    const LAMBDA = new AWS.Lambda();
+
+    const stringedEvent = JSON.stringify(event);
+    const parsedEvent = JSON.parse(stringedEvent);
+
+    switch(parsedEvent.typeEvent.S){
+      case("C"): {
+        const groupParams = {
+          "groupId": parsedEvent.groupId.S,
+          "name": parsedEvent.name.S,
+          "desc": parsedEvent.desc.S
         };
   
         var params = {
@@ -42,41 +106,18 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
           Payload: JSON.stringify(groupParams) //only string type
          };
   
-         LAMBDA.invoke(params, function(err, data) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('Payload sending...');
-          }
+        LAMBDA.invoke(params, function(err, data) {
+          if (err) 
+            console.log(err)
         });
       }
       break;
-  
-     /* case("R"): {
-        console.log("Event type: READ");
-        var params = {
-          FunctionName: "serverless-user-management-dev-getUser", 
-          InvocationType: "Event", 
-          LogType: "Tail", 
-          Payload: JSON.stringify(userParams) //only string type
-         };
-  
-         LAMBDA.invoke(params, function(err, data) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('Payload sending...');
-          }
-        });
-      }
-      break;*/
-  
+
       case("U"): {
-        //console.log("Event type: UPDATE");
         const groupParams = {
-          "groupId": bodyParsed.body.groupId,
-          "name": bodyParsed.body.name,
-          "desc": bodyParsed.body.desc
+          "groupId": parsedEvent.groupId.S,
+          "name": parsedEvent.name.S,
+          "desc": parsedEvent.desc.S
         };
   
         var params = {
@@ -86,20 +127,16 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
           Payload: JSON.stringify(groupParams) //only string type
          };
   
-         LAMBDA.invoke(params, function(err, data) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('Payload sending...');
-          }
+        LAMBDA.invoke(params, function(err, data) {
+          if (err) 
+            console.log(err)
         });
       }
       break;
-  
+
       case("D"): {
-        //console.log("Event type: DELETE");
         const groupParams = {
-          "groupId": bodyParsed.body.groupId
+          "groupId": parsedEvent.groupId.S
         };
   
         var params = {
@@ -107,28 +144,24 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
           InvocationType: "Event", 
           LogType: "Tail", 
           Payload: JSON.stringify(groupParams) //only string type
-        };
+         };
   
-         LAMBDA.invoke(params, function(err, data) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('Payload sending...');
-          }
+        LAMBDA.invoke(params, function(err, data) {
+          if (err) 
+            console.log(err)
         });
+        
       }
       break;
-      
+
       default:
-        console.log("Undefined type event");
+          console.log("Undefined type event");
     }
-  
   };
   
   module.exports.createGroup = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
-    const utils = require('./utils.js'); 
   
     const params = {
       TableName: 'group',
@@ -138,34 +171,64 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
     dynamoDb.put(params, (error, data) => {
       if (error)
         console.log(error);
-      else{
-        console.log('Group successfully created');
-  
-        const item = {
-          eventId: utils.generateUUID(),
-          aggregate: "group",
-          lambda: "serverless-user-management-dev-createGroup",
-          timestamp: Date.now(),
-          payload: event
-        }
-  
+    });
+  };
 
+  module.exports.updateGroup = (event, context, callback) => {
+    const AWS = require('aws-sdk');
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
   
-        const eventSourcingParams = {
-          TableName: 'eventStore',
-          Item: item
-        };
+    const stringedEvent = JSON.stringify(event);
+    const parsedEvent = JSON.parse(stringedEvent);
   
-        dynamoDb.put(eventSourcingParams, (error, data) => {
-          if (error)
-            console.log(error);
-          else
-            console.log('Event successfully stored');
-        });
-      }
+    const params = {
+      TableName: 'group',
+      Key: {
+        "groupId":  parsedEvent.groupId
+      },
+      ExpressionAttributeNames:{
+        "#groupname": "name", //name is a reserved keyword
+        "#groupdesc": "desc"  //desc is a reserved keyword
+      },
+      UpdateExpression: "set #groupname=:n, #groupdesc=:d",
+      ExpressionAttributeValues:{
+          ":n": parsedEvent.name,
+          ":d": parsedEvent.desc
+      }   
+    };
+  
+    dynamoDb.update(params, (err, data) => {
+      if (err)
+        console.log(err);
     });
   };
   
+  module.exports.deleteGroup = (event, context, callback) => {
+    const AWS = require('aws-sdk');
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  
+    const stringedEvent = JSON.stringify(event);
+    const parsedEvent = JSON.parse(stringedEvent);
+    
+    const params = {
+      TableName: 'group',
+      Key:{
+        "groupId": parsedEvent.groupId
+      },
+      ConditionExpression:"groupId = :val",
+      ExpressionAttributeValues: {
+          ":val": parsedEvent.groupId
+      }
+    };
+  
+    dynamoDb.delete(params, (err, data) => {
+      if (err)
+        console.log(err);
+    });
+  };
+  
+  //READ MODE LAMBDAs
+
   module.exports.readGroup = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -248,106 +311,7 @@ module.exports.pushEventGroupToSQS = (event, context, callback) => {
     });
   };
   
-  module.exports.updateGroup = (event, context, callback) => {
-    const AWS = require('aws-sdk');
-    const dynamoDb = new AWS.DynamoDB.DocumentClient();
-    const utils = require('./utils.js');
-  
-    const stringedEvent = JSON.stringify(event);
-    const parsedEvent = JSON.parse(stringedEvent);
-  
-    const params = {
-      TableName: 'group',
-      Key: {
-        "groupId":  parsedEvent.groupId
-      },
-      ExpressionAttributeNames:{
-        "#groupname": "name", //name is a reserved keyword
-        "#groupdesc": "desc"  //desc is a reserved keyword
-      },
-      UpdateExpression: "set #groupname=:n, #groupdesc=:d",
-      ExpressionAttributeValues:{
-          ":n": parsedEvent.name,
-          ":d": parsedEvent.desc
-      }   
-    };
-  
-    dynamoDb.update(params, (err, data) => {
-      if (err)
-        console.log(err);
-      else{
-        console.log('Group successfully updated');
-  
-        const item = {
-          eventId: utils.generateUUID(),
-          aggregate: "group",
-          lambda: "serverless-user-management-dev-updateGroup",
-          timestamp: Date.now(),
-          payload: event
-        }
-  
-        const eventSourcingParams = {
-          TableName: 'eventStore',
-          Item: item
-        };
-  
-        dynamoDb.put(eventSourcingParams, (error, data) => {
-          if (error)
-            console.log(error);
-          else
-            console.log('Event successfully stored');
-        });
-      }
-    });
-  };
-  
-  module.exports.deleteGroup = (event, context, callback) => {
-    const AWS = require('aws-sdk');
-    const dynamoDb = new AWS.DynamoDB.DocumentClient();
-    const utils = require('./utils.js');
-  
-    const stringedEvent = JSON.stringify(event);
-    const parsedEvent = JSON.parse(stringedEvent);
-    
-    const params = {
-      TableName: 'group',
-      Key:{
-        "groupId": parsedEvent.groupId
-      },
-      ConditionExpression:"groupId = :val",
-      ExpressionAttributeValues: {
-          ":val": parsedEvent.groupId
-      }
-    };
-  
-    dynamoDb.delete(params, (err, data) => {
-      if (err)
-        console.log(err);
-      else{
-        console.log('Group successfully deleted');
-  
-        const item = {
-          eventId: utils.generateUUID(),
-          aggregate: "group",
-          lambda: "serverless-user-management-dev-deleteGroup",
-          timestamp: Date.now(),
-          payload: event
-        }
-  
-        const eventSourcingParams = {
-          TableName: 'eventStore',
-          Item: item
-        };
-  
-        dynamoDb.put(eventSourcingParams, (error, data) => {
-          if (error)
-            console.log(error);
-          else
-            console.log('Event successfully stored');
-        });
-      }
-    });
-  };
+ 
   
   
   

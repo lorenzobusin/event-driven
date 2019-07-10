@@ -43,14 +43,15 @@ module.exports.invokeLambdas = async (arrayEvent) => {
   const LAMBDA = new AWS.Lambda();
 
   for(var i = 0; i < arrayEvent.length; i++){
-   var params = {
-     FunctionName: arrayEvent[i].lambda, 
-     InvocationType: "Event", 
-     LogType: "Tail", 
-     Payload: JSON.stringify(arrayEvent[i].payload)
-   };
+    delete arrayEvent[i].payload.typeEvent;
+    var params = {
+      FunctionName: arrayEvent[i].lambda, 
+      InvocationType: "Event", 
+      LogType: "Tail", 
+      Payload: JSON.stringify(arrayEvent[i].payload)
+    };
    
-   await LAMBDA.invoke(params).promise();
+    await LAMBDA.invoke(params).promise();
  };
 };
 

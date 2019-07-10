@@ -50,7 +50,7 @@
       </li>
       <li>
         <div class="dropdown">
-            <a href="GROUP.html" class="dropitem active">Groups</a>
+            <a href="GROUP.html" class="dropitem">Groups</a>
             <div class="dropdown-content">
               <a href="CREATE_group.html">Create</a>
               <a href="READ_group.html">Read</a>
@@ -61,27 +61,25 @@
       </li>
       <li>
         <div class="dropdown">
-          <a href="RECOVERY.html" class="dropitem">Recovery</a>
+          <a href="RECOVERY.html" class="dropitem active">Recovery</a>
         </div>
       </li>
     </ul>
   </div>
 
-  <h3 class="index_title">GROUP TAB</h3>
-  <div class="index_aggregate">
-    <div class="row">
-        <div class="col-md-12">
-              <a href="CREATE_group.html"><button class="button button1"><span>CREATE </span></button></a>
-              <a href="READ_group.html"><button class="button button2"><span>READ </span></button></a>
+  <div class="row form-section">
+      <form class="form col-md-4" id="RECOVERY">
+        <div class="form-group">
+            <h3 class="crud_title">RECOVERY FROM</h3>
+            <label>eventId</label>
+            <input type="text" class="form-control" name="eventId" id="RECOVERY_eventId"/>
+            <button class="btn btn-success">Recovery</button>
+            <span class="messageSuccess" id='messageSuccessRECOVERY'></span>
         </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <a href="UPDATE_group.html"><button class="button button3"><span>UPDATE </span></button></a>
-        <a href="DELETE_group.html"><button class="button button4"><span>DELETE </span></button></a>
-      </div>
-    </div>
+      </form>
   </div>
+
+  <script type="text/javascript" src="js/RECOVERY.js" charset="utf-8"></script>
 
   </body>
 </html>

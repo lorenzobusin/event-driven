@@ -37,7 +37,7 @@
           "desc": bodyParsed.body.desc
         };
 
-        lambdaName = "serverless-user-management-dev-crateGroup";
+        lambdaName = "serverless-user-management-dev-createGroup";
       }
       break;
   

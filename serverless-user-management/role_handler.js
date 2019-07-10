@@ -37,7 +37,7 @@ module.exports.commandRole = (event, context, callback) => {
         "desc": bodyParsed.body.desc
       };
 
-      lambdaName = "serverless-user-management-dev-crateRole";
+      lambdaName = "serverless-user-management-dev-createRole";
     }
     break;
 

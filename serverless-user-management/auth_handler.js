@@ -37,7 +37,7 @@
           "desc": bodyParsed.body.desc
         };
 
-        lambdaName = "serverless-user-management-dev-crateAuth";
+        lambdaName = "serverless-user-management-dev-createAuth";
       }
       break;
   

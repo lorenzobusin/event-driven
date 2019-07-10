@@ -37,7 +37,7 @@ module.exports.commandUser = (event, context, callback) => {
         "desc": bodyParsed.body.desc
       };
 
-      lambdaName = "serverless-user-management-dev-crateUser";
+      lambdaName = "serverless-user-management-dev-createUser";
     }
     break;
 

@@ -305,8 +305,8 @@ functions:
 
 # ------------------------------- EVENT SOURCING FUNCTIONS ------------------------------- #
 
-  mediatorRecovery: 
-    handler: handler.mediatorRecovery
+  recovery: 
+    handler: handler.recovery
     timeout: 10
     events: 
       - http:

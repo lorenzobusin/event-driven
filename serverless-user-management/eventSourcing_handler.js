@@ -1,5 +1,60 @@
 
-module.exports.mediatorRecovery = (event, context, callback) => {
+module.exports.mediator = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const LAMBDA = new AWS.Lambda();
+  var typeAggregate, payload, mediatorLambda;
+
+  try{
+    typeAggregate = event.Records[0].dynamodb.NewImage.aggregate.S; //read type of aggregate from event
+    payload = JSON.stringify(event.Records[0].dynamodb.NewImage.payload.M);
+  }catch (e) {
+    payload = "";
+    console.log(e);
+  }
+
+  if(payload == "")
+    return "Empty payload"
+  else{
+    switch(typeAggregate){
+      case("user"): {
+        mediatorLambda = "serverless-user-management-dev-mediatorUser";
+      }
+      break;
+
+      case("role"): {
+        mediatorLambda = "serverless-user-management-dev-mediatorRole";
+      }
+      break;
+
+      case("group"): {
+        mediatorLambda = "serverless-user-management-dev-mediatorGroup";
+      }
+      break;
+
+      case("auth"): {
+        mediatorLambda = "serverless-user-management-dev-mediatorAuth";
+      }
+      break;
+
+      default:
+          console.log("Undefined type event");
+    }
+  }
+
+  const params = {
+    FunctionName: mediatorLambda, 
+    InvocationType: "Event", 
+    LogType: "Tail", 
+    Payload: payload //only string type
+   };
+
+  LAMBDA.invoke(params, function(err, data) {
+    if (err)
+      console.log(err);
+  });
+};
+
+module.exports.recovery = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
@@ -73,54 +128,5 @@ module.exports.clearDB = (event, context, callback) => {
 
 };
 
-
-
-module.exports.mediator = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const LAMBDA = new AWS.Lambda();
-  console.log("event: " + JSON.stringify(event));
-
-  const typeAggregate = event.Records[0].dynamodb.NewImage.aggregate.S; //read type of aggregate from event
-  const payload = JSON.stringify(event.Records[0].dynamodb.NewImage.payload.M);
-  var mediatorLambda;
-  console.log("type: " + typeAggregate);
-
-  switch(typeAggregate){
-    case("user"): {
-      mediatorLambda = "serverless-user-management-dev-mediatorUser";
-    }
-    break;
-
-    case("role"): {
-      mediatorLambda = "serverless-user-management-dev-mediatorRole";
-    }
-    break;
-
-    case("group"): {
-      mediatorLambda = "serverless-user-management-dev-mediatorGroup";
-    }
-    break;
-
-    case("auth"): {
-      mediatorLambda = "serverless-user-management-dev-mediatorAuth";
-    }
-    break;
-
-    default:
-        console.log("Undefined type event");
-  }
-
-  const params = {
-    FunctionName: mediatorLambda, 
-    InvocationType: "Event", 
-    LogType: "Tail", 
-    Payload: payload //only string type
-   };
-
-  LAMBDA.invoke(params, function(err, data) {
-    if (err)
-      console.log(err);
-  });
-};
 
 

@@ -4,7 +4,7 @@ const recovery = document.getElementById('RECOVERY');
 recovery.addEventListener('submit', function(e){
   e.preventDefault();
   
-  fetch(linkGroupAPI_POST, {
+  fetch(linkRecovery_POST, {
     method: "post",
     headers: {
       'Accept': 'application/json',
@@ -12,13 +12,13 @@ recovery.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "eventId": document.getElementById('RECOVERY_eventId').value.trim()
+      "timestamp": document.getElementById('RECOVERY_timestamp').value.trim()
     })
   });
 
   document.getElementById('messageSuccessRECOVERY').style.color = 'green';
   document.getElementById('messageSuccessRECOVERY').innerHTML = 'Recovery completed';
 
-  document.getElementById('RECOVERY_eventId').value = "";
+  document.getElementById('RECOVERY_timestamp').value = "";
   
 });

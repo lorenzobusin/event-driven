@@ -43,7 +43,7 @@ module.exports.invokeLambdas = async (arrayEvent) => {
   const LAMBDA = new AWS.Lambda();
 
   for(var i = 0; i < arrayEvent.length; i++){
-    delete arrayEvent[i].payload.typeEvent;
+    delete arrayEvent[i].payload.typeEvent; //delete typeEvent from attributes
     var params = {
       FunctionName: arrayEvent[i].lambda, 
       InvocationType: "Event", 

@@ -66,7 +66,10 @@ module.exports.recovery = (event, context, callback) => {
       "#eventaggregate": "aggregate" //aggregate is a reserved keyword 
     },
     ProjectionExpression: "#eventtimestamp, #eventaggregate, payload, lambda",
-    ScanIndexForward: true
+    FilterExpression: "#eventtimestamp >= :timest",
+    ExpressionAttributeValues: {
+      ":timest": parseInt(event.body.timestamp, 10)
+    }
   };
 
   dynamoDb.scan(queryParams, (err, data) => {
@@ -85,6 +88,8 @@ module.exports.recovery = (event, context, callback) => {
           if (a1 > b1) return 1;
           return 0;
         });
+
+        console.log(events);
 
         utils.invokeLambdas(events); 
         }

@@ -1,0 +1,232 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "APINestedStack nested stack",
+  "Parameters": {
+    "ApiGatewayRestApiParameter": {
+      "Type": "String"
+    },
+    "ApiGatewayRestApiRootResourceIdParameter": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "ApiGatewayResourcePushcreateauthtosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushcreateauthtosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushcreategrouptosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushcreategrouptosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushcreateroletosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushcreateroletosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushdeleteauthtosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushdeleteauthtosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushdeletegrouptosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushdeletegrouptosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushdeleteroletosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushdeleteroletosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushupdateauthtosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushupdateauthtosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushupdategrouptosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushupdategrouptosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushupdateroletosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushupdateroletosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushcreateusertosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushcreateusertosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushupdateusertosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushupdateusertosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushdeleteusertosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushdeleteusertosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    }
+  },
+  "Outputs": {
+    "ApiGatewayResourcePushcreateusertosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushcreateusertosqs"
+      }
+    },
+    "ApiGatewayResourcePushupdateusertosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushupdateusertosqs"
+      }
+    },
+    "ApiGatewayResourcePushdeleteusertosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushdeleteusertosqs"
+      }
+    },
+    "ApiGatewayResourcePushcreateroletosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushcreateroletosqs"
+      }
+    },
+    "ApiGatewayResourcePushupdateroletosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushupdateroletosqs"
+      }
+    },
+    "ApiGatewayResourcePushdeleteroletosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushdeleteroletosqs"
+      }
+    },
+    "ApiGatewayResourcePushcreateauthtosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushcreateauthtosqs"
+      }
+    },
+    "ApiGatewayResourcePushupdateauthtosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushupdateauthtosqs"
+      }
+    },
+    "ApiGatewayResourcePushdeleteauthtosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushdeleteauthtosqs"
+      }
+    },
+    "ApiGatewayResourcePushcreategrouptosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushcreategrouptosqs"
+      }
+    },
+    "ApiGatewayResourcePushupdategrouptosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushupdategrouptosqs"
+      }
+    },
+    "ApiGatewayResourcePushdeletegrouptosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushdeletegrouptosqs"
+      }
+    }
+  }
+}

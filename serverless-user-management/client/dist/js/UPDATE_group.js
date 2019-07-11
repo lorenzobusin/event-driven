@@ -3,7 +3,7 @@
 const updateGroup = document.getElementById('UPDATE_GROUP');
 updateGroup.addEventListener('submit', function(e){
   e.preventDefault();
-    fetch(linkGroupAPI_POST, {
+    fetch(linkUpdateGroupAPI_POST, {
       method: "post",
       headers: {
         'Accept': 'application/json',

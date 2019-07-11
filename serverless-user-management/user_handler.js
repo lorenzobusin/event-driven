@@ -1,23 +1,52 @@
-module.exports.pushEventUserToSQS = (event, context, callback) => {
+module.exports.pushCreateUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
   const stringedEvent = JSON.stringify(event);
 
   const params = {
     MessageBody: stringedEvent,
-    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/userQueue"
+    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createUserQueue"
   };
 
   SQS.sendMessage(params, function(err,data){
-    if(err) {
+    if(err)
       console.log(err);
-    }else{
-      console.log('userEvent successfully put in userQueue');
-    }
   });
 };
 
-module.exports.commandUser = (event, context, callback) => {
+module.exports.pushUpdateUserToSQS = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const SQS = new AWS.SQS();
+  const stringedEvent = JSON.stringify(event);
+
+  const params = {
+    MessageBody: stringedEvent,
+    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateUserQueue"
+  };
+
+  SQS.sendMessage(params, function(err,data){
+    if(err)
+      console.log(err);
+  });
+};
+
+module.exports.pushDeleteUserToSQS = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const SQS = new AWS.SQS();
+  const stringedEvent = JSON.stringify(event);
+
+  const params = {
+    MessageBody: stringedEvent,
+    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/deleteUserQueue"
+  };
+
+  SQS.sendMessage(params, function(err,data){
+    if(err)
+      console.log(err);
+  });
+};
+
+module.exports.commandCreateUser = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
@@ -26,46 +55,90 @@ module.exports.commandUser = (event, context, callback) => {
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
-  var item, lambdaName;
+  const lambdaName= "serverless-user-management-dev-createUser";
 
   //check event
-  switch(bodyParsed.body.typeEvent){
-    case("C"): {
-      const groupParams = {
-        "groupId": bodyParsed.body.groupId,
-        "name": bodyParsed.body.name,
-        "desc": bodyParsed.body.desc
-      };
+  //TODO: crypt password
+  const userParams = {
+    "groupId": bodyParsed.body.groupId,
+    "name": bodyParsed.body.name,
+    "desc": bodyParsed.body.desc
+  };
 
-      lambdaName = "serverless-user-management-dev-createUser";
-    }
-    break;
+  const item = {
+    eventId: utils.generateUUID(),
+    aggregate: "user",
+    lambda: lambdaName,
+    timestamp: Date.now(),
+    payload: bodyParsed.body
+  };
 
-    case("U"): {
-      const groupParams = {
-        "groupId": bodyParsed.body.groupId,
-        "name": bodyParsed.body.name,
-        "desc": bodyParsed.body.desc
-      };
+  const eventSourcingParams = {
+    TableName: 'eventStore',
+    Item: item
+  };
 
-      lambdaName = "serverless-user-management-dev-updateUser";
-    }
-    break;
+  dynamoDb.put(eventSourcingParams, (error, data) => {
+    if (error)
+      console.log(error);
+  });
+};
 
-    case("D"): {
-      const groupParams = {
-        "groupId": bodyParsed.body.groupId
-      };
+module.exports.commandUpdateUser = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  const utils = require('./utils.js');
 
-      lambdaName = "serverless-user-management-dev-deleteUser";
-    }
-    break;
-    
-    default:
-      console.log("Undefined type event");
-  }
+  const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
+  const eventParsed = JSON.parse(stringedEvent);
+  const stringedBody = JSON.stringify(eventParsed);
+  const bodyParsed = JSON.parse(stringedBody);
+  const lambdaName= "serverless-user-management-dev-updateUser";
 
-  item = {
+  //check event
+  //TODO: crypt password
+  const userParams = {
+    "groupId": bodyParsed.body.groupId,
+    "name": bodyParsed.body.name,
+    "desc": bodyParsed.body.desc
+  };
+
+  const item = {
+    eventId: utils.generateUUID(),
+    aggregate: "user",
+    lambda: lambdaName,
+    timestamp: Date.now(),
+    payload: bodyParsed.body
+  };
+
+  const eventSourcingParams = {
+    TableName: 'eventStore',
+    Item: item
+  };
+
+  dynamoDb.put(eventSourcingParams, (error, data) => {
+    if (error)
+      console.log(error);
+  });
+};
+
+module.exports.commandDeleteUser = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  const utils = require('./utils.js');
+
+  const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
+  const eventParsed = JSON.parse(stringedEvent);
+  const stringedBody = JSON.stringify(eventParsed);
+  const bodyParsed = JSON.parse(stringedBody);
+  const lambdaName= "serverless-user-management-dev-deleteUser";
+
+  //check event
+  const userParams = {
+    "groupId": bodyParsed.body.groupId
+  };
+
+  const item = {
     eventId: utils.generateUUID(),
     aggregate: "user",
     lambda: lambdaName,
@@ -92,17 +165,17 @@ module.exports.mediatorUser = (event, context, callback) => {
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
 
-  switch(parsedEvent.typeEvent.S){
+  switch(parsedEvent.typeEvent){
     case("C"): {
       const userParams = {
-        "userId": parsedEvent.userId.S,
-        "firstName": parsedEvent.firstName.S,
-        "lastName": parsedEvent.lastName.S,
-        "date": parsedEvent.date.S,
-        "role": parsedEvent.role.S,
-        "group": parsedEvent.group.S,
-        "email": parsedEvent.email.S,
-        "password": utils.encrypt(parsedEvent.password.S)
+        "userId": parsedEvent.userId,
+        "firstName": parsedEvent.firstName,
+        "lastName": parsedEvent.lastName,
+        "date": parsedEvent.date,
+        "role": parsedEvent.role,
+        "group": parsedEvent.group,
+        "email": parsedEvent.email,
+        "password": utils.encrypt(parsedEvent.password)
       };
 
       var params = {
@@ -121,14 +194,14 @@ module.exports.mediatorUser = (event, context, callback) => {
 
     case("U"): {
       const userParams = {
-        "userId": parsedEvent.userId.S,
-        "firstName": parsedEvent.firstName.S,
-        "lastName": parsedEvent.lastName.S,
-        "date": parsedEvent.date.S,
-        "role": parsedEvent.role.S,
-        "group": parsedEvent.group.S,
-        "email": parsedEvent.email.S,
-        "password": utils.encrypt(parsedEvent.password.S)
+        "userId": parsedEvent.userId,
+        "firstName": parsedEvent.firstName,
+        "lastName": parsedEvent.lastName,
+        "date": parsedEvent.date,
+        "role": parsedEvent.role,
+        "group": parsedEvent.group,
+        "email": parsedEvent.email,
+        "password": utils.encrypt(parsedEvent.password)
       };
 
       var params = {
@@ -147,7 +220,7 @@ module.exports.mediatorUser = (event, context, callback) => {
 
     case("D"): {
       const userParams = {
-        "userId": parsedEvent.userId.S
+        "userId": parsedEvent.userId
       };
 
       var params = {

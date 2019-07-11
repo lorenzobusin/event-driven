@@ -5,7 +5,7 @@ updateUser.addEventListener('submit', function(e){
   e.preventDefault();
 
   if(document.getElementById('UPDATE_password').value == document.getElementById('UPDATE_confirmPassword').value){
-    fetch(linkUserAPI_POST, {
+    fetch(linkUpdateUserAPI_POST, {
       method: "post",
       headers: {
         'Accept': 'application/json',

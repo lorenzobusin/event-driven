@@ -2,12 +2,16 @@ service: serverless-user-management
 
 plugins:
  # - serverless-finch  #plugin to create html app
+ - serverless-plugin-split-stacks #to avoid the limit of 200 resources
 
 custom:
   client:
     bucketName: serverless-bucket-s3-public
     indexDocument: index.html
     errorDocument: error.html
+  splitStacks:
+    perFunction: false
+    perType: true
 
 provider:
   name: aws
@@ -111,11 +115,23 @@ resources:
 
 functions:
   # ------------------------------- USER FUNCTIONS ------------------------------- #
-  commandUser:
-    handler: handler.commandUser
+  commandCreateUser:
+    handler: handler.commandCreateUser
     events:
       - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:userQueue #set ARN of an existing queue
+          arn: arn:aws:sqs:eu-central-1:582373673306:createUserQueue #set ARN of an existing queue
+
+  commandUpdateUser:
+    handler: handler.commandUpdateUser
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateUserQueue 
+
+  commandDeleteUser:
+    handler: handler.commandDeleteUser
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:deleteUserQueue 
 
   mediatorUser:
     handler: handler.mediatorUser
@@ -141,22 +157,52 @@ functions:
             template:
               application/json: '{ "userId": "$input.params("userId")" }'
 
-  pushEventUserToSQS: 
-    handler: handler.pushEventUserToSQS 
+  pushCreateUserToSQS: 
+    handler: handler.pushCreateUserToSQS 
     events: 
       - http:
-          path: /pusheventusertosqs
+          path: /pushcreateusertosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushUpdateUserToSQS: 
+    handler: handler.pushUpdateUserToSQS 
+    events: 
+      - http:
+          path: /pushupdateusertosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushDeleteUserToSQS: 
+    handler: handler.pushDeleteUserToSQS 
+    events: 
+      - http:
+          path: /pushdeleteusertosqs
           method: post
           cors: true
           integration: lambda
 
   # ------------------------------- ROLE FUNCTIONS ------------------------------- #
 
-  commandRole:
-    handler: handler.commandRole
+  commandCreateRole:
+    handler: handler.commandCreateRole
     events:
       - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:roleQueue #create new queue and set the ARN
+          arn: arn:aws:sqs:eu-central-1:582373673306:createRoleQueue #create new queue and set the ARN
+
+  commandUpdateRole:
+    handler: handler.commandUpdateRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateRoleQueue 
+
+  commandDeleteRole:
+    handler: handler.commandDeleteRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:deleteRoleQueue 
 
   mediatorRole:
     handler: handler.mediatorRole
@@ -194,22 +240,52 @@ functions:
           cors: true
           integration: lambda
 
-  pushEventRoleToSQS: 
-    handler: handler.pushEventRoleToSQS 
+  pushCreateRoleToSQS: 
+    handler: handler.pushCreateRoleToSQS 
     events: 
       - http:
-          path: /pusheventroletosqs
+          path: /pushcreateroletosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushUpdateRoleToSQS: 
+    handler: handler.pushUpdateRoleToSQS 
+    events: 
+      - http:
+          path: /pushupdateroletosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushDeleteRoleToSQS: 
+    handler: handler.pushDeleteRoleToSQS 
+    events: 
+      - http:
+          path: /pushdeleteroletosqs
           method: post
           cors: true
           integration: lambda
 
   # ------------------------------- AUTHORIZATION FUNCTIONS ------------------------------- #
 
-  commandAuth:
-    handler: handler.commandAuth
+  commandCreateAuth:
+    handler: handler.commandCreateAuth
     events:
       - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:authQueue #create new queue and set the ARN
+          arn: arn:aws:sqs:eu-central-1:582373673306:createAuthQueue #create new queue and set the ARN
+  
+  commandUpdateAuth:
+    handler: handler.commandUpdateAuth
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateAuthQueue
+
+  commandDeleteAuth:
+    handler: handler.commandDeleteAuth
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:deleteAuthQueue
 
   mediatorAuth:
     handler: handler.mediatorAuth
@@ -244,22 +320,52 @@ functions:
           cors: true
           integration: lambda
 
-  pushEventAuthToSQS: 
-    handler: handler.pushEventAuthToSQS 
+  pushCreateAuthToSQS: 
+    handler: handler.pushCreateAuthToSQS 
     events: 
       - http:
-          path: /pusheventauthtosqs
+          path: /pushcreateauthtosqs
+          method: post
+          cors: true
+          integration: lambda
+    
+  pushUpdateAuthToSQS: 
+    handler: handler.pushUpdateAuthToSQS 
+    events: 
+      - http:
+          path: /pushupdateauthtosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushDeleteAuthToSQS: 
+    handler: handler.pushDeleteAuthToSQS 
+    events: 
+      - http:
+          path: /pushdeleteauthtosqs
           method: post
           cors: true
           integration: lambda
 
   # ------------------------------- GROUP FUNCTIONS ------------------------------- #
 
-  commandGroup:
-    handler: handler.commandGroup
+  commandCreateGroup:
+    handler: handler.commandCreateGroup
     events:
       - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:groupQueue #create new queue and set the ARN
+          arn: arn:aws:sqs:eu-central-1:582373673306:createGroupQueue #create new queue and set the ARN
+
+  commandUpdateGroup:
+    handler: handler.commandUpdateGroup
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateGroupQueue 
+    
+  commandDeleteGroup:
+    handler: handler.commandDeleteGroup
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:deleteGroupQueue 
 
   mediatorGroup:
     handler: handler.mediatorGroup
@@ -294,11 +400,29 @@ functions:
           cors: true
           integration: lambda
 
-  pushEventGroupToSQS: 
-    handler: handler.pushEventGroupToSQS 
+  pushCreateGroupToSQS: 
+    handler: handler.pushCreateGroupToSQS 
     events: 
       - http:
-          path: /pusheventgrouptosqs
+          path: /pushcreategrouptosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushUpdateGroupToSQS: 
+    handler: handler.pushUpdateGroupToSQS 
+    events: 
+      - http:
+          path: /pushupdategrouptosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushDeleteGroupToSQS: 
+    handler: handler.pushDeleteGroupToSQS 
+    events: 
+      - http:
+          path: /pushdeletegrouptosqs
           method: post
           cors: true
           integration: lambda
@@ -319,9 +443,6 @@ functions:
     handler: handler.mediator
     events:
         - stream: arn:aws:dynamodb:eu-central-1:582373673306:table/eventStore/stream/2019-07-10T08:02:22.059 #set the ARN of dynamodb stream
-
-  clearDB:
-    handler: handler.clearDB
     
     
 

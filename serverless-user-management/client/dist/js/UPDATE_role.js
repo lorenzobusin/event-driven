@@ -8,7 +8,7 @@ updateRole.addEventListener('submit', function(e){
   document.getElementById('UPDATE_auth').value = str.substring(0, str.length - 1) //remove last character to validate JSON
   document.getElementById('UPDATE_auth').value += (" ] }"); //close brackets JSON
 
-  fetch(linkRoleAPI_POST, {
+  fetch(linkUpdateRoleAPI_POST, {
     method: "post",
     headers: {
       'Accept': 'application/json',

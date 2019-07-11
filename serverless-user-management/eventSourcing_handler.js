@@ -2,11 +2,13 @@
 module.exports.mediator = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const LAMBDA = new AWS.Lambda();
+  const parser = AWS.DynamoDB.Converter;
   var typeAggregate, payload, mediatorLambda;
 
   try{
-    typeAggregate = event.Records[0].dynamodb.NewImage.aggregate.S; //read type of aggregate from event
-    payload = JSON.stringify(event.Records[0].dynamodb.NewImage.payload.M);
+    const parsedEvent = parser.unmarshall(event.Records[0].dynamodb.NewImage); //convert dynamodb event to js object
+    typeAggregate =parsedEvent.aggregate; //read type of aggregate from event
+    payload = JSON.stringify(parsedEvent.payload);
   }catch (e) {
     payload = "";
     console.log(e);
@@ -97,41 +99,6 @@ module.exports.recovery = (event, context, callback) => {
   });
 };
 
-
-module.exports.clearDB = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const LAMBDA = new AWS.Lambda();
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-  const utils = require('./utils.js');
-
- /* var params = {
-    FunctionName: "serverless-user-management-dev-deleteAllRoles", 
-    InvocationType: "Event", 
-    LogType: "Tail", 
-    Payload: ""
-  };
-
-  LAMBDA.invoke(params, function(err, data) {
-  });*/
-
-  //PUT RECOVERY EVENT INTO eventStore
-  const item = {
-    eventId: utils.generateUUID(),
-    aggregate: "recovery",
-    lambda: "serverless-user-management-dev-clearDB",
-    timestamp: Date.now(),
-    payload: "null"
-  }
-
-  const eventSourcingParams = {
-    TableName: 'eventStore',
-    Item: item
-  };
-
-  dynamoDb.put(eventSourcingParams, (error, data) => {
-  });
-
-};
 
 
 

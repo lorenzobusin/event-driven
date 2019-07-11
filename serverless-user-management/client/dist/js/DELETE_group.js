@@ -3,7 +3,7 @@ const deleteGroup = document.getElementById('DELETE_GROUP');
 deleteGroup.addEventListener('submit', function(e){
   e.preventDefault();
 
-  fetch(linkGroupAPI_POST, {
+  fetch(linkDeleteGroupAPI_POST, {
     method: "post",
     headers: {
       'Accept': 'application/json',

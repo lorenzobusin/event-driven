@@ -4,7 +4,7 @@ const createAuth = document.getElementById('CREATE_AUTH');
 createAuth.addEventListener('submit', function(e){
   e.preventDefault();
   
-  fetch(linkAuthAPI_POST, {
+  fetch(linkCreateAuthAPI_POST, {
     method: "post",
     headers: {
       'Accept': 'application/json',

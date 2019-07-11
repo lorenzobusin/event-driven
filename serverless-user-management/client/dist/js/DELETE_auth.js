@@ -3,7 +3,7 @@ const deleteAuth = document.getElementById('DELETE_AUTH');
 deleteAuth.addEventListener('submit', function(e){
   e.preventDefault();
 
-  fetch(linkAuthAPI_POST, {
+  fetch(linkDeleteAuthAPI_POST, {
     method: "post",
     headers: {
       'Accept': 'application/json',

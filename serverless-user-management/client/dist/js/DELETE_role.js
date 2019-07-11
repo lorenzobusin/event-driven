@@ -3,7 +3,7 @@ const deleteRole = document.getElementById('DELETE_ROLE');
 deleteRole.addEventListener('submit', function(e){
   e.preventDefault();
 
-  fetch(linkRoleAPI_POST, {
+  fetch(linkDeleteRoleAPI_POST, {
     method: "post",
     headers: {
       'Accept': 'application/json',

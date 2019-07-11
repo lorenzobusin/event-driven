@@ -1,23 +1,52 @@
-  module.exports.pushEventGroupToSQS = (event, context, callback) => {
+  module.exports.pushCreateGroupToSQS = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const SQS = new AWS.SQS();
     const stringedEvent = JSON.stringify(event);
   
     const params = {
       MessageBody: stringedEvent,
-      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/groupQueue"
+      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createGroupQueue"
     };
   
     SQS.sendMessage(params, function(err,data){
-      if(err) {
+      if(err)
         console.log(err);
-      }else{
-        console.log('groupEvent successfully put in groupQueue');
-      }
     });
   };
 
-  module.exports.commandGroup = (event, context, callback) => {
+  module.exports.pushUpdateGroupToSQS = (event, context, callback) => {
+    const AWS = require('aws-sdk');
+    const SQS = new AWS.SQS();
+    const stringedEvent = JSON.stringify(event);
+  
+    const params = {
+      MessageBody: stringedEvent,
+      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateGroupQueue"
+    };
+  
+    SQS.sendMessage(params, function(err,data){
+      if(err)
+        console.log(err);
+    });
+  };
+
+  module.exports.pushDeleteGroupToSQS = (event, context, callback) => {
+    const AWS = require('aws-sdk');
+    const SQS = new AWS.SQS();
+    const stringedEvent = JSON.stringify(event);
+  
+    const params = {
+      MessageBody: stringedEvent,
+      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/deleteGroupQueue"
+    };
+  
+    SQS.sendMessage(params, function(err,data){
+      if(err)
+        console.log(err);
+    });
+  };
+
+  module.exports.commandCreateGroup = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
     const utils = require('./utils.js');
@@ -26,46 +55,88 @@
     const eventParsed = JSON.parse(stringedEvent);
     const stringedBody = JSON.stringify(eventParsed);
     const bodyParsed = JSON.parse(stringedBody);
-    var item, lambdaName;
+    const lambdaName = "serverless-user-management-dev-createGroup";
 
     //check event
-    switch(bodyParsed.body.typeEvent){
-      case("C"): {
-        const groupParams = {
-          "groupId": bodyParsed.body.groupId,
-          "name": bodyParsed.body.name,
-          "desc": bodyParsed.body.desc
-        };
+    const groupParams = {
+      "groupId": bodyParsed.body.groupId,
+      "name": bodyParsed.body.name,
+      "desc": bodyParsed.body.desc
+    };
 
-        lambdaName = "serverless-user-management-dev-createGroup";
-      }
-      break;
-  
-      case("U"): {
-        const groupParams = {
-          "groupId": bodyParsed.body.groupId,
-          "name": bodyParsed.body.name,
-          "desc": bodyParsed.body.desc
-        };
+    const item = {
+      eventId: utils.generateUUID(),
+      aggregate: "group",
+      lambda: lambdaName,
+      timestamp: Date.now(),
+      payload: bodyParsed.body
+    };
 
-        lambdaName = "serverless-user-management-dev-updateGroup";
-      }
-      break;
-  
-      case("D"): {
-        const groupParams = {
-          "groupId": bodyParsed.body.groupId
-        };
+    const eventSourcingParams = {
+      TableName: 'eventStore',
+      Item: item
+    };
 
-        lambdaName = "serverless-user-management-dev-deleteGroup";
-      }
-      break;
-      
-      default:
-        console.log("Undefined type event");
-    }
+    dynamoDb.put(eventSourcingParams, (error, data) => {
+      if (error)
+        console.log(error);
+    });
+  };
 
-    item = {
+  module.exports.commandUpdateGroup = (event, context, callback) => {
+    const AWS = require('aws-sdk');
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const utils = require('./utils.js');
+
+    const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
+    const eventParsed = JSON.parse(stringedEvent);
+    const stringedBody = JSON.stringify(eventParsed);
+    const bodyParsed = JSON.parse(stringedBody);
+    const lambdaName = "serverless-user-management-dev-updateGroup";
+
+    //check event
+    const groupParams = {
+      "groupId": bodyParsed.body.groupId,
+      "name": bodyParsed.body.name,
+      "desc": bodyParsed.body.desc
+    };
+
+    const item = {
+      eventId: utils.generateUUID(),
+      aggregate: "group",
+      lambda: lambdaName,
+      timestamp: Date.now(),
+      payload: bodyParsed.body
+    };
+
+    const eventSourcingParams = {
+      TableName: 'eventStore',
+      Item: item
+    };
+
+    dynamoDb.put(eventSourcingParams, (error, data) => {
+      if (error)
+        console.log(error);
+    });
+  };
+
+  module.exports.commandDeleteGroup = (event, context, callback) => {
+    const AWS = require('aws-sdk');
+    const dynamoDb = new AWS.DynamoDB.DocumentClient();
+    const utils = require('./utils.js');
+
+    const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
+    const eventParsed = JSON.parse(stringedEvent);
+    const stringedBody = JSON.stringify(eventParsed);
+    const bodyParsed = JSON.parse(stringedBody);
+    const lambdaName = "serverless-user-management-dev-deleteGroup";
+
+    //check event
+    const groupParams = {
+      "groupId": bodyParsed.body.groupId
+    };
+
+    const item = {
       eventId: utils.generateUUID(),
       aggregate: "group",
       lambda: lambdaName,
@@ -91,12 +162,12 @@
     const stringedEvent = JSON.stringify(event);
     const parsedEvent = JSON.parse(stringedEvent);
 
-    switch(parsedEvent.typeEvent.S){
+    switch(parsedEvent.typeEvent){
       case("C"): {
         const groupParams = {
-          "groupId": parsedEvent.groupId.S,
-          "name": parsedEvent.name.S,
-          "desc": parsedEvent.desc.S
+          "groupId": parsedEvent.groupId,
+          "name": parsedEvent.name,
+          "desc": parsedEvent.desc
         };
   
         var params = {
@@ -115,9 +186,9 @@
 
       case("U"): {
         const groupParams = {
-          "groupId": parsedEvent.groupId.S,
-          "name": parsedEvent.name.S,
-          "desc": parsedEvent.desc.S
+          "groupId": parsedEvent.groupId,
+          "name": parsedEvent.name,
+          "desc": parsedEvent.desc
         };
   
         var params = {
@@ -136,7 +207,7 @@
 
       case("D"): {
         const groupParams = {
-          "groupId": parsedEvent.groupId.S
+          "groupId": parsedEvent.groupId
         };
   
         var params = {

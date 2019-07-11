@@ -4,7 +4,7 @@ const updateAuth = document.getElementById('UPDATE_AUTH');
 updateAuth.addEventListener('submit', function(e){
   e.preventDefault();
 
-  fetch(linkAuthAPI_POST, {
+  fetch(linkUpdateAuthAPI_POST, {
     method: "post",
     headers: {
       'Accept': 'application/json',

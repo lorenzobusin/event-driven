@@ -4,7 +4,7 @@ const createGroup = document.getElementById('CREATE_GROUP');
 createGroup.addEventListener('submit', function(e){
   e.preventDefault();
   
-  fetch(linkGroupAPI_POST, {
+  fetch(linkCreateGroupAPI_POST, {
     method: "post",
     headers: {
       'Accept': 'application/json',

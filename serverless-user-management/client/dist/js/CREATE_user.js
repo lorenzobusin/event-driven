@@ -4,7 +4,7 @@ const createUser = document.getElementById('CREATE_USER');
 createUser.addEventListener('submit', function(e){
   e.preventDefault();
   if(document.getElementById('CREATE_password').value == document.getElementById('CREATE_confirmPassword').value){
-    fetch(linkUserAPI_POST, {
+    fetch(linkCreateUserAPI_POST, {
       method: "post",
       headers: {
         'Accept': 'application/json',

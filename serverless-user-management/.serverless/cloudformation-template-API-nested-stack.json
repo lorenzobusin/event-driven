@@ -49,6 +49,19 @@
       },
       "DependsOn": []
     },
+    "ApiGatewayResourcePushcreateusertosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushcreateusertosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
     "ApiGatewayResourcePushdeleteauthtosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -82,6 +95,19 @@
           "Ref": "ApiGatewayRestApiRootResourceIdParameter"
         },
         "PathPart": "pushdeleteroletosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushdeleteusertosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "pushdeleteusertosqs",
         "RestApiId": {
           "Ref": "ApiGatewayRestApiParameter"
         }
@@ -127,19 +153,6 @@
       },
       "DependsOn": []
     },
-    "ApiGatewayResourcePushcreateusertosqs": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
-        },
-        "PathPart": "pushcreateusertosqs",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApiParameter"
-        }
-      },
-      "DependsOn": []
-    },
     "ApiGatewayResourcePushupdateusertosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -147,19 +160,6 @@
           "Ref": "ApiGatewayRestApiRootResourceIdParameter"
         },
         "PathPart": "pushupdateusertosqs",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApiParameter"
-        }
-      },
-      "DependsOn": []
-    },
-    "ApiGatewayResourcePushdeleteusertosqs": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
-        },
-        "PathPart": "pushdeleteusertosqs",
         "RestApiId": {
           "Ref": "ApiGatewayRestApiParameter"
         }

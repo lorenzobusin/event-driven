@@ -9,8 +9,12 @@ module.exports.pushCreateUserToSQS = (event, context, callback) => {
   };
 
   SQS.sendMessage(params, function(err,data){
-    if(err)
+    if(err){
       console.log(err);
+      callback(null, err);
+    }
+    else
+      callback(null, "User event pushed to SQS") 
   });
 };
 
@@ -25,8 +29,12 @@ module.exports.pushUpdateUserToSQS = (event, context, callback) => {
   };
 
   SQS.sendMessage(params, function(err,data){
-    if(err)
+    if(err){
       console.log(err);
+      callback(null, err);
+    }
+    else
+      callback(null, "User event pushed to SQS")
   });
 };
 
@@ -41,120 +49,90 @@ module.exports.pushDeleteUserToSQS = (event, context, callback) => {
   };
 
   SQS.sendMessage(params, function(err,data){
-    if(err)
+    if(err){
       console.log(err);
+      callback(null, err);
+    }
+    else
+      callback(null, "User event pushed to SQS")
   });
 };
 
-module.exports.commandCreateUser = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+module.exports.commandCreateUser = async (event, context, callback) => {
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
-  const lambdaName= "serverless-user-management-dev-createUser";
+  const check = bodyParsed.body;
 
-  //check event
-  //TODO: crypt password
-  const userParams = {
-    "groupId": bodyParsed.body.groupId,
-    "name": bodyParsed.body.name,
-    "desc": bodyParsed.body.desc
+  const checkEmailParams = {
+    TableName: 'user',
+    ProjectionExpression: "email",
+    FilterExpression: "email = :checkEmail",
+    ExpressionAttributeValues: {
+        ":checkEmail": check.email
+    }
   };
 
-  const item = {
-    eventId: utils.generateUUID(),
-    aggregate: "user",
-    lambda: lambdaName,
-    timestamp: Date.now(),
-    payload: bodyParsed.body
-  };
-
-  const eventSourcingParams = {
-    TableName: 'eventStore',
-    Item: item
-  };
-
-  dynamoDb.put(eventSourcingParams, (error, data) => {
-    if (error)
-      console.log(error);
-  });
+  const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
+  
+  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (!utils.validateEmail(check.email)) || (!utils.validatePassword(check.password))){
+    callback(null, "Email already exists or empty attributes");
+  }
+  else{
+    bodyParsed.body.password = utils.encrypt(bodyParsed.body.password);
+    utils.storeEvent("user", "serverless-user-management-dev-createUser", bodyParsed.body);
+    callback(null, "User event stored");
+  }
 };
 
-module.exports.commandUpdateUser = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+module.exports.commandUpdateUser = async (event, context, callback) => {
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
-  const lambdaName= "serverless-user-management-dev-updateUser";
+  const check = bodyParsed.body;
 
-  //check event
-  //TODO: crypt password
-  const userParams = {
-    "groupId": bodyParsed.body.groupId,
-    "name": bodyParsed.body.name,
-    "desc": bodyParsed.body.desc
+  const checkEmailParams = {
+    TableName: 'user',
+    ProjectionExpression: "email",
+    FilterExpression: "email = :checkEmail",
+    ExpressionAttributeValues: {
+        ":checkEmail": check.email
+    }
   };
 
-  const item = {
-    eventId: utils.generateUUID(),
-    aggregate: "user",
-    lambda: lambdaName,
-    timestamp: Date.now(),
-    payload: bodyParsed.body
-  };
-
-  const eventSourcingParams = {
-    TableName: 'eventStore',
-    Item: item
-  };
-
-  dynamoDb.put(eventSourcingParams, (error, data) => {
-    if (error)
-      console.log(error);
-  });
+  const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
+  
+  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (!utils.validateEmail(check.email)) || (!utils.validatePassword(check.password))){
+    callback(null, "Email already exists or empty attributes");
+  }
+  else{
+    bodyParsed.body.password = utils.encrypt(bodyParsed.body.password);
+    utils.storeEvent("user", "serverless-user-management-dev-updateUser", bodyParsed.body);
+    callback(null, "User event stored");
+  }
 };
 
 module.exports.commandDeleteUser = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
-  const lambdaName= "serverless-user-management-dev-deleteUser";
-
-  //check event
-  const userParams = {
-    "groupId": bodyParsed.body.groupId
-  };
-
-  const item = {
-    eventId: utils.generateUUID(),
-    aggregate: "user",
-    lambda: lambdaName,
-    timestamp: Date.now(),
-    payload: bodyParsed.body
-  };
-
-  const eventSourcingParams = {
-    TableName: 'eventStore',
-    Item: item
-  };
-
-  dynamoDb.put(eventSourcingParams, (error, data) => {
-    if (error)
-      console.log(error);
-  });
+  const check = bodyParsed.body;
+  
+  if(check.userId == "" )
+    callback(null, "Empty attribute");
+  else{
+    utils.storeEvent("user", "serverless-user-management-dev-deleteUser", bodyParsed.body);
+    callback(null, "User event stored");
+  }
 };
 
 module.exports.mediatorUser = (event, context, callback) => {
@@ -252,9 +230,13 @@ module.exports.createUser = (event, context, callback) => {
     Item: event
   };
 
-  dynamoDb.put(params, (error, data) => {
-    if (error)
-      console.log(error);
+  dynamoDb.put(params, (err, data) => {
+    if (err){
+      console.log(err);
+      callback(null, err);
+    }
+    else
+      callback(null, "User created");
   });
 };
 
@@ -289,8 +271,12 @@ module.exports.updateUser = (event, context, callback) => {
   };
 
   dynamoDb.update(params, (err, data) => {
-    if (err)
+    if (err){
       console.log(err);
+      callback(null, err);
+    }
+    else  
+      callback(null, "User updated");
   });
 };
 
@@ -313,9 +299,13 @@ module.exports.deleteUser = (event, context, callback) => {
   };
 
   dynamoDb.delete(params, (err, data) => {
-    if (err)
+    if (err){
       console.log(err);
-    });
+      callback(null, err);
+    }
+    else
+      callback(null, "User deleted")
+  });
 };
 
 //READ MODE LAMBDA
@@ -346,11 +336,15 @@ module.exports.readUser = (event, context, callback) => {
 
   dynamoDb.get(params, (err, data) => {
     const stringedData = JSON.stringify(data);
-    if (err)
+    if (err){
       console.log(err);
+      callback(null, err);
+    }
     else{
-      if(data == "")
+      if(data == ""){
         console.log("User not found");
+        callback(null, "User not found");
+      }
       else{
         const response = {
           statusCode: 200,

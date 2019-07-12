@@ -47,112 +47,48 @@ module.exports.pushDeleteRoleToSQS = (event, context, callback) => {
 };
 
 module.exports.commandCreateRole = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
-  const lambdaName = "serverless-user-management-dev-createRole";
-
-  //check event
-  const roleParams = {
-    "groupId": bodyParsed.body.groupId,
-    "name": bodyParsed.body.name,
-    "desc": bodyParsed.body.desc
-  };
-
-  const item = {
-    eventId: utils.generateUUID(),
-    aggregate: "role",
-    lambda: lambdaName,
-    timestamp: Date.now(),
-    payload: bodyParsed.body
-  };
-
-  const eventSourcingParams = {
-    TableName: 'eventStore',
-    Item: item
-  };
-
-  dynamoDb.put(eventSourcingParams, (error, data) => {
-    if (error)
-      console.log(error);
-  });
+  const check = bodyParsed.body;
+  
+  if(check.roleId == "" || check.name == "" || check.desc == "")
+    callback(null, "Empty attributes");
+  else
+    utils.storeEvent("role", "serverless-user-management-dev-createRole", bodyParsed.body);
 };
 
 module.exports.commandUpdateRole = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
-  const lambdaName = "serverless-user-management-dev-updateRole";
-
-  //check event
-  const roleParams = {
-    "groupId": bodyParsed.body.groupId,
-    "name": bodyParsed.body.name,
-    "desc": bodyParsed.body.desc
-  };
-
-  const item = {
-    eventId: utils.generateUUID(),
-    aggregate: "role",
-    lambda: lambdaName,
-    timestamp: Date.now(),
-    payload: bodyParsed.body
-  };
-
-  const eventSourcingParams = {
-    TableName: 'eventStore',
-    Item: item
-  };
-
-  dynamoDb.put(eventSourcingParams, (error, data) => {
-    if (error)
-      console.log(error);
-  });
+  const check = bodyParsed.body;
+  
+  if(check.roleId == "" || check.name == "" || check.desc == "")
+    callback(null, "Empty attributes");
+  else
+    utils.storeEvent("role", "serverless-user-management-dev-updateRole", bodyParsed.body);
 };
 
 module.exports.commandDeleteRole = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
-  const lambdaName = "serverless-user-management-dev-deleteRole";
-
-  //check event
-  const roleParams = {
-    "groupId": bodyParsed.body.groupId
-  };
-
-  const item = {
-    eventId: utils.generateUUID(),
-    aggregate: "role",
-    lambda: lambdaName,
-    timestamp: Date.now(),
-    payload: bodyParsed.body
-  };
-
-  const eventSourcingParams = {
-    TableName: 'eventStore',
-    Item: item
-  };
-
-  dynamoDb.put(eventSourcingParams, (error, data) => {
-    if (error)
-      console.log(error);
-  });
+  const check = bodyParsed.body;
+  
+  if(check.roleId == "")
+    callback(null, "Empty attribute");
+  else
+    utils.storeEvent("role", "serverless-user-management-dev-deleteRole", bodyParsed.body);
 };
 
 module.exports.mediatorRole = (event, context, callback) => {

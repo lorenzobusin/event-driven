@@ -55,3 +55,47 @@ module.exports.invokeLambdas = async (arrayEvent) => {
  };
 };
 
+module.exports.storeEvent = (typeAggregate, lambdaName, eventPayload) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  const utils = require('./utils.js');
+
+  const item = {
+    eventId: utils.generateUUID(),
+    aggregate: typeAggregate,
+    lambda: lambdaName,
+    timestamp: Date.now(),
+    payload: eventPayload
+  };
+
+  const eventSourcingParams = {
+    TableName: 'eventStore',
+    Item: item
+  };
+
+  dynamoDb.put(eventSourcingParams, (error, data) => {
+    if (error)
+      console.log(error);
+  });
+};
+
+module.exports.asyncCheckScanDB = async (params) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  const res = await dynamoDb.scan(params).promise();
+
+  if(res.Count == 0)
+    return false;
+  else  
+    return true;
+};
+
+module.exports.validateEmail = (email) => {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
+
+module.exports.validatePassword = (pass) => {
+  var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+  return re.test(String(pass));
+};

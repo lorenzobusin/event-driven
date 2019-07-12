@@ -222,9 +222,6 @@ functions:
   deleteRole: 
     handler: handler.deleteRole
 
-  deleteAllRoles: 
-    handler: handler.deleteAllRoles
-
   readRole: 
     handler: handler.readRole
     events: 

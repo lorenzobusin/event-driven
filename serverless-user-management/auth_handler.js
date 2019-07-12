@@ -9,8 +9,12 @@
     };
   
     SQS.sendMessage(params, function(err,data){
-      if(err)
+      if(err){
         console.log(err);
+        callback(null, err);
+      }
+      else
+        callback(null, "Auth event pushed to SQS");
     });
   };
 
@@ -25,8 +29,12 @@
     };
   
     SQS.sendMessage(params, function(err,data){
-      if(err)
+      if(err){
         console.log(err);
+        callback(null, err);
+      }
+      else
+        callback(null, "Auth event pushed to SQS");
     });
   };
 
@@ -41,8 +49,12 @@
     };
   
     SQS.sendMessage(params, function(err,data){
-      if(err)
+      if(err){
         console.log(err);
+        callback(null, err);
+      }
+      else
+        callback(null, "Auth event pushed to SQS");
     });
   };
 

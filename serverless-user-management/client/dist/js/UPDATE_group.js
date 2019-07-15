@@ -11,7 +11,6 @@ updateGroup.addEventListener('submit', function(e){
       },
 
       body: JSON.stringify({
-        "typeEvent": "U",
         "groupId": document.getElementById('UPDATE_groupId').value.trim(),
         "name": document.getElementById('UPDATE_name').value.trim(),
         "desc": document.getElementById('UPDATE_desc').value.trim()

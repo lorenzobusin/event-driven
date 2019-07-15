@@ -11,7 +11,6 @@ deleteUser.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "typeEvent": "D",
       "userId": document.getElementById('DELETE_userId').value.trim()
     })
   });

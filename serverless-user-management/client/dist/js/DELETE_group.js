@@ -11,7 +11,6 @@ deleteGroup.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "typeEvent": "D",
       "groupId": document.getElementById('DELETE_groupId').value.trim()
     })
   });

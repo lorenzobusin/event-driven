@@ -83,7 +83,7 @@ module.exports.commandCreateUser = async (event, context, callback) => {
   }
   else{
     bodyParsed.body.password = utils.encrypt(bodyParsed.body.password);
-    utils.storeEvent("user", "serverless-user-management-dev-createUser", bodyParsed.body);
+    utils.storeEvent("user", "executeCreateUserQueue", bodyParsed.body);
     callback(null, "User event stored");
   }
 };
@@ -113,7 +113,7 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
   }
   else{
     bodyParsed.body.password = utils.encrypt(bodyParsed.body.password);
-    utils.storeEvent("user", "serverless-user-management-dev-updateUser", bodyParsed.body);
+    utils.storeEvent("user", "executeUpdateUserQueue", bodyParsed.body);
     callback(null, "User event stored");
   }
 };
@@ -130,104 +130,21 @@ module.exports.commandDeleteUser = (event, context, callback) => {
   if(check.userId == "" )
     callback(null, "Empty attribute");
   else{
-    utils.storeEvent("user", "serverless-user-management-dev-deleteUser", bodyParsed.body);
+    utils.storeEvent("user", "executeDeleteUserQueue", bodyParsed.body);
     callback(null, "User event stored");
   }
-};
-
-module.exports.mediatorUser = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const LAMBDA = new AWS.Lambda();
-  const utils = require('./utils.js');
-
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
-
-  switch(parsedEvent.typeEvent){
-    case("C"): {
-      const userParams = {
-        "userId": parsedEvent.userId,
-        "firstName": parsedEvent.firstName,
-        "lastName": parsedEvent.lastName,
-        "date": parsedEvent.date,
-        "role": parsedEvent.role,
-        "group": parsedEvent.group,
-        "email": parsedEvent.email,
-        "password": utils.encrypt(parsedEvent.password)
-      };
-
-      var params = {
-        FunctionName: "serverless-user-management-dev-createUser", 
-        InvocationType: "Event", 
-        LogType: "Tail", 
-        Payload: JSON.stringify(userParams) //only string type
-       };
-
-       LAMBDA.invoke(params, function(err, data) {
-        if (err) 
-          console.log(err);
-      });
-    }
-    break;
-
-    case("U"): {
-      const userParams = {
-        "userId": parsedEvent.userId,
-        "firstName": parsedEvent.firstName,
-        "lastName": parsedEvent.lastName,
-        "date": parsedEvent.date,
-        "role": parsedEvent.role,
-        "group": parsedEvent.group,
-        "email": parsedEvent.email,
-        "password": utils.encrypt(parsedEvent.password)
-      };
-
-      var params = {
-        FunctionName: "serverless-user-management-dev-updateUser", 
-        InvocationType: "Event", 
-        LogType: "Tail", 
-        Payload: JSON.stringify(userParams) //only string type
-       };
-
-       LAMBDA.invoke(params, function(err, data) {
-        if (err) 
-          console.log(err);
-      });
-    }
-    break;
-
-    case("D"): {
-      const userParams = {
-        "userId": parsedEvent.userId
-      };
-
-      var params = {
-        FunctionName: "serverless-user-management-dev-deleteUser", 
-        InvocationType: "Event", 
-        LogType: "Tail", 
-        Payload: JSON.stringify(userParams) //only string type
-      };
-
-       LAMBDA.invoke(params, function(err, data) {
-        if (err) 
-          console.log(err);
-      });
-    }
-    break;
-    
-    default:
-      console.log("Undefined type event");
-  }
-
 };
 
 module.exports.createUser = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
+  const stringedBody = event.Records[0].body.toString('utf-8');
+  const parsedBody = JSON.parse(stringedBody);
+
   const params = {
     TableName: 'user',
-    Item: event
+    Item: parsedBody
   };
 
   dynamoDb.put(params, (err, data) => {
@@ -244,13 +161,13 @@ module.exports.updateUser = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
+  const stringedBody = event.Records[0].body.toString('utf-8');
+  const parsedBody = JSON.parse(stringedBody);
 
   const params = {
     TableName: 'user',
     Key: {
-      "userId":  parsedEvent.userId
+      "userId":  parsedBody.userId
     },
     ExpressionAttributeNames:{
       "#birthdate": "date", //date is a reserved keyword
@@ -260,13 +177,13 @@ module.exports.updateUser = (event, context, callback) => {
     },
     UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, #userrole=:r, #usergroup=:g, email=:e, password=:p",
     ExpressionAttributeValues:{
-        ":fn": parsedEvent.firstName,
-        ":ln": parsedEvent.lastName,
-        ":d": parsedEvent.date,
-        ":r": parsedEvent.role,
-        ":g": parsedEvent.group,
-        ":e": parsedEvent.email,
-        ":p": parsedEvent.password
+        ":fn": parsedBody.firstName,
+        ":ln": parsedBody.lastName,
+        ":d": parsedBody.date,
+        ":r": parsedBody.role,
+        ":g": parsedBody.group,
+        ":e": parsedBody.email,
+        ":p": parsedBody.password
     }   
   };
 
@@ -284,17 +201,17 @@ module.exports.deleteUser = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
+  const stringedBody = event.Records[0].body.toString('utf-8');
+  const parsedBody = JSON.parse(stringedBody);
   
   const params = {
     TableName: 'user',
     Key:{
-      "userId": parsedEvent.userId
+      "userId": parsedBody.userId
     },
     ConditionExpression:"userId = :val",
     ExpressionAttributeValues: {
-        ":val": parsedEvent.userId
+        ":val": parsedBody.userId
     }
   };
 
@@ -341,7 +258,7 @@ module.exports.readUser = (event, context, callback) => {
       callback(null, err);
     }
     else{
-      if(data == ""){
+      if(data.Count == 0){
         console.log("User not found");
         callback(null, "User not found");
       }

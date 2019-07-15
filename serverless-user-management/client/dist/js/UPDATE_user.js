@@ -13,7 +13,6 @@ updateUser.addEventListener('submit', function(e){
       },
 
       body: JSON.stringify({
-        "typeEvent": "U",
         "userId": document.getElementById('UPDATE_userId').value.trim(),
         "firstName": document.getElementById('UPDATE_firstName').value.trim(),
         "lastName": document.getElementById('UPDATE_lastName').value.trim(),

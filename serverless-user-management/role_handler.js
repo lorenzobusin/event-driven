@@ -14,7 +14,7 @@ module.exports.pushCreateRoleToSQS = (event, context, callback) => {
       callback(null, err);
     }
     else
-      callback(null, "Role event push to SQS");
+      callback(null, "Role event pushed to SQS");
   });
 };
 
@@ -34,7 +34,7 @@ module.exports.pushUpdateRoleToSQS = (event, context, callback) => {
       callback(null, err);
     }
     else
-      callback(null, "Role event push to SQS");
+      callback(null, "Role event pushed to SQS");
   });
 };
 
@@ -54,7 +54,7 @@ module.exports.pushDeleteRoleToSQS = (event, context, callback) => {
       callback(null, err);
     }
     else
-      callback(null, "Role event push to SQS");
+      callback(null, "Role event pushed to SQS");
   });
 };
 
@@ -75,22 +75,22 @@ module.exports.commandCreateRole = async (event, context, callback) => {
     ProjectionExpression: "#rolename",
     FilterExpression: "#rolename = :checkname",
     ExpressionAttributeValues: {
-        ":checkEmail": check.name
+        ":checkname": check.name
     }
   };
 
   const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
   
   if((check.roleId == "" || check.name == "" || check.desc == "") || nameAlreadyExists)
-    callback(null, "Empty attributes");
+    callback(null, "Name already exists or empty attributes");
   else{
-    utils.storeEvent("role", "serverless-user-management-dev-createRole", bodyParsed.body);
+    utils.storeEvent("role", "executeCreateRoleQueue", bodyParsed.body);
     callback(null, "Role event stored");
   }
     
 };
 
-module.exports.commandUpdateRole = (event, context, callback) => {
+module.exports.commandUpdateRole = async (event, context, callback) => {
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
@@ -98,11 +98,25 @@ module.exports.commandUpdateRole = (event, context, callback) => {
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
   const check = bodyParsed.body;
+
+  const checkNameParams = {
+    TableName: 'role',
+    ExpressionAttributeNames:{
+      "#rolename": "name" //name is a reserved keyword
+    },
+    ProjectionExpression: "#rolename",
+    FilterExpression: "#rolename = :checkname",
+    ExpressionAttributeValues: {
+        ":checkname": check.name
+    }
+  };
+
+  const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
   
-  if(check.roleId == "" || check.name == "" || check.desc == "")
-    callback(null, "Empty attributes");
+  if((check.roleId == "" || check.name == "" || check.desc == "") || nameAlreadyExists)
+    callback(null, "Name already exists or empty attributes");
   else{
-    utils.storeEvent("role", "serverless-user-management-dev-updateRole", bodyParsed.body);
+    utils.storeEvent("role", "executeUpdateRoleQueue", bodyParsed.body);
     callback(null, "Role event stored");
   }
 };
@@ -119,95 +133,21 @@ module.exports.commandDeleteRole = (event, context, callback) => {
   if(check.roleId == "")
     callback(null, "Empty attribute");
   else{
-    utils.storeEvent("role", "serverless-user-management-dev-deleteRole", bodyParsed.body);
+    utils.storeEvent("role", "executeDeleteRoleQueue", bodyParsed.body);
     callback(null, "Role event stored");
   }
-};
-
-module.exports.mediatorRole = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const LAMBDA = new AWS.Lambda();
-
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
-
-  switch(parsedEvent.typeEvent){
-    case("C"): {
-      const roleParams = {
-        "roleId": parsedEvent.roleId,
-        "name": parsedEvent.name,
-        "desc": parsedEvent.desc,
-        "auth": parsedEvent.auth
-      };
-
-      var params = {
-        FunctionName: "serverless-user-management-dev-createRole", 
-        InvocationType: "Event", 
-        LogType: "Tail", 
-        Payload: JSON.stringify(roleParams) //only string type
-       };
-
-       LAMBDA.invoke(params, function(err, data) {
-        if (err)
-          console.log(err);
-      });
-    }
-    break;
-
-    case("U"): {
-      const roleParams = {
-        "roleId": parsedEvent.roleId,
-        "name": parsedEvent.name,
-        "desc": parsedEvent.desc,
-        "auth": parsedEvent.auth
-      };
-
-      var params = {
-        FunctionName: "serverless-user-management-dev-updateRole", 
-        InvocationType: "Event", 
-        LogType: "Tail", 
-        Payload: JSON.stringify(roleParams) //only string type
-       };
-
-       LAMBDA.invoke(params, function(err, data) {
-        if (err)
-          console.log(err);
-      });
-    }
-    break;
-
-    case("D"): {
-      const roleParams = {
-        "roleId": parsedEvent.roleId
-      };
-
-      var params = {
-        FunctionName: "serverless-user-management-dev-deleteRole", 
-        InvocationType: "Event", 
-        LogType: "Tail", 
-        Payload: JSON.stringify(roleParams) //only string type
-      };
-
-       LAMBDA.invoke(params, function(err, data) {
-        if (err)
-          console.log(err);
-      });
-    }
-    break;
-    
-    default:
-      console.log("Undefined type event");
-  }
-
 };
 
 module.exports.createRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
+  const stringedBody = event.Records[0].body.toString('utf-8');
+  const parsedBody = JSON.parse(stringedBody);
+
   const params = {
     TableName: 'role',
-    Item: event
+    Item: parsedBody
   };
 
   dynamoDb.put(params, (err, data) => {
@@ -225,13 +165,13 @@ module.exports.updateRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
+  const stringedBody = event.Records[0].body.toString('utf-8');
+  const parsedBody = JSON.parse(stringedBody);
 
   const params = {
     TableName: 'role',
     Key: {
-      "roleId":  parsedEvent.roleId
+      "roleId":  parsedBody.roleId
     },
     ExpressionAttributeNames:{
       "#rolename": "name", //name is a reserved keyword
@@ -240,9 +180,9 @@ module.exports.updateRole = (event, context, callback) => {
     },
     UpdateExpression: "set #rolename=:n, #roledesc=:d, #roleauth=:a",
     ExpressionAttributeValues:{
-        ":n": parsedEvent.name,
-        ":d": parsedEvent.desc,
-        ":a": parsedEvent.auth
+        ":n": parsedBody.name,
+        ":d": parsedBody.desc,
+        ":a": parsedBody.auth
     }   
   };
 
@@ -260,17 +200,17 @@ module.exports.deleteRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
+  const stringedBody = event.Records[0].body.toString('utf-8');
+  const parsedBody = JSON.parse(stringedBody);
   
   const params = {
     TableName: 'role',
     Key:{
-      "roleId": parsedEvent.roleId
+      "roleId": parsedBody.roleId
     },
     ConditionExpression:"roleId = :val",
     ExpressionAttributeValues: {
-        ":val": parsedEvent.roleId
+        ":val": parsedBody.roleId
     }
   };
   
@@ -317,7 +257,7 @@ module.exports.readRole = (event, context, callback) => {
       callback(null, err);
     }
     else{
-      if(data == ""){
+      if(data.Count == 0){
         console.log("Role not found");
         callback(null, "Role not found");
       }  
@@ -357,7 +297,7 @@ module.exports.getAllRoles = (event, context, callback) => {
       callback(null, err);
     }
     else{
-      if(data == ""){
+      if(data.Count == 0){
         console.log("Role not found");
         callback(null, "Role not found");
       }  

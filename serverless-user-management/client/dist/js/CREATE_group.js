@@ -12,7 +12,6 @@ createGroup.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "typeEvent": "C",
       "groupId": generateUUID(),
       "name": document.getElementById('CREATE_name').value.trim(),
       "desc": document.getElementById('CREATE_desc').value.trim()

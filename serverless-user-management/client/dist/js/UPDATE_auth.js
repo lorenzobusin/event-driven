@@ -12,7 +12,6 @@ updateAuth.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "typeEvent": "U",
       "authId": document.getElementById('UPDATE_authId').value.trim(),
       "name": document.getElementById('UPDATE_name').value.trim(),
       "desc": document.getElementById('UPDATE_desc').value.trim()

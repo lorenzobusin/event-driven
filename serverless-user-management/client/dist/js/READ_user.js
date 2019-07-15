@@ -20,7 +20,6 @@ function addRow(fn, ln, d, r, g, e) { //attributes
   cell6.innerHTML = e;
 };
 
-  //Mi serve avere un evento per ogni operazione di lettura e gestirlo tramite una coda?
   const readUser = document.getElementById('READ_USER');
   readUser.addEventListener('submit', function(e){
     e.preventDefault();

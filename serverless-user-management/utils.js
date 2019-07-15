@@ -38,24 +38,22 @@ module.exports.generateUUID = () => {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 };
 
-module.exports.invokeLambdas = async (arrayEvent) => {
+module.exports.asyncPushToExecutionQueue = async (arrayEvent) => {
   const AWS = require('aws-sdk');
-  const LAMBDA = new AWS.Lambda();
+  const SQS = new AWS.SQS();
 
   for(var i = 0; i < arrayEvent.length; i++){
-    delete arrayEvent[i].payload.typeEvent; //delete typeEvent from attributes
-    var params = {
-      FunctionName: arrayEvent[i].lambda, 
-      InvocationType: "Event", 
-      LogType: "Tail", 
-      Payload: JSON.stringify(arrayEvent[i].payload)
-    };
+
+    const params = {
+      MessageBody: JSON.stringify(arrayEvent[i].payload),
+      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/" + arrayEvent[i].executionQueue
+   };
    
-    await LAMBDA.invoke(params).promise();
+    await SQS.sendMessage(params).promise();
  };
 };
 
-module.exports.storeEvent = (typeAggregate, lambdaName, eventPayload) => {
+module.exports.storeEvent = (typeAggregate, queue, eventPayload) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
@@ -63,7 +61,7 @@ module.exports.storeEvent = (typeAggregate, lambdaName, eventPayload) => {
   const item = {
     eventId: utils.generateUUID(),
     aggregate: typeAggregate,
-    lambda: lambdaName,
+    executionQueue: queue,
     timestamp: Date.now(),
     payload: eventPayload
   };

@@ -12,7 +12,6 @@ createUser.addEventListener('submit', function(e){
       },
 
       body: JSON.stringify({
-        "typeEvent": "C",
         "userId": generateUUID(),
         "firstName": document.getElementById('CREATE_firstName').value.trim(),
         "lastName": document.getElementById('CREATE_lastName').value.trim(),

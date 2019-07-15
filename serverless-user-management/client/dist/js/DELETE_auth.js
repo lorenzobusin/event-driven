@@ -11,7 +11,6 @@ deleteAuth.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "typeEvent": "D",
       "authId": document.getElementById('DELETE_authId').value.trim()
     })
   });

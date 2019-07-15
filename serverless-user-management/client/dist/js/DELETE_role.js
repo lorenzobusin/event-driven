@@ -11,7 +11,6 @@ deleteRole.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "typeEvent": "D",
       "roleId": document.getElementById('DELETE_roleId').value.trim()
     })
   });

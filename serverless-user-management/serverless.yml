@@ -136,17 +136,23 @@ functions:
       - sqs:
           arn: arn:aws:sqs:eu-central-1:582373673306:deleteUserQueue 
 
-  mediatorUser:
-    handler: handler.mediatorUser
+  createUser:
+    handler: handler.createUser
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateUserQueue
 
   updateUser:
     handler: handler.updateUser
-
-  createUser:
-    handler: handler.createUser
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue
 
   deleteUser: 
     handler: handler.deleteUser
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteUserQueue
 
   readUser: 
     handler: handler.readUser
@@ -210,17 +216,23 @@ functions:
       - sqs:
           arn: arn:aws:sqs:eu-central-1:582373673306:deleteRoleQueue 
 
-  mediatorRole:
-    handler: handler.mediatorRole
+  createRole:
+    handler: handler.createRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateRoleQueue
 
   updateRole:
     handler: handler.updateRole
-
-  createRole:
-    handler: handler.createRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateRoleQueue
 
   deleteRole: 
     handler: handler.deleteRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteRoleQueue
 
   readRole: 
     handler: handler.readRole
@@ -293,17 +305,23 @@ functions:
       - sqs:
           arn: arn:aws:sqs:eu-central-1:582373673306:deleteAuthQueue
 
-  mediatorAuth:
-    handler: handler.mediatorAuth
+  createAuth:
+    handler: handler.createAuth
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateAuthQueue
 
   updateAuth:
     handler: handler.updateAuth
-
-  createAuth:
-    handler: handler.createAuth
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateAuthQueue
 
   deleteAuth: 
     handler: handler.deleteAuth
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteAuthQueue
 
   readAuth: 
     handler: handler.readAuth
@@ -376,17 +394,23 @@ functions:
       - sqs:
           arn: arn:aws:sqs:eu-central-1:582373673306:deleteGroupQueue 
 
-  mediatorGroup:
-    handler: handler.mediatorGroup
+  createGroup:
+    handler: handler.createGroup
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateGroupQueue
 
   updateGroup:
     handler: handler.updateGroup
-
-  createGroup:
-    handler: handler.createGroup
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateGroupQueue
 
   deleteGroup: 
     handler: handler.deleteGroup
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteGroupQueue
 
   readGroup: 
     handler: handler.readGroup

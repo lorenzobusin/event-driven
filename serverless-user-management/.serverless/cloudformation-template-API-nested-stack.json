@@ -10,6 +10,19 @@
     }
   },
   "Resources": {
+    "ApiGatewayResourceLogin": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Ref": "ApiGatewayRestApiRootResourceIdParameter"
+        },
+        "PathPart": "login",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApiParameter"
+        }
+      },
+      "DependsOn": []
+    },
     "ApiGatewayResourcePushcreateauthtosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -226,6 +239,11 @@
     "ApiGatewayResourcePushdeletegrouptosqs": {
       "Value": {
         "Ref": "ApiGatewayResourcePushdeletegrouptosqs"
+      }
+    },
+    "ApiGatewayResourceLogin": {
+      "Value": {
+        "Ref": "ApiGatewayResourceLogin"
       }
     }
   }

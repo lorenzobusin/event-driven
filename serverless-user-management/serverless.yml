@@ -30,6 +30,7 @@ provider:
 
 resources:
   Resources:
+
     #USER TABLE
     UsersDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
@@ -477,5 +478,12 @@ functions:
     events:
         - stream: arn:aws:dynamodb:eu-central-1:582373673306:table/eventStore/stream/2019-07-10T08:02:22.059 #set the ARN of dynamodb stream
     
-    
+  login:
+    handler: handler.login
+    events:
+      - http:
+          path: /login
+          method: post
+          cors: true
+          integration: lambda
 

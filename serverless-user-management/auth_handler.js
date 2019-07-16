@@ -137,7 +137,7 @@
     }
   };
   
-  module.exports.createAuth = (event, context, callback) => {
+  module.exports.createAuth = async (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -149,17 +149,17 @@
       Item: parsedBody
     };
   
-    dynamoDb.put(params, (err, data) => {
+    await dynamoDb.put(params, (err, data) => {
       if (err){
         console.log(err);
         callback(null, err);
       }
       else
         callback(null, "Authorization successfully created");
-    });
+    }).promise();
   };
   
-  module.exports.updateAuth = (event, context, callback) => {
+  module.exports.updateAuth = async (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
   
@@ -182,17 +182,17 @@
       }   
     };
   
-    dynamoDb.update(params, (err, data) => {
+    await dynamoDb.update(params, (err, data) => {
       if (err){
         console.log(err);
         callback(null, err);
       }
       else
         callback(null, "Autorization successfully updated");
-    });
+    }).promise();
   };
   
-  module.exports.deleteAuth = (event, context, callback) => {
+  module.exports.deleteAuth = async (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();
   
@@ -210,14 +210,14 @@
       }
     };
   
-    dynamoDb.delete(params, (err, data) => {
+    await dynamoDb.delete(params, (err, data) => {
       if (err){
         console.log(err);
         callback(null, err)
       }
       else
         callback(null, "Authorization successfully deleted");
-    });
+    }).promise();
   };
 
   //READ MODE LAMBDAs

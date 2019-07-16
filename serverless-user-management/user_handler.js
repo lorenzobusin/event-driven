@@ -1,41 +1,59 @@
 module.exports.pushCreateUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
+  const utils = require('./utils.js');
+  
   const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
 
-  const params = {
-    MessageBody: stringedEvent,
-    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createUserQueue"
-  };
+  if(!utils.validatePassword(parsedEvent.body.password))
+    callback(null, "Invalid password format");
+  else{
+    parsedEvent.body.password = utils.encrypt(parsedEvent.body.password);
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "User event pushed to SQS") 
-  });
+    const params = {
+      MessageBody: JSON.stringify(parsedEvent),
+      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createUserQueue"
+    };
+
+    SQS.sendMessage(params, function(err,data){
+      if(err){
+        console.log(err);
+        callback(null, err);
+      }
+      else
+        callback(null, "User event pushed to SQS");
+    }); 
+  } 
 };
 
 module.exports.pushUpdateUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
+  const utils = require('./utils.js');
+  
   const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
 
-  const params = {
-    MessageBody: stringedEvent,
-    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateUserQueue"
-  };
+  if(!utils.validatePassword(parsedEvent.body.password))
+    callback(null, "Invalid password format");
+  else{
+    parsedEvent.body.password = utils.encrypt(parsedEvent.body.password);
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "User event pushed to SQS")
-  });
+    const params = {
+      MessageBody: JSON.stringify(parsedEvent),
+      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateUserQueue"
+    };
+
+    SQS.sendMessage(params, function(err,data){
+      if(err){
+        console.log(err);
+        callback(null, err);
+      }
+      else
+        callback(null, "User event pushed to SQS");
+    });
+  }
 };
 
 module.exports.pushDeleteUserToSQS = (event, context, callback) => {
@@ -67,6 +85,8 @@ module.exports.commandCreateUser = async (event, context, callback) => {
   const bodyParsed = JSON.parse(stringedBody);
   const check = bodyParsed.body;
 
+  console.log(stringedEvent);
+
   const checkEmailParams = {
     TableName: 'user',
     ProjectionExpression: "email",
@@ -77,12 +97,13 @@ module.exports.commandCreateUser = async (event, context, callback) => {
   };
 
   const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
+  console.log(JSON.stringify(bodyParsed.body));
   
-  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (!utils.validateEmail(check.email)) || (!utils.validatePassword(check.password))){
+  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (!utils.validateEmail(check.email))){
     callback(null, "Email already exists or empty attributes");
   }
   else{
-    bodyParsed.body.password = utils.encrypt(bodyParsed.body.password);
+    console.log("user stored");
     utils.storeEvent("user", "executeCreateUserQueue", bodyParsed.body);
     callback(null, "User event stored");
   }
@@ -108,11 +129,10 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
 
   const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
   
-  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (!utils.validateEmail(check.email)) || (!utils.validatePassword(check.password))){
+  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (!utils.validateEmail(check.email))){
     callback(null, "Email already exists or empty attributes");
   }
   else{
-    bodyParsed.body.password = utils.encrypt(bodyParsed.body.password);
     utils.storeEvent("user", "executeUpdateUserQueue", bodyParsed.body);
     callback(null, "User event stored");
   }
@@ -135,7 +155,7 @@ module.exports.commandDeleteUser = (event, context, callback) => {
   }
 };
 
-module.exports.createUser = (event, context, callback) => {
+module.exports.createUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -147,17 +167,17 @@ module.exports.createUser = (event, context, callback) => {
     Item: parsedBody
   };
 
-  dynamoDb.put(params, (err, data) => {
+  await dynamoDb.put(params, (err, data) => {
     if (err){
       console.log(err);
       callback(null, err);
     }
     else
       callback(null, "User created");
-  });
+  }).promise();
 };
 
-module.exports.updateUser = (event, context, callback) => {
+module.exports.updateUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -187,17 +207,17 @@ module.exports.updateUser = (event, context, callback) => {
     }   
   };
 
-  dynamoDb.update(params, (err, data) => {
+  await dynamoDb.update(params, (err, data) => {
     if (err){
       console.log(err);
       callback(null, err);
     }
     else  
       callback(null, "User updated");
-  });
+  }).promise();
 };
 
-module.exports.deleteUser = (event, context, callback) => {
+module.exports.deleteUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -215,14 +235,14 @@ module.exports.deleteUser = (event, context, callback) => {
     }
   };
 
-  dynamoDb.delete(params, (err, data) => {
+  await dynamoDb.delete(params, (err, data) => {
     if (err){
       console.log(err);
       callback(null, err);
     }
     else
       callback(null, "User deleted")
-  });
+  }).promise();
 };
 
 //READ MODE LAMBDA

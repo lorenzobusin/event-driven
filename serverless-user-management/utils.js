@@ -27,7 +27,7 @@ module.exports.decrypt = (value) => {
   let decrypted = decipher.update(encryptedText,  outputEncoding, inputEncoding);
   decrypted += decipher.final(inputEncoding);
   return decrypted.toString();
-}
+};
 
 module.exports.generateUUID = () => {
   function s4() {

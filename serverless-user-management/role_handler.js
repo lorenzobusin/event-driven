@@ -138,7 +138,7 @@ module.exports.commandDeleteRole = (event, context, callback) => {
   }
 };
 
-module.exports.createRole = (event, context, callback) => {
+module.exports.createRole = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -150,18 +150,18 @@ module.exports.createRole = (event, context, callback) => {
     Item: parsedBody
   };
 
-  dynamoDb.put(params, (err, data) => {
+  await dynamoDb.put(params, (err, data) => {
     if (err){
       console.log(err);
       callback(null, err);
     }
     else
       callback(null, "Role created");
-  });
+  }).promise();
 
 };
 
-module.exports.updateRole = (event, context, callback) => {
+module.exports.updateRole = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -186,17 +186,17 @@ module.exports.updateRole = (event, context, callback) => {
     }   
   };
 
-  dynamoDb.update(params, (err, data) => {
+  await dynamoDb.update(params, (err, data) => {
     if (err){
       console.log(err);
       callback(null, err);
     }
     else
       callback(null, "Role updated");
-  });
+  }).promise();
 };
 
-module.exports.deleteRole = (event, context, callback) => {
+module.exports.deleteRole = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -214,14 +214,14 @@ module.exports.deleteRole = (event, context, callback) => {
     }
   };
   
-  dynamoDb.delete(params, (err, data) => {
+  await dynamoDb.delete(params, (err, data) => {
     if (err){
       console.log(err);
       callback(null, err);
     }
     else
       callback(null, "Role deleted");
-  });
+  }).promise();
 };
 
 //READ MODE LAMBDAs

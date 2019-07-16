@@ -19,6 +19,7 @@ const linkGetAllRoles_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazona
 const linkGetAllGroups_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/getAllGroups";
 const linkGetAllAuths_GET = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/getAllAuths";
 const linkRecovery_POST = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/mediatorrecovery";
+const linkLoginAPI_POST = "https://2ont8yn0k4.execute-api.eu-central-1.amazonaws.com/dev/login";
 
 function generateUUID() {
   function s4() {

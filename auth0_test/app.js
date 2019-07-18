@@ -11,7 +11,6 @@ var userInViews = require('./lib/middleware/userInViews');
 var authRouter = require('./routes/auth');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
 dotenv.load();
 
 // Configure Passport to use Auth0
@@ -47,6 +46,9 @@ const app = express();
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+//app.engine('html', require('ejs').renderFile);
+//app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(cookieParser());

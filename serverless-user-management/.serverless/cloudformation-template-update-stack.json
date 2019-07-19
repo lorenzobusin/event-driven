@@ -17,6 +17,13 @@
       },
       "DependsOn": []
     },
+    "LoginLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/serverless-user-management-dev-login"
+      },
+      "DependsOn": []
+    },
     "CommandCreateUserLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
@@ -329,13 +336,6 @@
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
         "LogGroupName": "/aws/lambda/serverless-user-management-dev-mediator"
-      },
-      "DependsOn": []
-    },
-    "LoginLogGroup": {
-      "Type": "AWS::Logs::LogGroup",
-      "Properties": {
-        "LogGroupName": "/aws/lambda/serverless-user-management-dev-login"
       },
       "DependsOn": []
     },
@@ -703,6 +703,32 @@
       },
       "DependsOn": []
     },
+    "LoginLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
+        },
+        "FunctionName": "serverless-user-management-dev-login",
+        "Handler": "handler.login",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs10.x",
+        "Timeout": 6
+      },
+      "DependsOn": [
+        "LoginLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
     "CommandCreateUserLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -710,7 +736,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandCreateUser",
         "Handler": "handler.commandCreateUser",
@@ -736,7 +762,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandUpdateUser",
         "Handler": "handler.commandUpdateUser",
@@ -762,7 +788,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandDeleteUser",
         "Handler": "handler.commandDeleteUser",
@@ -788,7 +814,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-createUser",
         "Handler": "handler.createUser",
@@ -814,7 +840,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-updateUser",
         "Handler": "handler.updateUser",
@@ -840,7 +866,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-deleteUser",
         "Handler": "handler.deleteUser",
@@ -866,7 +892,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-readUser",
         "Handler": "handler.readUser",
@@ -892,7 +918,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushCreateUserToSQS",
         "Handler": "handler.pushCreateUserToSQS",
@@ -918,7 +944,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushUpdateUserToSQS",
         "Handler": "handler.pushUpdateUserToSQS",
@@ -944,7 +970,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushDeleteUserToSQS",
         "Handler": "handler.pushDeleteUserToSQS",
@@ -970,7 +996,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandCreateRole",
         "Handler": "handler.commandCreateRole",
@@ -996,7 +1022,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandUpdateRole",
         "Handler": "handler.commandUpdateRole",
@@ -1022,7 +1048,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandDeleteRole",
         "Handler": "handler.commandDeleteRole",
@@ -1048,7 +1074,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-createRole",
         "Handler": "handler.createRole",
@@ -1074,7 +1100,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-updateRole",
         "Handler": "handler.updateRole",
@@ -1100,7 +1126,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-deleteRole",
         "Handler": "handler.deleteRole",
@@ -1126,7 +1152,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-readRole",
         "Handler": "handler.readRole",
@@ -1152,7 +1178,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-getAllRoles",
         "Handler": "handler.getAllRoles",
@@ -1178,7 +1204,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushCreateRoleToSQS",
         "Handler": "handler.pushCreateRoleToSQS",
@@ -1204,7 +1230,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushUpdateRoleToSQS",
         "Handler": "handler.pushUpdateRoleToSQS",
@@ -1230,7 +1256,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushDeleteRoleToSQS",
         "Handler": "handler.pushDeleteRoleToSQS",
@@ -1256,7 +1282,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandCreateAuth",
         "Handler": "handler.commandCreateAuth",
@@ -1282,7 +1308,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandUpdateAuth",
         "Handler": "handler.commandUpdateAuth",
@@ -1308,7 +1334,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandDeleteAuth",
         "Handler": "handler.commandDeleteAuth",
@@ -1334,7 +1360,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-createAuth",
         "Handler": "handler.createAuth",
@@ -1360,7 +1386,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-updateAuth",
         "Handler": "handler.updateAuth",
@@ -1386,7 +1412,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-deleteAuth",
         "Handler": "handler.deleteAuth",
@@ -1412,7 +1438,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-readAuth",
         "Handler": "handler.readAuth",
@@ -1438,7 +1464,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-getAllAuths",
         "Handler": "handler.getAllAuths",
@@ -1464,7 +1490,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushCreateAuthToSQS",
         "Handler": "handler.pushCreateAuthToSQS",
@@ -1490,7 +1516,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushUpdateAuthToSQS",
         "Handler": "handler.pushUpdateAuthToSQS",
@@ -1516,7 +1542,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushDeleteAuthToSQS",
         "Handler": "handler.pushDeleteAuthToSQS",
@@ -1542,7 +1568,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandCreateGroup",
         "Handler": "handler.commandCreateGroup",
@@ -1568,7 +1594,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandUpdateGroup",
         "Handler": "handler.commandUpdateGroup",
@@ -1594,7 +1620,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-commandDeleteGroup",
         "Handler": "handler.commandDeleteGroup",
@@ -1620,7 +1646,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-createGroup",
         "Handler": "handler.createGroup",
@@ -1646,7 +1672,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-updateGroup",
         "Handler": "handler.updateGroup",
@@ -1672,7 +1698,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-deleteGroup",
         "Handler": "handler.deleteGroup",
@@ -1698,7 +1724,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-readGroup",
         "Handler": "handler.readGroup",
@@ -1724,7 +1750,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-getAllGroups",
         "Handler": "handler.getAllGroups",
@@ -1750,7 +1776,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushCreateGroupToSQS",
         "Handler": "handler.pushCreateGroupToSQS",
@@ -1776,7 +1802,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushUpdateGroupToSQS",
         "Handler": "handler.pushUpdateGroupToSQS",
@@ -1802,7 +1828,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-pushDeleteGroupToSQS",
         "Handler": "handler.pushDeleteGroupToSQS",
@@ -1828,7 +1854,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-recovery",
         "Handler": "handler.recovery",
@@ -1854,7 +1880,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-mediator",
         "Handler": "handler.mediator",
@@ -1870,32 +1896,6 @@
       },
       "DependsOn": [
         "MediatorLogGroup",
-        "IamRoleLambdaExecution"
-      ]
-    },
-    "LoginLambdaFunction": {
-      "Type": "AWS::Lambda::Function",
-      "Properties": {
-        "Code": {
-          "S3Bucket": {
-            "Ref": "ServerlessDeploymentBucket"
-          },
-          "S3Key": "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z/serverless-user-management.zip"
-        },
-        "FunctionName": "serverless-user-management-dev-login",
-        "Handler": "handler.login",
-        "MemorySize": 1024,
-        "Role": {
-          "Fn::GetAtt": [
-            "IamRoleLambdaExecution",
-            "Arn"
-          ]
-        },
-        "Runtime": "nodejs10.x",
-        "Timeout": 6
-      },
-      "DependsOn": [
-        "LoginLogGroup",
         "IamRoleLambdaExecution"
       ]
     },
@@ -2038,6 +2038,59 @@
         }
       },
       "DependsOn": []
+    },
+    "ApiGatewayMethodLoginOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Credentials": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
+                "method.response.header.Access-Control-Allow-Credentials": "'false'"
+              },
+              "ResponseTemplates": {
+                "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "APINestedStack",
+            "Outputs.ApiGatewayResourceLogin"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      },
+      "DependsOn": [
+        "APINestedStack"
+      ]
     },
     "ApiGatewayMethodReaduserOptions": {
       "Type": "AWS::ApiGateway::Method",
@@ -3059,45 +3112,11 @@
       },
       "DependsOn": []
     },
-    "ApiGatewayMethodLoginOptions": {
+    "ApiGatewayMethodLoginPost": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
-        "AuthorizationType": "NONE",
-        "HttpMethod": "OPTIONS",
-        "MethodResponses": [
-          {
-            "StatusCode": "200",
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Access-Control-Allow-Headers": true,
-              "method.response.header.Access-Control-Allow-Methods": true,
-              "method.response.header.Access-Control-Allow-Credentials": true
-            },
-            "ResponseModels": {}
-          }
-        ],
+        "HttpMethod": "POST",
         "RequestParameters": {},
-        "Integration": {
-          "Type": "MOCK",
-          "RequestTemplates": {
-            "application/json": "{statusCode:200}"
-          },
-          "ContentHandling": "CONVERT_TO_TEXT",
-          "IntegrationResponses": [
-            {
-              "StatusCode": "200",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
-                "method.response.header.Access-Control-Allow-Credentials": "'false'"
-              },
-              "ResponseTemplates": {
-                "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-              }
-            }
-          ]
-        },
         "ResourceId": {
           "Fn::GetAtt": [
             "APINestedStack",
@@ -3106,7 +3125,180 @@
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
-        }
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "LoginLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          },
+          "PassthroughBehavior": "NEVER",
+          "RequestTemplates": {
+            "application/json": "\n    #set( $body = $input.json(\"$\") )\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  ",
+            "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+          },
+          "IntegrationResponses": [
+            {
+              "StatusCode": 200,
+              "SelectionPattern": "",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 400,
+              "SelectionPattern": "[\\s\\S]*\\[400\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 401,
+              "SelectionPattern": "[\\s\\S]*\\[401\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 403,
+              "SelectionPattern": "[\\s\\S]*\\[403\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 404,
+              "SelectionPattern": "[\\s\\S]*\\[404\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 422,
+              "SelectionPattern": "[\\s\\S]*\\[422\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 500,
+              "SelectionPattern": "[\\s\\S]*(Process\\s?exited\\s?before\\s?completing\\s?request|\\[500\\])[\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 502,
+              "SelectionPattern": "[\\s\\S]*\\[502\\][\\s\\S]*",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            },
+            {
+              "StatusCode": 504,
+              "SelectionPattern": "([\\s\\S]*\\[504\\][\\s\\S]*)|(.*Task timed out after \\d+\\.\\d+ seconds$)",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "ResponseTemplates": {}
+            }
+          ]
+        },
+        "MethodResponses": [
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 200
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 400
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 401
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 403
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 404
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 422
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 500
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 502
+          },
+          {
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true
+            },
+            "ResponseModels": {},
+            "StatusCode": 504
+          }
+        ]
       },
       "DependsOn": [
         "APINestedStack"
@@ -6912,199 +7104,7 @@
       },
       "DependsOn": []
     },
-    "ApiGatewayMethodLoginPost": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "HttpMethod": "POST",
-        "RequestParameters": {},
-        "ResourceId": {
-          "Fn::GetAtt": [
-            "APINestedStack",
-            "Outputs.ApiGatewayResourceLogin"
-          ]
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
-        "Integration": {
-          "IntegrationHttpMethod": "POST",
-          "Type": "AWS",
-          "Uri": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition"
-                },
-                ":apigateway:",
-                {
-                  "Ref": "AWS::Region"
-                },
-                ":lambda:path/2015-03-31/functions/",
-                {
-                  "Fn::GetAtt": [
-                    "LoginLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "/invocations"
-              ]
-            ]
-          },
-          "PassthroughBehavior": "NEVER",
-          "RequestTemplates": {
-            "application/json": "\n    #set( $body = $input.json(\"$\") )\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  ",
-            "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
-          },
-          "IntegrationResponses": [
-            {
-              "StatusCode": 200,
-              "SelectionPattern": "",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "ResponseTemplates": {}
-            },
-            {
-              "StatusCode": 400,
-              "SelectionPattern": "[\\s\\S]*\\[400\\][\\s\\S]*",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "ResponseTemplates": {}
-            },
-            {
-              "StatusCode": 401,
-              "SelectionPattern": "[\\s\\S]*\\[401\\][\\s\\S]*",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "ResponseTemplates": {}
-            },
-            {
-              "StatusCode": 403,
-              "SelectionPattern": "[\\s\\S]*\\[403\\][\\s\\S]*",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "ResponseTemplates": {}
-            },
-            {
-              "StatusCode": 404,
-              "SelectionPattern": "[\\s\\S]*\\[404\\][\\s\\S]*",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "ResponseTemplates": {}
-            },
-            {
-              "StatusCode": 422,
-              "SelectionPattern": "[\\s\\S]*\\[422\\][\\s\\S]*",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "ResponseTemplates": {}
-            },
-            {
-              "StatusCode": 500,
-              "SelectionPattern": "[\\s\\S]*(Process\\s?exited\\s?before\\s?completing\\s?request|\\[500\\])[\\s\\S]*",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "ResponseTemplates": {}
-            },
-            {
-              "StatusCode": 502,
-              "SelectionPattern": "[\\s\\S]*\\[502\\][\\s\\S]*",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "ResponseTemplates": {}
-            },
-            {
-              "StatusCode": 504,
-              "SelectionPattern": "([\\s\\S]*\\[504\\][\\s\\S]*)|(.*Task timed out after \\d+\\.\\d+ seconds$)",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'"
-              },
-              "ResponseTemplates": {}
-            }
-          ]
-        },
-        "MethodResponses": [
-          {
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true
-            },
-            "ResponseModels": {},
-            "StatusCode": 200
-          },
-          {
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true
-            },
-            "ResponseModels": {},
-            "StatusCode": 400
-          },
-          {
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true
-            },
-            "ResponseModels": {},
-            "StatusCode": 401
-          },
-          {
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true
-            },
-            "ResponseModels": {},
-            "StatusCode": 403
-          },
-          {
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true
-            },
-            "ResponseModels": {},
-            "StatusCode": 404
-          },
-          {
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true
-            },
-            "ResponseModels": {},
-            "StatusCode": 422
-          },
-          {
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true
-            },
-            "ResponseModels": {},
-            "StatusCode": 500
-          },
-          {
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true
-            },
-            "ResponseModels": {},
-            "StatusCode": 502
-          },
-          {
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true
-            },
-            "ResponseModels": {},
-            "StatusCode": 504
-          }
-        ]
-      },
-      "DependsOn": [
-        "APINestedStack"
-      ]
-    },
-    "ApiGatewayDeployment1563264913180": {
+    "ApiGatewayDeployment1563542810709": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -7113,6 +7113,7 @@
         "StageName": "dev"
       },
       "DependsOn": [
+        "ApiGatewayMethodLoginOptions",
         "ApiGatewayMethodReaduserOptions",
         "ApiGatewayMethodPushcreateusertosqsOptions",
         "ApiGatewayMethodPushupdateusertosqsOptions",
@@ -7133,7 +7134,7 @@
         "ApiGatewayMethodPushupdategrouptosqsOptions",
         "ApiGatewayMethodPushdeletegrouptosqsOptions",
         "ApiGatewayMethodMediatorrecoveryOptions",
-        "ApiGatewayMethodLoginOptions",
+        "ApiGatewayMethodLoginPost",
         "ApiGatewayMethodReaduserGet",
         "ApiGatewayMethodPushcreateusertosqsPost",
         "ApiGatewayMethodPushupdateusertosqsPost",
@@ -7153,8 +7154,7 @@
         "ApiGatewayMethodPushcreategrouptosqsPost",
         "ApiGatewayMethodPushupdategrouptosqsPost",
         "ApiGatewayMethodPushdeletegrouptosqsPost",
-        "ApiGatewayMethodMediatorrecoveryPost",
-        "ApiGatewayMethodLoginPost"
+        "ApiGatewayMethodMediatorrecoveryPost"
       ]
     },
     "ReadUserLambdaPermissionApiGateway": {
@@ -8013,12 +8013,50 @@
       },
       "DependsOn": []
     },
+    "APINestedStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "Parameters": {
+          "ApiGatewayRestApiParameter": {
+            "Ref": "ApiGatewayRestApi"
+          },
+          "ApiGatewayRestApiRootResourceIdParameter": {
+            "Fn::GetAtt": [
+              "ApiGatewayRestApi",
+              "RootResourceId"
+            ]
+          }
+        },
+        "TemplateURL": {
+          "Fn::Join": [
+            "/",
+            [
+              "https://s3.eu-central-1.amazonaws.com",
+              {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z",
+              "cloudformation-template-API-nested-stack.json"
+            ]
+          ]
+        }
+      },
+      "DependsOn": [
+        "ApiGatewayRestApi"
+      ]
+    },
     "PermissionsNestedStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
         "Parameters": {
           "ApiGatewayRestApiParameter": {
             "Ref": "ApiGatewayRestApi"
+          },
+          "LoginLambdaFunctionArnParameter": {
+            "Fn::GetAtt": [
+              "LoginLambdaFunction",
+              "Arn"
+            ]
           },
           "PushCreateUserToSQSLambdaFunctionArnParameter": {
             "Fn::GetAtt": [
@@ -8091,12 +8129,6 @@
               "PushDeleteGroupToSQSLambdaFunction",
               "Arn"
             ]
-          },
-          "LoginLambdaFunctionArnParameter": {
-            "Fn::GetAtt": [
-              "LoginLambdaFunction",
-              "Arn"
-            ]
           }
         },
         "TemplateURL": {
@@ -8107,7 +8139,7 @@
               {
                 "Ref": "ServerlessDeploymentBucket"
               },
-              "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z",
+              "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z",
               "cloudformation-template-Permissions-nested-stack.json"
             ]
           ]
@@ -8115,6 +8147,7 @@
       },
       "DependsOn": [
         "ApiGatewayRestApi",
+        "LoginLambdaFunction",
         "PushCreateUserToSQSLambdaFunction",
         "PushUpdateUserToSQSLambdaFunction",
         "PushDeleteUserToSQSLambdaFunction",
@@ -8126,46 +8159,16 @@
         "PushDeleteAuthToSQSLambdaFunction",
         "PushCreateGroupToSQSLambdaFunction",
         "PushUpdateGroupToSQSLambdaFunction",
-        "PushDeleteGroupToSQSLambdaFunction",
-        "LoginLambdaFunction"
-      ]
-    },
-    "APINestedStack": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "Parameters": {
-          "ApiGatewayRestApiParameter": {
-            "Ref": "ApiGatewayRestApi"
-          },
-          "ApiGatewayRestApiRootResourceIdParameter": {
-            "Fn::GetAtt": [
-              "ApiGatewayRestApi",
-              "RootResourceId"
-            ]
-          }
-        },
-        "TemplateURL": {
-          "Fn::Join": [
-            "/",
-            [
-              "https://s3.eu-central-1.amazonaws.com",
-              {
-                "Ref": "ServerlessDeploymentBucket"
-              },
-              "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z",
-              "cloudformation-template-API-nested-stack.json"
-            ]
-          ]
-        }
-      },
-      "DependsOn": [
-        "ApiGatewayRestApi"
+        "PushDeleteGroupToSQSLambdaFunction"
       ]
     },
     "VersionsNestedStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
         "Parameters": {
+          "LoginLambdaFunctionParameter": {
+            "Ref": "LoginLambdaFunction"
+          },
           "CommandCreateUserLambdaFunctionParameter": {
             "Ref": "CommandCreateUserLambdaFunction"
           },
@@ -8300,9 +8303,6 @@
           },
           "MediatorLambdaFunctionParameter": {
             "Ref": "MediatorLambdaFunction"
-          },
-          "LoginLambdaFunctionParameter": {
-            "Ref": "LoginLambdaFunction"
           }
         },
         "TemplateURL": {
@@ -8313,13 +8313,14 @@
               {
                 "Ref": "ServerlessDeploymentBucket"
               },
-              "serverless/serverless-user-management/dev/1563264918679-2019-07-16T08:15:18.679Z",
+              "serverless/serverless-user-management/dev/1563542839710-2019-07-19T13:27:19.710Z",
               "cloudformation-template-Versions-nested-stack.json"
             ]
           ]
         }
       },
       "DependsOn": [
+        "LoginLambdaFunction",
         "CommandCreateUserLambdaFunction",
         "CommandUpdateUserLambdaFunction",
         "CommandDeleteUserLambdaFunction",
@@ -8364,8 +8365,7 @@
         "PushUpdateGroupToSQSLambdaFunction",
         "PushDeleteGroupToSQSLambdaFunction",
         "RecoveryLambdaFunction",
-        "MediatorLambdaFunction",
-        "LoginLambdaFunction"
+        "MediatorLambdaFunction"
       ]
     }
   },
@@ -8375,12 +8375,21 @@
         "Ref": "ServerlessDeploymentBucket"
       }
     },
+    "LoginLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Fn::GetAtt": [
+          "VersionsNestedStack",
+          "Outputs.LoginLambdaVersionZXBLtreIq5c8d2kD96LRd407QNzzax2onBDqeci9jc"
+        ]
+      }
+    },
     "CommandCreateUserLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandCreateUserLambdaVersionXEMc43EIMZv5XVdcZ0XDQWMqn3UNvP1AhaWfmfkZGE"
+          "Outputs.CommandCreateUserLambdaVersionpOSAaiY4XVWjpOR7lOyJ81MA83dMrWpcngS9zhrk"
         ]
       }
     },
@@ -8389,7 +8398,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandUpdateUserLambdaVersionqkCDQHc9OybgKQiuOWJLaXfThjsDQ0ZLH5pi9mdvf8"
+          "Outputs.CommandUpdateUserLambdaVersionosziWaIbSwa3MZdGf8acv3Z5q1C4JBnUyqdh86K6uo"
         ]
       }
     },
@@ -8398,7 +8407,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandDeleteUserLambdaVersionjM3ZaGCfBWvIDG8VRUlkqSHx4R6UunSmXI8VN09aLM"
+          "Outputs.CommandDeleteUserLambdaVersionUTkAuSP05hEoB1ayPiYfgqceMNhsUIcCzfDGCUKkmqc"
         ]
       }
     },
@@ -8407,7 +8416,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CreateUserLambdaVersionVuJYgqf5cEuVxSYakrsDjWomz0nnNro1xX40nzi45BU"
+          "Outputs.CreateUserLambdaVersion8gIqnBZIr6Pfh5xhAUNUDohHjyJgHUEVRA8Yjkgs5EM"
         ]
       }
     },
@@ -8416,7 +8425,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.UpdateUserLambdaVersionZzGa0Uai3QUMKwUtejzMj18CpkoCMz7So4tC7MsX2M"
+          "Outputs.UpdateUserLambdaVersionfBJCjsCPYrxBPA1bWFwXwZEXAFSbgOwQiNZNvKJwYY"
         ]
       }
     },
@@ -8425,7 +8434,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.DeleteUserLambdaVersion4AjsluAe6v9YQaAojxaAkEdxauOa1iUxKfxRlCKfqY"
+          "Outputs.DeleteUserLambdaVersionKB4ZAwVjHtfUAKdhdokajGXex7cw1XaasZ7XQ8tY"
         ]
       }
     },
@@ -8434,7 +8443,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.ReadUserLambdaVersionWcEYBhwkMJHeoeSm7cVIKYPed1CN4BFgSdvFu0dVso"
+          "Outputs.ReadUserLambdaVersionalCga2eo8ABJtcF8h0lmmn39AZJyherm4pYENInILE"
         ]
       }
     },
@@ -8443,7 +8452,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushCreateUserToSQSLambdaVersionE3drArCorplffpy8GLjgoeX9FIPZB0FrLrIP1J6JPQ"
+          "Outputs.PushCreateUserToSQSLambdaVersionsQ7CBujzXTcG1ml6KX3w2x130we5uwRtqivR2wm8Q"
         ]
       }
     },
@@ -8452,7 +8461,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushUpdateUserToSQSLambdaVersionIymnsHdFStVGQNLlrkKjgUTEOlUQzNAfu45kgjeY"
+          "Outputs.PushUpdateUserToSQSLambdaVersiont0XGXTMqW7XMWZdwQqArJCVbDKaLlxh3XXmMq8bONw"
         ]
       }
     },
@@ -8461,7 +8470,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushDeleteUserToSQSLambdaVersionxcYnKfpKgn7xp9ESMxaaLQDFnM2Ca8Xpsv0v2HW8"
+          "Outputs.PushDeleteUserToSQSLambdaVersionMT5atqkOntd9ZdiRnuo5ujc3Lyt123cJQH7Bt4Zmhx4"
         ]
       }
     },
@@ -8470,7 +8479,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandCreateRoleLambdaVersionnpuZLRPCcoTs3ccwEwycKqK4eZWCjWDEenB1wHEy8"
+          "Outputs.CommandCreateRoleLambdaVersiontkExHlGhryO5nehulPw4uypU6ALy6cesl5Fsz2DV6Q"
         ]
       }
     },
@@ -8479,7 +8488,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandUpdateRoleLambdaVersionDLTqIAYgaHQyKSRnaWw5V65J6iHLM3Moe6og2FoeOI"
+          "Outputs.CommandUpdateRoleLambdaVersionLYgGq0rm1W4aSjofUE6DfvbHcUBAP16Ya5rWY732HbE"
         ]
       }
     },
@@ -8488,7 +8497,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandDeleteRoleLambdaVersionLSHIzAE3ZjjKkQFjAdUmEePV4mBAElDLZANtvCnCCx8"
+          "Outputs.CommandDeleteRoleLambdaVersionSshF21YQgTpCPVKrc4oEY6mwWuAkRmMry2XbjYADw"
         ]
       }
     },
@@ -8497,7 +8506,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CreateRoleLambdaVersionnt46IqkVZ10G4HUArt2m58zUU29qbSqrvDm4TnXTc"
+          "Outputs.CreateRoleLambdaVersioniGHvxMJURLEAr4x5U6QEeTArxY3aWUWpDr8CgO4H0"
         ]
       }
     },
@@ -8506,7 +8515,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.UpdateRoleLambdaVersionCvwejJGSiHLXsrJHFZziGtpKdsJNZXARBFecQdtGXnU"
+          "Outputs.UpdateRoleLambdaVersionkL6G9iMVcUBmp7R6cIEXNvfG1Bp4MkbsqkM4KtIInvE"
         ]
       }
     },
@@ -8515,7 +8524,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.DeleteRoleLambdaVersionWv9giyynci74lBq8y6zit08MwGpGWYnAgbn5p1jE"
+          "Outputs.DeleteRoleLambdaVersionO32dIlEunQ26ssXNaADU6AcWOzPuEKhRBdychxdU"
         ]
       }
     },
@@ -8524,7 +8533,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.ReadRoleLambdaVersionvo6PLzSRVtNuql9K8Kn4NmcGXFWH0aRso7bpW8g"
+          "Outputs.ReadRoleLambdaVersionNWRXr1oZb3FefRSOXymJjdIETahp8JwFykkO5Z5Pg"
         ]
       }
     },
@@ -8533,7 +8542,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.GetAllRolesLambdaVersionHELLBFmXcqYGzzwTdryMIvJ09TFnK1CyEpZSl7GNzAw"
+          "Outputs.GetAllRolesLambdaVersionHxM1NMiknBvanPOelizya1YryUi5RmWtSNo5RM2kNU"
         ]
       }
     },
@@ -8542,7 +8551,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushCreateRoleToSQSLambdaVersion0NgdAE3UGMoKD17AenzvB5wgDzmw1Qp8hCIscxbDU"
+          "Outputs.PushCreateRoleToSQSLambdaVersionY4CoJDHyNotgQRGAE4idQZPyiwoh65KVl7XFTG2lSg"
         ]
       }
     },
@@ -8551,7 +8560,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushUpdateRoleToSQSLambdaVersiond1Qbch3cNNy1QTgrjruRO6aKhrVeLXQOnqXxXGNV3c"
+          "Outputs.PushUpdateRoleToSQSLambdaVersionmFhujsGo3znkzhOvY4IRaufYdUftUbzos9lC9G0ng"
         ]
       }
     },
@@ -8560,7 +8569,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushDeleteRoleToSQSLambdaVersion4ooaECuIKs86QEarnS0xLjgdZHl1oVJ49skbrMT9zo"
+          "Outputs.PushDeleteRoleToSQSLambdaVersionX7iojkjsoVtpqOJ50oPESVdj8uoTTyrjADqW4rwzYg"
         ]
       }
     },
@@ -8569,7 +8578,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandCreateAuthLambdaVersioniIVgYh1XVkwDHwSIDkTCcDO6r1R3y2JR6m7WPG1RU"
+          "Outputs.CommandCreateAuthLambdaVersionDAAVhhDYvk9tFcfWiEgEjX4h7PMZcoyRCEAJRIwRE"
         ]
       }
     },
@@ -8578,7 +8587,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandUpdateAuthLambdaVersion22139iqgxdQu7jeWXcDbByPhj2ym5j08N4hVX1PM4"
+          "Outputs.CommandUpdateAuthLambdaVersioncEO6wPNPRtN56uQn0XvfyRlzmV8ecjm96VDLhpu8k"
         ]
       }
     },
@@ -8587,7 +8596,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandDeleteAuthLambdaVersionpEI0JUIl3LaTP1UINvXEnJmtKj9goYWRcwIliWdlU"
+          "Outputs.CommandDeleteAuthLambdaVersioncQdy7pzYKmwqhDdVnguoguEKqp9bhFPVLjPTeFcIOC4"
         ]
       }
     },
@@ -8596,7 +8605,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CreateAuthLambdaVersionvGPge0CQSXRSZ7u6TQX6ql1Qozu7g22sBsCuCckoqU"
+          "Outputs.CreateAuthLambdaVersion9vVrdt83cbKmxQutqGcbdFnhH1eIqYhEM8p1qMGg"
         ]
       }
     },
@@ -8605,7 +8614,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.UpdateAuthLambdaVersion63Es1SPvcdcGbr0E6HLtAb2YOiUD9zjV4nEzelGkbM"
+          "Outputs.UpdateAuthLambdaVersionmrK2rwxVK011SLSiPGeQhJBYr5iapah7IpnxLloB4"
         ]
       }
     },
@@ -8614,7 +8623,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.DeleteAuthLambdaVersionPUP8QTnuD4hcj1aHNxGa4vuT1DfzrUQwXNAnOKZs8FM"
+          "Outputs.DeleteAuthLambdaVersion7N8FDvJTwn5JVdMfoLaa7OQuaMQLoz4kitCxFtwkSYQ"
         ]
       }
     },
@@ -8623,7 +8632,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.ReadAuthLambdaVersionVmK49Geb5tvERgLR3qinFChJo6kTHaFLro7cMVpZE"
+          "Outputs.ReadAuthLambdaVersionIKfpIDH9n5zmhPH7szkOye8QGHg7YOO4M5R0RUOI9c"
         ]
       }
     },
@@ -8632,7 +8641,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.GetAllAuthsLambdaVersion5klKld3OwWU69ocfpF6GKqS5xmjTGj1pfbMw8zlqJsw"
+          "Outputs.GetAllAuthsLambdaVersionHK3ueUp2D9WDsGC6eemdoa7A3TgURz737fDAldAl8"
         ]
       }
     },
@@ -8641,7 +8650,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushCreateAuthToSQSLambdaVersionf1f6wY3zGmrbnSTiZ9UiUj1n79onicnhMjptF6s19tY"
+          "Outputs.PushCreateAuthToSQSLambdaVersionbSCtxtN72nDXiJH8tnoqCXeEF9pGhcxhDPI5lAgKjRQ"
         ]
       }
     },
@@ -8650,7 +8659,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushUpdateAuthToSQSLambdaVersion1YTy7cUlCDz4z4KVBy6KTZg4vEKgqpKKW3Dqhk5iP34"
+          "Outputs.PushUpdateAuthToSQSLambdaVersionEnnvpVDB3ZPZsXHpMf3G0X4rMmijc54C2YHv5Es8"
         ]
       }
     },
@@ -8659,7 +8668,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushDeleteAuthToSQSLambdaVersionM5D0Bj2Rg3uljEFhWTUESOLohYtaPvlXEC5QcIJSyQ0"
+          "Outputs.PushDeleteAuthToSQSLambdaVersionjl7FlM3pVQwKQfOjz76ihWtpbkbwyQkVC3J5bfelM"
         ]
       }
     },
@@ -8668,7 +8677,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandCreateGroupLambdaVersion4hHxd8HZNvip7LtIBoHFksFBk92AAlRRcC7SqVvCg"
+          "Outputs.CommandCreateGroupLambdaVersionX575HhBcNZxbhMIVFmTWkCVII8hfmPkK5AC3GMw4"
         ]
       }
     },
@@ -8677,7 +8686,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandUpdateGroupLambdaVersion5awyg3fapzP76DL4FL60fatjAMGcMHP7sIM5BAzBvR4"
+          "Outputs.CommandUpdateGroupLambdaVersionxi9m9npfDRpedY6eFjmKjHAAFvjrCxmDsNVwwNXoKk"
         ]
       }
     },
@@ -8686,7 +8695,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CommandDeleteGroupLambdaVersion2pYe8zvDmxLmquv8j3ctivNrjCno8slnXaQCMYw5Y"
+          "Outputs.CommandDeleteGroupLambdaVersion7Hmcb4yVOtw5ZNunr1fRRrdabljL9ZAKqqqr0R8g"
         ]
       }
     },
@@ -8695,7 +8704,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.CreateGroupLambdaVersionePDPuFOdSfRy6v5GZaMKmENsQGdIT8mu0WUJ9uelqM"
+          "Outputs.CreateGroupLambdaVersionvP42ldY13FLBy6HIX21JEjGBj2WqJTndvcbNVQchy8"
         ]
       }
     },
@@ -8704,7 +8713,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.UpdateGroupLambdaVersioniX4gOhkOGEcv4zNklupMKgI0nEmB9LTWVoJY6XGPbWk"
+          "Outputs.UpdateGroupLambdaVersionOVA8ght3lQCq0G3JwXk6JjuJ0TeXLaxd09kuldbow"
         ]
       }
     },
@@ -8713,7 +8722,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.DeleteGroupLambdaVersionK7dvZXRIUiOknOkw3JtdXTn39FbEMm3nkn3muZ7qc4"
+          "Outputs.DeleteGroupLambdaVersionMWzgh0oYSRUuX6CoDg1kx3TmiJJuZrxiLba8EWBdro"
         ]
       }
     },
@@ -8722,7 +8731,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.ReadGroupLambdaVersioncVMF6kuB3vdvo3u6vHMjloHZzGPxUWDs27Nt8muSV90"
+          "Outputs.ReadGroupLambdaVersion13HyoapgzX3W7lqAGt0ICEX1eKAynVD1VuJmDMY6mT4"
         ]
       }
     },
@@ -8731,7 +8740,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.GetAllGroupsLambdaVersion88R9Rpsmao2dVk98Qlxql0ZyFgqF6G69KKLhPyjU28"
+          "Outputs.GetAllGroupsLambdaVersiondsLbKjgyjwEMX74aOS5oYv4Zlw7EyWPJNzG1pG9A"
         ]
       }
     },
@@ -8740,7 +8749,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushCreateGroupToSQSLambdaVersiontDtrJ1GbG147yghz1VZz6lfweXFpyKSMJ68Q39nUCTI"
+          "Outputs.PushCreateGroupToSQSLambdaVersion5GNh5ZAgzRYtPymsYfh3eJnwMHIccPcJjCEj5G4A"
         ]
       }
     },
@@ -8749,7 +8758,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushUpdateGroupToSQSLambdaVersionjHnGDkQtdFh9WS5WnJ8qjvx4WzG3sBngY9RM4GCYPA"
+          "Outputs.PushUpdateGroupToSQSLambdaVersionF3nI8JEvSEZ4jQ66daIlzoBKyxy67JRSz1qNcxsNo"
         ]
       }
     },
@@ -8758,7 +8767,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.PushDeleteGroupToSQSLambdaVersionicESsToyD1PGPW3WO3OgpDDm7wpuL4KIDwNwVOHRZ0"
+          "Outputs.PushDeleteGroupToSQSLambdaVersionH78TbEjhcyUng79CTmJqIGxyb9qxPqgLA35rMwf2BQ"
         ]
       }
     },
@@ -8767,7 +8776,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.RecoveryLambdaVersionzjbpxQErVbWOS3pFHU46cIZPb2jRGhoFmhi1SbQu5c"
+          "Outputs.RecoveryLambdaVersionAAXKBzXzsttHhaoSprkIzG8fNnyh3YnjueLW0Xk0"
         ]
       }
     },
@@ -8776,16 +8785,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.MediatorLambdaVersionzXMU0vAI1c9sjcyMCYeNg3wVLh3acc4sKhqx9STQc"
-        ]
-      }
-    },
-    "LoginLambdaFunctionQualifiedArn": {
-      "Description": "Current Lambda function version",
-      "Value": {
-        "Fn::GetAtt": [
-          "VersionsNestedStack",
-          "Outputs.LoginLambdaVersionxkCddvRL3xo0BkyVRTftWKJHLYFr5YJU1ltbrgOS7A"
+          "Outputs.MediatorLambdaVersionJm1nVxWg3AVj3S6KhVdRnXD0o9mmP2rKTyXSummojU"
         ]
       }
     },

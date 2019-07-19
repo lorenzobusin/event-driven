@@ -46,14 +46,17 @@ html
         li
           .dropdown
             a.dropitem(href='RECOVERY') Recovery
-        li
+        li#logBtn
           .dropdown
             if locals.user
               .dropdown
-                a.dropitem(id="qsLogoutBtn" href="/logout") Log Out
+                a.dropitem(id="qsLogoutBtn" href="/logout") Logout
+                img(src=user.picture)
+                br
+                span #{user.emails[0].value}
             else
               .dropdown
-                a.dropitem(id="qsLoginBtn" href="/login") Log In
+                a.dropitem(id="qsLoginBtn" href="/login") Login
     .row.form-section
       form#UPDATE_USER.form.col-md-4
         .form-group
@@ -80,14 +83,6 @@ html
               br
             label Email
             input#UPDATE_email.form-control(type='text', name='email', pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', title='Email does not respect the right format')
-            .row
-              .col-md-6
-                label Password
-                input#UPDATE_password.form-control(type='password', name='password', pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}', title='Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters', required='')
-              .col-md-6
-                label Confirm password
-                input#UPDATE_confirmPassword.form-control(type='password', name='confirmPassword', onkeyup='check("UPDATE_password", "UPDATE_confirmPassword", "UPDATE_checkPassword");', required='')
-                span#UPDATE_checkPassword.checkPassword
             button.btn.btn-success(type='submit') Update
             span#messageSuccessUPDATE.messageSuccess
           else

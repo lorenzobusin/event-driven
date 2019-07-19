@@ -5,6 +5,9 @@
     "ApiGatewayRestApiParameter": {
       "Type": "String"
     },
+    "LoginLambdaFunctionArnParameter": {
+      "Type": "String"
+    },
     "PushCreateUserToSQSLambdaFunctionArnParameter": {
       "Type": "String"
     },
@@ -39,9 +42,6 @@
       "Type": "String"
     },
     "PushDeleteGroupToSQSLambdaFunctionArnParameter": {
-      "Type": "String"
-    },
-    "LoginLambdaFunctionArnParameter": {
       "Type": "String"
     }
   },

@@ -181,6 +181,11 @@
     }
   },
   "Outputs": {
+    "ApiGatewayResourceLogin": {
+      "Value": {
+        "Ref": "ApiGatewayResourceLogin"
+      }
+    },
     "ApiGatewayResourcePushcreateusertosqs": {
       "Value": {
         "Ref": "ApiGatewayResourcePushcreateusertosqs"
@@ -239,11 +244,6 @@
     "ApiGatewayResourcePushdeletegrouptosqs": {
       "Value": {
         "Ref": "ApiGatewayResourcePushdeletegrouptosqs"
-      }
-    },
-    "ApiGatewayResourceLogin": {
-      "Value": {
-        "Ref": "ApiGatewayResourceLogin"
       }
     }
   }

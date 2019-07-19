@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    meta(charset='utf-8')
+    meta
     title UserManagement
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
     link(rel='stylesheet', href='css/style.css')
@@ -46,19 +46,24 @@ html
         li
           .dropdown
             a.dropitem(href='RECOVERY') Recovery
-        li
+        li#logBtn
           .dropdown
             if locals.user
               .dropdown
-                a.dropitem(id="qsLogoutBtn" href="/logout") Log Out
+                a.dropitem(id="qsLogoutBtn" href="/logout") Logout
+                img(src=user.picture)
+                br
+                span #{user.emails[0].value}
             else
               .dropdown
-                a.dropitem(id="qsLoginBtn" href="/login") Log In
+                a.dropitem(id="qsLoginBtn" href="/login") Login
     .row.form-section
       form#CREATE_USER.form.col-md-4
         .form-group
           h3.crud_title Create user
           if locals.user
+            label userId
+            input#CREATE_userId.form-control(type='text', name='userId', required='')
             label First name
             input#CREATE_firstName.form-control(type='text', name='firstName', required='')
             label Last name
@@ -77,15 +82,6 @@ html
               br
             label Email
             input#CREATE_email.form-control(type='text', name='email', pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', title='Email does not respect the right format')
-            .row
-              .col-md-6
-                label Password
-                input#CREATE_password.form-control(type='password', name='password', pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}', title='Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters', required='')
-              .col-md-6
-                label Confirm password
-                input#CREATE_confirmPassword.form-control(type='password', name='confirmPassword', onkeyup='check("CREATE_password", \
-                "CREATE_confirmPassword", "CREATE_checkPassword");', required='')
-                span#CREATE_checkPassword.checkPassword
             button.btn.btn-success(type='submit') Create
             span#messageSuccessCREATE.messageSuccess
           else

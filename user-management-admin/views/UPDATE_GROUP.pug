@@ -1,0 +1,17 @@
+extends layout
+block content
+
+  .row.form-section
+    form#CREATE_GROUP.form.col-md-4
+      .form-group
+        h3.crud_title Update group
+        if locals.user
+          label Name
+          input#UPDATE_name.form-control(type='text', name='name', required='')
+          label Description
+          textarea#UPDATE_desc.form-control(name='desc', required='')
+          button.btn.btn-success(type='submit') Create
+          span#messageSuccessUPDATE.messageSuccess
+        else
+          h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
+  script(type='text/javascript', src='js/UPDATE_group.js', charset='utf-8')

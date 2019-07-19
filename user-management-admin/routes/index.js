@@ -130,5 +130,11 @@ router.get('/DELETE_group', function (req, res) {
   });
 });
 
+//RECOVERY
+router.get('/RECOVERY', function (req, res) {
+  res.render('RECOVERY', {
+  	pageAggregate: 'recovery'
+  });
+});
 
 module.exports = router;

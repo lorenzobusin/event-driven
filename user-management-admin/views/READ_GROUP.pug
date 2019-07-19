@@ -1,0 +1,21 @@
+extends layout
+block content
+  .row.form-section
+    form#READ_GROUP.form.col-md-4
+      .form-group
+        h3.crud_title READ GROUP
+        if locals.user
+          label groupId
+          input#READ_groupId.form-control(type='text', name='groupId')
+          button#READ.btn.btn-success Search
+          span#messageSuccessREAD.messageSuccess
+        else
+            h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
+  .row
+    .col-md-10
+      table#tableResult
+        thead
+          tr
+            th Name
+            th Description
+  script(type='text/javascript', src='js/READ_group.js', charset='utf-8')

@@ -1,0 +1,15 @@
+extends layout
+block content
+
+  .row.form-section
+    form#RECOVERY.form.col-md-4
+      .form-group
+        h3.crud_title RECOVERY FROM
+        if locals.user
+          label timestamp
+          input#RECOVERY_timestamp.form-control(type='text', name='timestamp')
+          button.btn.btn-success Recovery
+          span#messageSuccessRECOVERY.messageSuccess
+        else
+          h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
+  script(type='text/javascript', src='js/RECOVERY.js', charset='utf-8')

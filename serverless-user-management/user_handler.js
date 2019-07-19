@@ -6,25 +6,19 @@ module.exports.pushCreateUserToSQS = (event, context, callback) => {
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
 
-  if(!utils.validatePassword(parsedEvent.body.password))
-    callback(null, "Invalid password format");
-  else{
-    parsedEvent.body.password = utils.encrypt(parsedEvent.body.password);
-
-    const params = {
+  const params = {
       MessageBody: JSON.stringify(parsedEvent),
       QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createUserQueue"
-    };
+  };
 
-    SQS.sendMessage(params, function(err,data){
-      if(err){
-        console.log(err);
-        callback(null, err);
-      }
-      else
-        callback(null, "User event pushed to SQS");
-    }); 
-  } 
+  SQS.sendMessage(params, function(err,data){
+    if(err){
+      console.log(err);
+      callback(null, err);
+    }
+    else
+      callback(null, "User event pushed to SQS");
+  });  
 };
 
 module.exports.pushUpdateUserToSQS = (event, context, callback) => {
@@ -35,25 +29,19 @@ module.exports.pushUpdateUserToSQS = (event, context, callback) => {
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
 
-  if(!utils.validatePassword(parsedEvent.body.password))
-    callback(null, "Invalid password format");
-  else{
-    parsedEvent.body.password = utils.encrypt(parsedEvent.body.password);
+  const params = {
+    MessageBody: JSON.stringify(parsedEvent),
+    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateUserQueue"
+  };
 
-    const params = {
-      MessageBody: JSON.stringify(parsedEvent),
-      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateUserQueue"
-    };
-
-    SQS.sendMessage(params, function(err,data){
-      if(err){
-        console.log(err);
-        callback(null, err);
-      }
-      else
-        callback(null, "User event pushed to SQS");
-    });
-  }
+  SQS.sendMessage(params, function(err,data){
+    if(err){
+      console.log(err);
+      callback(null, err);
+    }
+    else
+      callback(null, "User event pushed to SQS");
+  });
 };
 
 module.exports.pushDeleteUserToSQS = (event, context, callback) => {
@@ -85,7 +73,16 @@ module.exports.commandCreateUser = async (event, context, callback) => {
   const bodyParsed = JSON.parse(stringedBody);
   const check = bodyParsed.body;
 
-  console.log(stringedEvent);
+  const checkIdParams = {
+    TableName: 'user',
+    ProjectionExpression: "userId",
+    FilterExpression: "userId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": check.userId
+    }
+  };
+
+  const userIdAlreadyExists = await utils.asyncCheckScanDB(checkIdParams);
 
   const checkEmailParams = {
     TableName: 'user',
@@ -97,10 +94,9 @@ module.exports.commandCreateUser = async (event, context, callback) => {
   };
 
   const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
-  console.log(JSON.stringify(bodyParsed.body));
   
-  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (!utils.validateEmail(check.email))){
-    callback(null, "Email already exists or empty attributes");
+  if((check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (userIdAlreadyExists) || (emailAlreadyExists)){
+    callback(null, "Email/userId already exists or empty attributes");
   }
   else{
     console.log("user stored");
@@ -118,6 +114,17 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
   const bodyParsed = JSON.parse(stringedBody);
   const check = bodyParsed.body;
 
+  const checkIdParams = {
+    TableName: 'user',
+    ProjectionExpression: "userId",
+    FilterExpression: "userId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": check.userId
+    }
+  };
+
+  const userIdAlreadyExists = await utils.asyncCheckScanDB(checkIdParams);
+
   const checkEmailParams = {
     TableName: 'user',
     ProjectionExpression: "email",
@@ -129,8 +136,8 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
 
   const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
   
-  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (!utils.validateEmail(check.email))){
-    callback(null, "Email already exists or empty attributes");
+  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (userIdAlreadyExists)){
+    callback(null, "Email/userId already exists or empty attributes");
   }
   else{
     utils.storeEvent("user", "executeUpdateUserQueue", bodyParsed.body);

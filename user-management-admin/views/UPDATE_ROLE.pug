@@ -1,0 +1,82 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title User Management
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+    link(rel='stylesheet', href='css/style.css')
+    link(rel='shortcut icon', type='image/png', href='img/favicon.png')
+    script(type='text/javascript', src='js/utils.js', charset='utf-8')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+  body(onload='getAllAuths("UPDATE_auth")')
+    .navbar
+      ul
+        li
+          .dropdown
+            a.dropitem(href='USER_index') Users
+            .dropdown-content
+              a(href='CREATE_user') Create
+              a(href='READ_user') Read
+              a(href='UPDATE_user') Update
+              a(href='DELETE_user') Delete
+        li
+          .dropdown.active
+            a.dropitem(href='ROLE_index') Roles
+            .dropdown-content
+              a(href='CREATE_role') Create
+              a(href='READ_role') Read
+              a(href='UPDATE_role') Update
+              a(href='DELETE_role') Delete
+        li
+          .dropdown
+            a.dropitem(href='AUTH_index') Authorizations
+            .dropdown-content
+              a(href='CREATE_auth') Create
+              a(href='READ_auth') Read
+              a(href='UPDATE_auth') Update
+              a(href='DELETE_auth') Delete
+        li
+          .dropdown
+            a.dropitem(href='GROUP_index') Groups
+            .dropdown-content
+              a(href='CREATE_group') Create
+              a(href='READ_group') Read
+              a(href='UPDATE_group') Update
+              a(href='DELETE_group') Delete
+        li
+          .dropdown
+            a.dropitem(href='RECOVERY') Recovery
+        li
+          .dropdown
+            if locals.user
+              .dropdown
+                a.dropitem(id="qsLogoutBtn" href="/logout") Log Out
+            else
+              .dropdown
+                a.dropitem(id="qsLoginBtn" href="/login") Log In
+    .row.form-section
+      form#UPDATE_ROLE.form.col-md-4
+        .form-group
+          h3.crud_title Update role
+          if locals.user
+            label roleId
+            input#UPDATE_roleId.form-control(type='text', name='roleId')
+            h2 Insert new info
+            label Name
+            input#UPDATE_name.form-control(type='text', name='name', required='')
+            label Description
+            textarea#UPDATE_desc.form-control(name='desc', required='')
+            label Authorizations JSON
+            textarea#UPDATE_auth.form-control(name='auth', readonly='', required='')
+              | {
+              | "Authorizations":  [
+            button.btn.btn-success(type='submit') Create
+            span#messageSuccessUPDATE.messageSuccess
+            .col-md-6.addAuth
+              h2 Available authorizations
+              ul#ul-Auth
+              input#btn-reset.btn.btn-success(type='button', value='Reset', onclick='resetAuth("UPDATE_auth", "ul-Auth")')
+          else
+            h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
+  script(type='text/javascript', src='js/UPDATE_role.js', charset='utf-8')
+  script(type='text/javascript', src='js/getAllAuths.js', charset='utf-8')

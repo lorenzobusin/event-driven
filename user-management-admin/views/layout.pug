@@ -1,0 +1,98 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title UserManagement
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+    link(rel='stylesheet', href='css/style.css')
+    link(rel='shortcut icon', type='image/png', href='img/favicon.png')
+    script(type='text/javascript', src='js/utils.js', charset='utf-8')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+  body
+    .navbar
+      ul
+        li
+          if pageAggregate === 'user'
+            .dropdown.active
+              a.dropitem(href='USER_index') Users
+              .dropdown-content
+                a(href='CREATE_user') Create
+                a(href='READ_user') Read
+                a(href='UPDATE_user') Update
+                a(href='DELETE_user') Delete
+          else
+            .dropdown
+              a.dropitem(href='USER_index') Users
+              .dropdown-content
+                a(href='CREATE_user') Create
+                a(href='READ_user') Read
+                a(href='UPDATE_user') Update
+                a(href='DELETE_user') Delete
+        li
+          if pageAggregate === 'role'
+            .dropdown.active
+              a.dropitem(href='ROLE_index') Roles
+              .dropdown-content
+                a(href='CREATE_role') Create
+                a(href='READ_role') Read
+                a(href='UPDATE_role') Update
+                a(href='DELETE_role') Delete
+          else
+            .dropdown
+              a.dropitem(href='ROLE_index') Roles
+              .dropdown-content
+                a(href='CREATE_role') Create
+                a(href='READ_role') Read
+                a(href='UPDATE_role') Update
+                a(href='DELETE_role') Delete
+        li
+          if pageAggregate === 'auth'
+            .dropdown.active
+              a.dropitem(href='AUTH_index') Authorizations
+              .dropdown-content
+                a(href='CREATE_auth') Create
+                a(href='READ_auth') Read
+                a(href='UPDATE_auth') Update
+                a(href='DELETE_auth') Delete
+          else
+            .dropdown
+              a.dropitem(href='AUTH_index') Authorizations
+              .dropdown-content
+                a(href='CREATE_auth') Create
+                a(href='READ_auth') Read
+                a(href='UPDATE_auth') Update
+                a(href='DELETE_auth') Delete
+        li
+          if pageAggregate === 'group'
+            .dropdown.active
+              a.dropitem(href='GROUP_index') Groups
+              .dropdown-content
+                a(href='CREATE_group') Create
+                a(href='READ_group') Read
+                a(href='UPDATE_group') Update
+                a(href='DELETE_group') Delete
+          else
+            .dropdown
+              a.dropitem(href='GROUP_index') Groups
+              .dropdown-content
+                a(href='CREATE_group') Create
+                a(href='READ_group') Read
+                a(href='UPDATE_group') Update
+                a(href='DELETE_group') Delete
+        li
+          if pageAggregate === 'recovery'
+            .dropdown.active
+              a.dropitem(href='RECOVERY') Recovery
+          else
+            .dropdown
+              a.dropitem(href='RECOVERY') Recovery
+        li
+          .dropdown
+            if locals.user
+              .dropdown
+                a.dropitem(id="qsLogoutBtn" href="/logout") Log Out
+            else
+              .dropdown
+                a.dropitem(id="qsLoginBtn" href="/login") Log In
+
+    block content

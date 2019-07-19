@@ -1,0 +1,22 @@
+extends layout
+block content
+  .row.form-section
+    form#READ_ROLE.form.col-md-4
+      .form-group
+        h3.crud_title READ ROLE
+        if locals.user
+          label roleId
+          input#READ_roleId.form-control(type='text', name='roleId')
+          button#READ.btn.btn-success Search
+          span#messageSuccessREAD.messageSuccess
+        else
+            h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
+  .row
+    .col-md-10
+      table#tableResult
+        thead
+          tr
+            th Name
+            th Description
+            th Authorizations
+  script(type='text/javascript', src='js/READ_role.js', charset='utf-8')

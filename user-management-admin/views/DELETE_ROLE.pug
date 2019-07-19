@@ -1,0 +1,15 @@
+extends layout
+block content
+	
+	.row.form-section
+		form#DELETE_ROLE.form.col-md-4
+			.form-group
+				h3.crud_title DELETE ROLE
+				if locals.user
+					label roleId
+					input#DELETE_roleId.form-control(type='text', name='roleId', required='')
+					button.btn.btn-success(type='submit') Delete
+					span#messageSuccessDELETE.messageSuccess
+				else
+					h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
+	script(type='text/javascript', src='js/DELETE_role.js', charset='utf-8')

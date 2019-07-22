@@ -1,0 +1,496 @@
+service: serverless-user-management
+
+plugins:
+ # - serverless-finch  #plugin to create html app
+ - serverless-plugin-split-stacks #to avoid the limit of 200 resources
+
+custom:
+  client:
+    bucketName: serverless-bucket-s3-public
+    indexDocument: index.html
+    errorDocument: error.html
+  splitStacks:
+    perFunction: false
+    perType: true
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: eu-central-1
+  stage: dev
+  iamRoleStatements:
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - "dynamodb:*"
+        - "sqs:*"
+        - "lambda:*"
+        - "cloudwatch:*"
+        - "apigateway:*"
+
+resources:
+  Resources:
+
+    #USER TABLE
+    UsersDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: user
+
+    #ROLE TABLE
+    RolesDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: roleId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: roleId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: role
+
+    #AUTHORIZATION TABLE
+    AuthorizationsDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: authId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: authId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: auth
+
+    #GROUP TABLE
+    GroupsDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: groupId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: groupId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: group
+
+    #EVENT STORE TABLE
+    EventStoreDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: eventId
+            AttributeType: S
+          - AttributeName: timestamp
+            AttributeType: N
+        KeySchema:
+          - AttributeName: eventId
+            KeyType: HASH
+          - AttributeName: timestamp
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        StreamSpecification: 
+          StreamViewType: NEW_IMAGE
+        TableName: eventStore
+
+      
+
+functions:
+
+  #authorize:
+   # handler: handler.authorize
+  
+  login:
+    handler: handler.login
+    events:
+      - http:
+          path: /login
+          method: post
+          cors: true
+          integration: lambda
+          #authorizer: authorize
+
+  # ------------------------------- USER FUNCTIONS ------------------------------- #
+  commandCreateUser:
+    handler: handler.commandCreateUser
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:createUserQueue #set ARN of an existing queue
+
+  commandUpdateUser:
+    handler: handler.commandUpdateUser
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateUserQueue 
+
+  commandDeleteUser:
+    handler: handler.commandDeleteUser
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:deleteUserQueue 
+
+  createUser:
+    handler: handler.createUser
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateUserQueue
+
+  updateUser:
+    handler: handler.updateUser
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue
+
+  deleteUser: 
+    handler: handler.deleteUser
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteUserQueue
+
+  readUser: 
+    handler: handler.readUser
+    events: 
+      - http: 
+          path: /readUser
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "userId": "$input.params("userId")" }'
+
+  pushCreateUserToSQS: 
+    handler: handler.pushCreateUserToSQS 
+    events: 
+      - http:
+          path: /pushcreateusertosqs
+          method: post
+          cors: true
+          integration: lambda
+          
+
+  pushUpdateUserToSQS: 
+    handler: handler.pushUpdateUserToSQS 
+    events: 
+      - http:
+          path: /pushupdateusertosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushDeleteUserToSQS: 
+    handler: handler.pushDeleteUserToSQS 
+    events: 
+      - http:
+          path: /pushdeleteusertosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  # ------------------------------- ROLE FUNCTIONS ------------------------------- #
+
+  commandCreateRole:
+    handler: handler.commandCreateRole
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:createRoleQueue #create new queue and set the ARN
+
+  commandUpdateRole:
+    handler: handler.commandUpdateRole
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateRoleQueue 
+
+  commandDeleteRole:
+    handler: handler.commandDeleteRole
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:deleteRoleQueue 
+
+  createRole:
+    handler: handler.createRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateRoleQueue
+
+  updateRole:
+    handler: handler.updateRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateRoleQueue
+
+  deleteRole: 
+    handler: handler.deleteRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteRoleQueue
+
+  readRole: 
+    handler: handler.readRole
+    events: 
+      - http: 
+          path: /readRole
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "roleId": "$input.params("roleId")" }'
+  
+  getAllRoles: 
+    handler: handler.getAllRoles
+    events: 
+      - http: 
+          path: /getAllRoles
+          method: get
+          cors: true
+          integration: lambda
+
+  pushCreateRoleToSQS: 
+    handler: handler.pushCreateRoleToSQS 
+    events: 
+      - http:
+          path: /pushcreateroletosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushUpdateRoleToSQS: 
+    handler: handler.pushUpdateRoleToSQS 
+    events: 
+      - http:
+          path: /pushupdateroletosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushDeleteRoleToSQS: 
+    handler: handler.pushDeleteRoleToSQS 
+    events: 
+      - http:
+          path: /pushdeleteroletosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  # ------------------------------- AUTHORIZATION FUNCTIONS ------------------------------- #
+
+  commandCreateAuth:
+    handler: handler.commandCreateAuth
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:createAuthQueue #create new queue and set the ARN
+  
+  commandUpdateAuth:
+    handler: handler.commandUpdateAuth
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateAuthQueue
+
+  commandDeleteAuth:
+    handler: handler.commandDeleteAuth
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:deleteAuthQueue
+
+  createAuth:
+    handler: handler.createAuth
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateAuthQueue
+
+  updateAuth:
+    handler: handler.updateAuth
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateAuthQueue
+
+  deleteAuth: 
+    handler: handler.deleteAuth
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteAuthQueue
+
+  readAuth: 
+    handler: handler.readAuth
+    events: 
+      - http: 
+          path: /readAuth
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "authId": "$input.params("authId")" }'
+    
+  getAllAuths: 
+    handler: handler.getAllAuths
+    events: 
+      - http: 
+          path: /getAllAuths
+          method: get
+          cors: true
+          integration: lambda
+
+  pushCreateAuthToSQS: 
+    handler: handler.pushCreateAuthToSQS 
+    events: 
+      - http:
+          path: /pushcreateauthtosqs
+          method: post
+          cors: true
+          integration: lambda
+    
+  pushUpdateAuthToSQS: 
+    handler: handler.pushUpdateAuthToSQS 
+    events: 
+      - http:
+          path: /pushupdateauthtosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushDeleteAuthToSQS: 
+    handler: handler.pushDeleteAuthToSQS 
+    events: 
+      - http:
+          path: /pushdeleteauthtosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  # ------------------------------- GROUP FUNCTIONS ------------------------------- #
+
+  commandCreateGroup:
+    handler: handler.commandCreateGroup
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:createGroupQueue #create new queue and set the ARN
+
+  commandUpdateGroup:
+    handler: handler.commandUpdateGroup
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateGroupQueue 
+    
+  commandDeleteGroup:
+    handler: handler.commandDeleteGroup
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:deleteGroupQueue 
+
+  createGroup:
+    handler: handler.createGroup
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateGroupQueue
+
+  updateGroup:
+    handler: handler.updateGroup
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateGroupQueue
+
+  deleteGroup: 
+    handler: handler.deleteGroup
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteGroupQueue
+
+  readGroup: 
+    handler: handler.readGroup
+    events: 
+      - http: 
+          path: /readGroup
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "groupId": "$input.params("groupId")" }'
+
+  getAllGroups: 
+    handler: handler.getAllGroups
+    events: 
+      - http: 
+          path: /getAllGroups
+          method: get
+          cors: true
+          integration: lambda
+
+  pushCreateGroupToSQS: 
+    handler: handler.pushCreateGroupToSQS 
+    events: 
+      - http:
+          path: /pushcreategrouptosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushUpdateGroupToSQS: 
+    handler: handler.pushUpdateGroupToSQS 
+    events: 
+      - http:
+          path: /pushupdategrouptosqs
+          method: post
+          cors: true
+          integration: lambda
+
+  pushDeleteGroupToSQS: 
+    handler: handler.pushDeleteGroupToSQS 
+    events: 
+      - http:
+          path: /pushdeletegrouptosqs
+          method: post
+          cors: true
+          integration: lambda
+
+# ------------------------------- EVENT SOURCING FUNCTIONS ------------------------------- #
+
+  recovery: 
+    handler: handler.recovery
+    timeout: 10
+    events: 
+      - http:
+          path: /mediatorrecovery
+          method: post
+          cors: true
+          integration: lambda
+
+  mediator:
+    handler: handler.mediator
+    events:
+        - stream: arn:aws:dynamodb:eu-central-1:582373673306:table/eventStore/stream/2019-07-10T08:02:22.059 #set the ARN of dynamodb stream
+    
+

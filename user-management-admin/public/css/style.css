@@ -388,19 +388,13 @@ h4 {
   position: absolute;
   right: 0;
   background-color: lightgray;
-  font-family: monospace;
 }
 
 #logBtn img{
   border-radius: 50%;
-  margin-left: 1em;
 }
 
 #logBtn a{
-  color: black;
-}
-
-#logoBtn:hover {
-  background-color: cornflowerblue;
+  color: blue;
 }
 

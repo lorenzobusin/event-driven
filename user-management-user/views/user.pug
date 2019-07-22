@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  .w3-card-4
+    h1 Welcome #{user.emails[0].value}
+    img(src=user.picture)
+    h2 User profile
+    p This is the content of <code>req.user</code>.
+    pre
+      code #{userProfile}
+
+    p This is the userId: #{user.user_id}

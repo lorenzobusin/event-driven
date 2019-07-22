@@ -1,0 +1,31 @@
+extends layout
+block content
+  .row
+    .col-md-5
+      .profilo
+        h2 Your profile
+        if locals.user
+          ul.border
+            label userId
+            li 
+              span#PROFILE_userId
+            label First name
+            li 
+              span#PROFILE_firstName
+            label Last name
+            li
+              span#PROFILE_lastName
+            label Birth date
+            li 
+              span#PROFILE_date
+            label Role
+            li
+              span#PROFILE_role
+            label Group
+            li 
+              span#PROFILE_group
+            label Email
+            li
+              span#PROFILE_email
+        else
+          h4 You are not logged in! Please #[a(href="/login") Log In] to continue.

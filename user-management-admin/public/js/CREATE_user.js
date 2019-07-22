@@ -11,7 +11,7 @@ createUser.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "userId": document.getElementById('CREATE_userId').value.trim(),
+      "userId": document.getElementById('CREATE_userId').value.trim().substr(6),
       "firstName": document.getElementById('CREATE_firstName').value.trim(),
       "lastName": document.getElementById('CREATE_lastName').value.trim(),
       "date": document.getElementById('CREATE_date').value.trim(),

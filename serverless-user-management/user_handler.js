@@ -1,4 +1,4 @@
-module.exports.pushCreateUserToSQS = (event, context, callback) => {
+/*module.exports.pushCreateUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
   const utils = require('./utils.js');
@@ -251,7 +251,7 @@ module.exports.deleteUser = async (event, context, callback) => {
       callback(null, "User deleted")
   }).promise();
 };
-
+*/
 //READ MODE LAMBDA
 
 module.exports.readUser = (event, context, callback) => {
@@ -266,12 +266,6 @@ module.exports.readUser = (event, context, callback) => {
     Key: {
       "userId": parsedEvent.userId
     },
-    ExpressionAttributeNames:{
-      "#birthdate": "date", //date is a reserved keyword
-      "#userrole": "role", //role is a reserved keyword
-      "#usergroup": "group" //group is a reserved keyword
-    },
-    ProjectionExpression: "firstName, lastName, #birthdate, #userrole, #usergroup, email",
     KeyConditionExpression: "userId = :id",
     ExpressionAttributeValues: {
         ":id": parsedEvent.userId

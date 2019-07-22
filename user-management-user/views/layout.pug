@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    meta
+    title User App
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+    link(rel='stylesheet', href='css/style.css')
+    link(rel='shortcut icon', type='image/png', href='img/favicon.png')
+    script(type='text/javascript', src='js/utils.js', charset='utf-8')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(type='text/javascript', src='js/getUser.js', charset='utf-8')
+  body
+    script(type='text/javascript').
+      getUser('#{user.user_id}');
+    .navbar
+      ul
+        li
+          if navActive === 'profile'
+            .dropdown.active
+              a.dropitem(href='profile') Profile
+          else
+            .dropdown
+              a.dropitem(href='profile') Profile
+        li
+          if navActive === 'update'
+            .dropdown.active
+              a.dropitem(href='update') Update
+          else
+            .dropdown
+              a.dropitem(href='update') Update
+        li#logBtn
+          .dropdown
+            if locals.user
+              .dropdown
+                a.dropitem(id="qsLogoutBtn" href="/logout") Logout
+                img(src=user.picture)
+                br
+                span #{user.emails[0].value}
+            else
+              .dropdown
+                a.dropitem(id="qsLoginBtn" href="/login") Login
+
+    block content

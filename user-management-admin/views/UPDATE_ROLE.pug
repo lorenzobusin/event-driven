@@ -1,14 +1,14 @@
 doctype html
 html
   head
-    meta(charset='utf-8')
+    meta
     title User Management
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
     link(rel='stylesheet', href='css/style.css')
     link(rel='shortcut icon', type='image/png', href='img/favicon.png')
     script(type='text/javascript', src='js/utils.js', charset='utf-8')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-  body(onload='getAllAuths("UPDATE_auth")')
+  body(onload='getAllRoles("CREATE_role"); getAllGroups("CREATE_group");')
     .navbar
       ul
         li
@@ -46,37 +46,37 @@ html
         li
           .dropdown
             a.dropitem(href='RECOVERY') Recovery
-        li
+        li#logBtn
           .dropdown
             if locals.user
               .dropdown
-                a.dropitem(id="qsLogoutBtn" href="/logout") Log Out
+                a.dropitem(id="qsLogoutBtn" href="/logout") Logout
+                img(src=user.picture)
+                br
+                span #{user.emails[0].value}
             else
               .dropdown
-                a.dropitem(id="qsLoginBtn" href="/login") Log In
-    .row.form-section
-      form#UPDATE_ROLE.form.col-md-4
-        .form-group
-          h3.crud_title Update role
-          if locals.user
-            label roleId
-            input#UPDATE_roleId.form-control(type='text', name='roleId')
-            h2 Insert new info
-            label Name
-            input#UPDATE_name.form-control(type='text', name='name', required='')
-            label Description
-            textarea#UPDATE_desc.form-control(name='desc', required='')
-            label Authorizations JSON
-            textarea#UPDATE_auth.form-control(name='auth', readonly='', required='')
-              | {
-              | "Authorizations":  [
-            button.btn.btn-success(type='submit') Create
-            span#messageSuccessUPDATE.messageSuccess
-            .col-md-6.addAuth
-              h2 Available authorizations
-              ul#ul-Auth
-              input#btn-reset.btn.btn-success(type='button', value='Reset', onclick='resetAuth("UPDATE_auth", "ul-Auth")')
-          else
-            h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
-  script(type='text/javascript', src='js/UPDATE_role.js', charset='utf-8')
-  script(type='text/javascript', src='js/getAllAuths.js', charset='utf-8')
+                a.dropitem(id="qsLoginBtn" href="/login") Login
+.row.form-section
+  form#UPDATE_ROLE.form.col-md-4
+    .form-group
+      h3.crud_title Update role
+      label roleId
+      input#UPDATE_roleId.form-control(type='text', name='roleId')
+      h2 Insert new info
+      label Name
+      input#UPDATE_name.form-control(type='text', name='name', required='')
+      label Description
+      textarea#UPDATE_desc.form-control(name='desc', required='')
+      label Authorizations JSON
+      textarea#UPDATE_auth.form-control(name='auth', readonly='', required='')
+        | {
+        |   "Authorizations":  [
+      button.btn.btn-success(type='submit') Create
+      span#messageSuccessUPDATE.messageSuccess
+  .col-md-6.addAuth
+    h2 Available authorizations
+    ul#ul-Auth
+    input#btn-reset.btn.btn-success(type='button', value='Reset', onclick='resetAuth("UPDATE_auth", "ul-Auth")')
+script(type='text/javascript', src='js/UPDATE_role.js', charset='utf-8')
+script(type='text/javascript', src='js/getAllAuths.js', charset='utf-8')

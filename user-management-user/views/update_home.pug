@@ -1,0 +1,31 @@
+extends layout
+block content
+  .row.form-section
+    form#UPDATE_PROFILE.form.col-md-4
+      .form-group
+        h2.crud_title Update your profile
+        if locals.user
+          label userId
+          input#PROFILE_userId.form-control(type='text', name='userId', required='', disabled='disabled')
+          label First name
+          input#PROFILE_firstName.form-control(type='text', name='firstName', required='')
+          label Last name
+          input#PROFILE_lastName.form-control(type='text', name='lastName', required='')
+          label Birth date
+          input#PROFILE_date.form-control(type='date', name='date', required='')
+          .row
+              .col-md-6
+                label Role
+                br
+                select#PROFILE_role.select-css(disabled='disabled')
+              .col-md-6
+                label Group
+                br
+                select#PROFILE_group.select-css(disabled='disabled')
+              br
+          label Email
+          input#PROFILE_email.form-control(type='text', name='email', pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', title='Email does not respect the right format')
+          button.btn.btn-success(type='submit') Update
+          span#messageSuccessCREATE.messageSuccess
+        else
+          h4 You are not logged in! Please #[a(href="/login") Log In] to continue.

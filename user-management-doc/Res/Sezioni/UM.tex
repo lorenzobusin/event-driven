@@ -1,0 +1,65 @@
+\newpage
+\newsection{User Management}
+\subsection{Aggregates}
+\subsubsection{User}
+\begin{itemize}
+	\item \textbf{userId}: this attribute must be unique and refers to the \emph{user\_id} key in the corresponding \emph{Auth0} users table;
+	\item \textbf{firstName}: user's first name;
+	\item \textbf{lastName}: user's  last name;
+	\item \textbf{date}: user's birth date;
+	\item \textbf{email}: this attribute must be unique and respect the right format;
+	\item External links:
+	\begin{itemize}
+		\item \textbf{role}: user's role;
+		\item \textbf{group}: user's belonging group.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Role}
+\begin{itemize}
+	\item \textbf{roleId}: this attribute is generated with a UUID function;
+	\item \textbf{name}: this attribute must be unique;
+	\item \textbf{desc}: role's description;
+	\item External links:
+	\begin{itemize}
+		\item \textbf{auth}: JSON array of role's authorizations.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{Authorization}
+\begin{itemize}
+	\item \textbf{authId}: this attribute is generated with a UUID function;
+	\item \textbf{name}: this attribute must be unique;
+	\item \textbf{desc}: auth's description.
+\end{itemize}
+
+\subsubsection{Group}
+\begin{itemize}
+	\item \textbf{groupId}: this attribute is generated with a UUID function;
+	\item \textbf{name}: this attribute must be unique;
+	\item \textbf{desc}: group's description.
+\end{itemize}
+
+\subsection{Admin side}
+\subsubsection{Authentication}
+The authentication feature si provided by a third part provider, Auth0. In the admin side only admin users can log in; the user must be in the corresponding application's database on Auth0.
+\subsubsection{Use cases}
+\begin{itemize}
+	\item Creation of new aggregate object;
+	\item Reading of aggregate object's info;
+	\item Update of aggregate object;
+	\item Delete an aggregate object;
+	\item Recover the system state from a specific timestamp.
+\end{itemize}
+	
+
+\subsection{User side}
+\subsubsection{Authentication}
+The authentication feature si provided by a third part provider, Auth0. In the user side only users can log in; it can sign in with email and password or using Google's authentication or just log in using its credentials.
+\subsubsection{Use cases}:
+\begin{itemize}
+	\item Filling the users form to sign in into the User Management app;
+	\item Update user's info;
+	\item Reading user's info.
+\end{itemize}
+

@@ -22,5 +22,9 @@ router.get('/update', function (req, res) {
   });
 });
 
+router.get('/signin', function (req, res) {
+  res.render('signin_home')
+});
+
 
 module.exports = router;

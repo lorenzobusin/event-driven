@@ -10,8 +10,6 @@ html
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(type='text/javascript', src='js/getUser.js', charset='utf-8')
   body
-    script(type='text/javascript').
-      getUser('#{user.user_id}');
     .navbar
       ul
         li
@@ -36,6 +34,8 @@ html
                 img(src=user.picture)
                 br
                 span #{user.emails[0].value}
+              script(type='text/javascript').
+                getUser('#{user.user_id}');
             else
               .dropdown
                 a.dropitem(id="qsLoginBtn" href="/login") Login

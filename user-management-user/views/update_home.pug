@@ -4,6 +4,7 @@ block content
     form#UPDATE_PROFILE.form.col-md-4
       .form-group
         h2.crud_title Update your profile
+        h2 #{prova}
         if locals.user
           label userId
           input#PROFILE_userId.form-control(type='text', name='userId', required='', disabled='disabled')
@@ -29,3 +30,5 @@ block content
           span#messageSuccessCREATE.messageSuccess
         else
           h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
+
+  script(type='text/javascript', src='js/UPDATE_profile.js', charset='utf-8')

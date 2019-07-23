@@ -1,0 +1,23 @@
+title Write model
+
+activate pushToQueue
+[->>pushToQueue:event
+pushToQueue->>commandOperation: push event
+activate commandOperation
+deactivate pushToQueue
+database eventStore
+commandOperation->>eventStore:check and \nstore event
+deactivate commandOperation
+activate eventStore
+eventStore->>mediator:orchestrate event
+activate mediator
+deactivate eventStore
+mediator->>operation:push to\nexecution queue
+deactivate mediator
+activate operation
+database views
+operation->>views: execute operation\nand update views
+deactivate operation
+
+
+

@@ -3,63 +3,82 @@
 \subsection{Aggregates}
 \subsubsection{User}
 \begin{itemize}
-	\item \textbf{userId}: this attribute must be unique and refers to the \emph{user\_id} key in the corresponding \emph{Auth0} users table;
-	\item \textbf{firstName}: user's first name;
-	\item \textbf{lastName}: user's  last name;
-	\item \textbf{date}: user's birth date;
-	\item \textbf{email}: this attribute must be unique and respect the right format;
+	\item \textbf{UserId}: this attribute must be unique and refers to the \emph{user\_id} key in the corresponding \emph{Auth0} users table(without first 6 characters 'Auth0|' );
+	\item \textbf{FirstName}: user's first name;
+	\item \textbf{LastName}: user's  last name;
+	\item \textbf{Date}: user's birth date;
+	\item \textbf{Email}: this attribute must be unique and respect the right format;
 	\item External links:
 	\begin{itemize}
-		\item \textbf{role}: user's role;
-		\item \textbf{group}: user's belonging group.
+		\item \textbf{Role}: user's role;
+		\item \textbf{Group}: user's belonging group.
 	\end{itemize}
 \end{itemize}
 
 \subsubsection{Role}
 \begin{itemize}
-	\item \textbf{roleId}: this attribute is generated with a UUID function;
-	\item \textbf{name}: this attribute must be unique;
-	\item \textbf{desc}: role's description;
+	\item \textbf{RoleId}: this attribute is generated with a UUID function;
+	\item \textbf{Name}: this attribute must be unique;
+	\item \textbf{Desc}: role's description;
 	\item External links:
 	\begin{itemize}
-		\item \textbf{auth}: JSON array of role's authorizations.
+		\item \textbf{Auth}: JSON array of role's authorizations.
 	\end{itemize}
 \end{itemize}
 
 \subsubsection{Authorization}
 \begin{itemize}
-	\item \textbf{authId}: this attribute is generated with a UUID function;
-	\item \textbf{name}: this attribute must be unique;
-	\item \textbf{desc}: auth's description.
+	\item \textbf{AuthId}: this attribute is generated with a UUID function;
+	\item \textbf{Name}: this attribute must be unique;
+	\item \textbf{Desc}: auth's description.
 \end{itemize}
 
 \subsubsection{Group}
 \begin{itemize}
-	\item \textbf{groupId}: this attribute is generated with a UUID function;
-	\item \textbf{name}: this attribute must be unique;
-	\item \textbf{desc}: group's description.
+	\item \textbf{GroupId}: this attribute is generated with a UUID function;
+	\item \textbf{Name}: this attribute must be unique;
+	\item \textbf{Desc}: group's description.
 \end{itemize}
 
 \subsection{Admin side}
 \subsubsection{Authentication}
 The authentication feature si provided by a third part provider, Auth0. In the admin side only admin users can log in; the user must be in the corresponding application's database on Auth0.
 \subsubsection{Use cases}
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[scale=1.2]{../Img/UC_admin}
+	\caption{Admin use cases}\label{}
+\end{figure}
+
 \begin{itemize}
-	\item Creation of new aggregate object;
-	\item Reading of aggregate object's info;
-	\item Update of aggregate object;
-	\item Delete an aggregate object;
-	\item Recover the system state from a specific timestamp.
+	\item UC1: the admin creates a new object based on the type of aggregate;
+	\item UC2: the admin read the information about an object based on the type of aggregate;
+	\item UC3: the admin updates an object based on the type of aggregate;
+	\item UC4: the admin deletes an object;
+	\item UC5: the admin recovers the system state from the chosen timestamp re-running of the event occurred after that; 
+	\item UC6: the admin log in into the application using the Auth0 portal;
+	\item UC7: the admin log out from the application.
 \end{itemize}
 	
 
 \subsection{User side}
 \subsubsection{Authentication}
 The authentication feature si provided by a third part provider, Auth0. In the user side only users can log in; it can sign in with email and password or using Google's authentication or just log in using its credentials.
-\subsubsection{Use cases}:
+\subsubsection{Use cases}
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[scale=1.2]{../Img/UC_user}
+	\caption{User use cases}\label{}
+\end{figure}
+
 \begin{itemize}
-	\item Filling the users form to sign in into the User Management app;
-	\item Update user's info;
-	\item Reading user's info.
+	\item UC1: the user fills the form to sign in into the application the first time logs in;
+	\item UC2: the user read his profile;
+	\item UC3: the user updates his profile;
+	\item UC4: the user sign up to Auth0 authentication portal using email and password or Google's account;
+	\item UC5: the user log in to Auth0 authentication portal using email and password or Google's account;
+	\item UC6: the user log out from the application.
 \end{itemize}
 

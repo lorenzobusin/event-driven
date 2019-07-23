@@ -1,0 +1,16 @@
+title Read model
+
+activate readOperation
+[->>readOperation:event
+database views
+readOperation->views:query the db
+activate views
+views-->readOperation:return response
+deactivate readOperation
+deactivate views
+
+
+
+
+
+

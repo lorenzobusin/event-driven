@@ -20,9 +20,6 @@ updateProfile.addEventListener('submit', function(e){
       "email": document.getElementById('PROFILE_email').value.trim()
     })
   });
-
-  document.getElementById('messageSuccessUPDATE').style.color = 'green';
-  document.getElementById('messageSuccessUPDATE').innerHTML = 'User updated';
-  //document.getElementById('messageSuccessUPDATE').style.color = 'red';
-  //document.getElementById('messageSuccessUPDATE').innerHTML = 'User not updated';
+  document.getElementById('loader_update').style.visibility = "visible";
+  setTimeout(function(){ window.location.href = '/profile'; }, 5000); //wait before redirect
 });

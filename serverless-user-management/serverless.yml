@@ -114,6 +114,7 @@ resources:
 
       
 functions:
+
   readUser: 
     handler: handler.readUser
     events: 
@@ -125,3 +126,5 @@ functions:
           request:
             template:
               application/json: '{ "userId": "$input.params("userId")" }'
+
+  

@@ -118,15 +118,7 @@ functions:
 
   #authorize:
    # handler: handler.authorize
-  
-  login:
-    handler: handler.login
-    events:
-      - http:
-          path: /login
-          method: post
-          cors: true
-          integration: lambda
+   
           #authorizer: authorize
 
   # ------------------------------- USER FUNCTIONS ------------------------------- #

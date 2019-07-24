@@ -1,8 +1,9 @@
 extends layout
 
 block content
-  .w3-container
-    if locals.user
-      h4 Welcome, #{user.emails[0].value}!
-    else
-      h4 You are not logged in! Please #[a(href="/login") Login] to continue.
+	.w3-container
+		if locals.user
+			h4 Welcome, #{user.emails[0].value}
+				.loader
+		else
+			h4 You are not logged in! Please #[a(href="/login") Login] to continue.

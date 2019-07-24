@@ -138,7 +138,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1563802556992-2019-07-22T13:35:56.992Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-readUser",
               "Handler": "handler.readUser",
@@ -261,7 +261,7 @@
                 "PassthroughBehavior": "NEVER",
                 "RequestTemplates": {
                   "application/json": "{ \"userId\": \"$input.params(\"userId\")\" }",
-                  "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+                  "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  "
                 },
                 "IntegrationResponses": [
                   {
@@ -408,7 +408,7 @@
               "APINestedStack"
             ]
           },
-          "ApiGatewayDeployment1563802537817": {
+          "ApiGatewayDeployment1563958550708": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -551,6 +551,25 @@
             },
             "DependsOn": []
           },
+          "APINestedStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+              "Parameters": {},
+              "TemplateURL": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "https://s3.eu-central-1.amazonaws.com",
+                    {
+                      "Ref": "ServerlessDeploymentBucket"
+                    },
+                    "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z",
+                    "cloudformation-template-API-nested-stack.json"
+                  ]
+                ]
+              }
+            }
+          },
           "PermissionsNestedStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
@@ -576,7 +595,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1563802556992-2019-07-22T13:35:56.992Z",
+                    "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z",
                     "cloudformation-template-Permissions-nested-stack.json"
                   ]
                 ]
@@ -586,25 +605,6 @@
               "APINestedStack",
               "ReadUserLambdaFunction"
             ]
-          },
-          "APINestedStack": {
-            "Type": "AWS::CloudFormation::Stack",
-            "Properties": {
-              "Parameters": {},
-              "TemplateURL": {
-                "Fn::Join": [
-                  "/",
-                  [
-                    "https://s3.eu-central-1.amazonaws.com",
-                    {
-                      "Ref": "ServerlessDeploymentBucket"
-                    },
-                    "serverless/serverless-user-management/dev/1563802556992-2019-07-22T13:35:56.992Z",
-                    "cloudformation-template-API-nested-stack.json"
-                  ]
-                ]
-              }
-            }
           },
           "VersionsNestedStack": {
             "Type": "AWS::CloudFormation::Stack",
@@ -622,7 +622,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1563802556992-2019-07-22T13:35:56.992Z",
+                    "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z",
                     "cloudformation-template-Versions-nested-stack.json"
                   ]
                 ]
@@ -644,7 +644,7 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.ReadUserLambdaVersionbK3A4cbI0S4Qf6llSYIzVd4mrKd6Ol2yxhZDaUbrCZI"
+                "Outputs.ReadUserLambdaVersionWhQvDXhqdiYTJ9szNGguqI7VyCkgqiQOQHj3exEtzM"
               ]
             }
           },
@@ -927,7 +927,7 @@
     "artifact": "C:\\Users\\loren\\Desktop\\Stage\\event-driven\\serverless-user-management\\.serverless\\serverless-user-management.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-user-management/dev/1563802556992-2019-07-22T13:35:56.992Z",
+    "artifactDirectoryName": "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z",
     "artifact": "serverless-user-management.zip"
   }
 }

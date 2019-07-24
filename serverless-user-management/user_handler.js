@@ -1,4 +1,4 @@
-/*module.exports.pushCreateUserToSQS = (event, context, callback) => {
+module.exports.pushCreateUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
   const utils = require('./utils.js');
@@ -44,7 +44,7 @@ module.exports.pushUpdateUserToSQS = (event, context, callback) => {
   });
 };
 
-module.exports.pushDeleteUserToSQS = (event, context, callback) => {
+/*module.exports.pushDeleteUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
   const stringedEvent = JSON.stringify(event);
@@ -62,7 +62,7 @@ module.exports.pushDeleteUserToSQS = (event, context, callback) => {
     else
       callback(null, "User event pushed to SQS")
   });
-};
+};*/
 
 module.exports.commandCreateUser = async (event, context, callback) => {
   const utils = require('./utils.js');
@@ -114,29 +114,19 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
   const bodyParsed = JSON.parse(stringedBody);
   const check = bodyParsed.body;
 
-  const checkIdParams = {
-    TableName: 'user',
-    ProjectionExpression: "userId",
-    FilterExpression: "userId = :checkId",
-    ExpressionAttributeValues: {
-        ":checkId": check.userId
-    }
-  };
-
-  const userIdAlreadyExists = await utils.asyncCheckScanDB(checkIdParams);
-
   const checkEmailParams = {
     TableName: 'user',
-    ProjectionExpression: "email",
-    FilterExpression: "email = :checkEmail",
+    ProjectionExpression: "email, userId",
+    FilterExpression: "email=:checkEmail and userId<>:checkUserId",
     ExpressionAttributeValues: {
-        ":checkEmail": check.email
+        ":checkEmail": check.email,
+        ":checkUserId": check.userId
     }
   };
 
   const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
   
-  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists) || (userIdAlreadyExists)){
+  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists)){
     callback(null, "Email/userId already exists or empty attributes");
   }
   else{
@@ -145,7 +135,7 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
   }
 };
 
-module.exports.commandDeleteUser = (event, context, callback) => {
+/*module.exports.commandDeleteUser = (event, context, callback) => {
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
@@ -160,7 +150,7 @@ module.exports.commandDeleteUser = (event, context, callback) => {
     utils.storeEvent("user", "executeDeleteUserQueue", bodyParsed.body);
     callback(null, "User event stored");
   }
-};
+};*/
 
 module.exports.createUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
@@ -200,17 +190,15 @@ module.exports.updateUser = async (event, context, callback) => {
       "#birthdate": "date", //date is a reserved keyword
       "#userrole": "role", //role is a reserved keyword
       "#usergroup": "group" //group is a reserved keyword
-
     },
-    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, #userrole=:r, #usergroup=:g, email=:e, password=:p",
+    UpdateExpression: "set firstName = :fn, lastName=:ln, #birthdate=:d, #userrole=:r, #usergroup=:g, email=:e",
     ExpressionAttributeValues:{
         ":fn": parsedBody.firstName,
         ":ln": parsedBody.lastName,
         ":d": parsedBody.date,
         ":r": parsedBody.role,
         ":g": parsedBody.group,
-        ":e": parsedBody.email,
-        ":p": parsedBody.password
+        ":e": parsedBody.email
     }   
   };
 
@@ -224,7 +212,7 @@ module.exports.updateUser = async (event, context, callback) => {
   }).promise();
 };
 
-module.exports.deleteUser = async (event, context, callback) => {
+/*module.exports.deleteUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 

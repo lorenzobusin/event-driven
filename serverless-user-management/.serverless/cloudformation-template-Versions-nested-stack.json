@@ -7,22 +7,22 @@
     }
   },
   "Resources": {
-    "ReadUserLambdaVersionbK3A4cbI0S4Qf6llSYIzVd4mrKd6Ol2yxhZDaUbrCZI": {
+    "ReadUserLambdaVersionWhQvDXhqdiYTJ9szNGguqI7VyCkgqiQOQHj3exEtzM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ReadUserLambdaFunctionParameter"
         },
-        "CodeSha256": "3Tw0nxgmCnnTP5AaCbo6rsxvSSJ/GAEgI+gg+ATyDtY="
+        "CodeSha256": "z4JGayPh6BPzXWOYuJ5IGWENpB67zTbehbpEn2HL0vA="
       },
       "DependsOn": []
     }
   },
   "Outputs": {
-    "ReadUserLambdaVersionbK3A4cbI0S4Qf6llSYIzVd4mrKd6Ol2yxhZDaUbrCZI": {
+    "ReadUserLambdaVersionWhQvDXhqdiYTJ9szNGguqI7VyCkgqiQOQHj3exEtzM": {
       "Value": {
-        "Ref": "ReadUserLambdaVersionbK3A4cbI0S4Qf6llSYIzVd4mrKd6Ol2yxhZDaUbrCZI"
+        "Ref": "ReadUserLambdaVersionWhQvDXhqdiYTJ9szNGguqI7VyCkgqiQOQHj3exEtzM"
       }
     }
   }

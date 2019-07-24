@@ -18,5 +18,6 @@ signinUser.addEventListener('submit', function(e){
       "email": document.getElementById('SIGNIN_email').value.trim()
     })
   });
-  window.location.href = '/profile';
+  document.getElementById('loader_update').style.visibility = "visible";
+  setTimeout(function(){ window.location.href = '/profile'; }, 3000); //wait before redirect
 });

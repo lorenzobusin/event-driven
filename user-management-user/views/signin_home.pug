@@ -37,11 +37,12 @@ html
             input#SIGNIN_date.form-control(type='date', name='date', required='')
             label Email
             input#SIGNIN_email.form-control(type='text', name='email', pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', title='Email does not respect the right format')
-            button.btn.btn-success(type='submit') Signin
-            span#messageSuccessCREATE.messageSuccess
+            .row
+              button.btn.btn-success(type='submit') Signin
+              .loader#loader_update
             script(type='text/javascript').
                 setUserId('#{user.user_id}');
           else
-            h4 You are not logged in! Please #[a(href="/login") Log In] to continue.
+            h4 You are not logged in! Please #[a(href="/login") Login] to continue.
 
   script(type='text/javascript', src='js/SIGNIN_user.js', charset='utf-8')

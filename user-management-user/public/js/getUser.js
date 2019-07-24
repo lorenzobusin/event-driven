@@ -4,7 +4,8 @@ function getUser(userId, pageName){
   fetch(linkReadUserAPI_GET + dynamoDB_userId, {
     method: "GET",
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 4674cc54-bd05-11e7-abc4-cec278b6b50a'
     }
   }).then(function(response){
       const responseJSON = response.json();
@@ -13,6 +14,7 @@ function getUser(userId, pageName){
       try{
         const stringedResponse = JSON.stringify(data);
         const parsedResponse = JSON.parse(stringedResponse);
+        console.log(stringedResponse);
         const parsedBody = JSON.parse(parsedResponse.body);
         if(pageName == 'index'){
           setTimeout(function(){ window.location.href = '/profile'; }, 3000);

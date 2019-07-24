@@ -114,6 +114,9 @@ resources:
 
       
 functions:
+  authorize:
+    handler: handler.authorize
+    cors: true
 
   readUser: 
     handler: handler.readUser
@@ -121,10 +124,17 @@ functions:
       - http: 
           path: /readUser
           method: get
+          authorizer: authorize
           cors: true
           integration: lambda
           request:
             template:
               application/json: '{ "userId": "$input.params("userId")" }'
+          
+          #authorizer:
+            #name: authorize
+            #type: TOKEN
+            #identitySource: method.request.header.Authorization
+            #identityValidationExpression: Bearer (.*)
 
   

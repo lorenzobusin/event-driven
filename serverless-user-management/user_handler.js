@@ -1,4 +1,4 @@
-module.exports.pushCreateUserToSQS = (event, context, callback) => {
+/*module.exports.pushCreateUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
   const utils = require('./utils.js');
@@ -44,7 +44,7 @@ module.exports.pushUpdateUserToSQS = (event, context, callback) => {
   });
 };
 
-/*module.exports.pushDeleteUserToSQS = (event, context, callback) => {
+module.exports.pushDeleteUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
   const stringedEvent = JSON.stringify(event);
@@ -62,7 +62,7 @@ module.exports.pushUpdateUserToSQS = (event, context, callback) => {
     else
       callback(null, "User event pushed to SQS")
   });
-};*/
+};
 
 module.exports.commandCreateUser = async (event, context, callback) => {
   const utils = require('./utils.js');
@@ -135,7 +135,7 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
   }
 };
 
-/*module.exports.commandDeleteUser = (event, context, callback) => {
+module.exports.commandDeleteUser = (event, context, callback) => {
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
@@ -150,7 +150,7 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
     utils.storeEvent("user", "executeDeleteUserQueue", bodyParsed.body);
     callback(null, "User event stored");
   }
-};*/
+};
 
 module.exports.createUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
@@ -212,7 +212,7 @@ module.exports.updateUser = async (event, context, callback) => {
   }).promise();
 };
 
-/*module.exports.deleteUser = async (event, context, callback) => {
+module.exports.deleteUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -248,6 +248,8 @@ module.exports.readUser = (event, context, callback) => {
 
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
+  console.log("event: " + stringedEvent);
+  console.log("context: " + JSON.stringify(context));
 
   const params = {
     TableName: 'user',
@@ -286,6 +288,100 @@ module.exports.readUser = (event, context, callback) => {
       }      
     }
   });
+};
+
+/*module.exports.authorize = (event, context, callback) => {
+    console.log("event: " + JSON.stringify(event));
+    console.log("auth: " + event.authorizationToken);
+    var token = event.authorizationToken;
+    switch (token) {
+        case 'allow':
+            callback(null, generatePolicy('user', 'Allow', event.methodArn));
+            break;
+        case 'deny':
+            callback(null, generatePolicy('user', 'Deny', event.methodArn));
+            break;
+        case 'unauthorized':
+            callback("Unauthorized");   // Return a 401 Unauthorized response
+            break;
+        default:
+            callback("Error: Invalid token"); // Return a 500 Invalid token response
+    }
+};
+
+// Help function to generate an IAM policy
+var generatePolicy = function(principalId, effect, resource) {
+     var authResponse = {};
+      
+    authResponse.principalId = principalId;
+    if (effect && resource) {
+          var policyDocument = {};
+          policyDocument.Version = '2012-10-17'; 
+          policyDocument.Statement = [];
+          var statementOne = {};
+          statementOne.Action = 'execute-api:Invoke'; 
+          statementOne.Effect = effect;
+          statementOne.Resource = resource;
+          policyDocument.Statement[0] = statementOne;
+          authResponse.policyDocument = policyDocument;
+    }
+      
+      // Optional output with custom properties of the String, Number or Boolean type.
+    authResponse.context = {
+          "stringKey": "stringval",
+          "numberKey": 123,
+          "booleanKey": true
+    };
+  return authResponse;
+}*/
+
+const generatePolicy = function(principalId, effect, resource) {
+  const authResponse = {};
+  authResponse.principalId = principalId;
+  if (effect && resource) {
+    const policyDocument = {};
+    policyDocument.Version = '2012-10-17';
+    policyDocument.Statement = [];
+    const statementOne = {};
+    statementOne.Action = 'execute-api:Invoke';
+    statementOne.Effect = effect;
+    statementOne.Resource = resource;
+    policyDocument.Statement[0] = statementOne;
+    authResponse.policyDocument = policyDocument;
+  }
+  return authResponse;
+};
+
+module.exports.authorize = (event, context, callback) => {
+
+  // Get Token
+  if (typeof event.authorizationToken === 'undefined') {
+    if (process.env.DEBUG === 'true') {
+      console.log('AUTH: No token');
+    }
+    callback('A');
+  }
+
+  const split = event.authorizationToken.split('Bearer');
+  if (split.length !== 2) {
+    if (process.env.DEBUG === 'true') {
+      console.log('AUTH: no token in Bearer');
+    }
+    callback('A');
+  }
+  const token = split[1].trim();
+
+  switch (token.toLowerCase()) {
+    case "4674cc54-bd05-11e7-abc4-cec278b6b50a":
+      callback(null, generatePolicy('user123', 'Allow', event.methodArn));
+      break;
+    case "4674cc54-bd05-11e7-abc4-cec278b6b50b":
+      callback(null, generatePolicy('user123', 'Deny', event.methodArn));
+      break;
+    default:
+      callback('A');
+   }
+
 };
 
 

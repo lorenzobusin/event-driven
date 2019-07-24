@@ -44,6 +44,13 @@
             },
             "DependsOn": []
           },
+          "AuthorizeLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-authorize"
+            },
+            "DependsOn": []
+          },
           "ReadUserLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -131,6 +138,32 @@
             },
             "DependsOn": []
           },
+          "AuthorizeLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z/serverless-user-management.zip"
+              },
+              "FunctionName": "serverless-user-management-dev-authorize",
+              "Handler": "handler.authorize",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6
+            },
+            "DependsOn": [
+              "AuthorizeLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
           "ReadUserLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
@@ -138,7 +171,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-readUser",
               "Handler": "handler.readUser",
@@ -231,7 +264,10 @@
                 ]
               },
               "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
+              "AuthorizationType": "CUSTOM",
+              "AuthorizerId": {
+                "Ref": "AuthorizeApiGatewayAuthorizer"
+              },
               "Integration": {
                 "IntegrationHttpMethod": "POST",
                 "Type": "AWS",
@@ -405,10 +441,51 @@
               ]
             },
             "DependsOn": [
+              "AuthorizeApiGatewayAuthorizer",
               "APINestedStack"
             ]
           },
-          "ApiGatewayDeployment1563958550708": {
+          "AuthorizeApiGatewayAuthorizer": {
+            "Type": "AWS::ApiGateway::Authorizer",
+            "Properties": {
+              "IdentitySource": "method.request.header.Authorization",
+              "Name": "authorize",
+              "RestApiId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayRestApi"
+                ]
+              },
+              "AuthorizerUri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "AuthorizeLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              },
+              "Type": "TOKEN"
+            },
+            "DependsOn": [
+              "APINestedStack"
+            ]
+          },
+          "ApiGatewayDeployment1563978571142": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -563,7 +640,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z",
+                    "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z",
                     "cloudformation-template-API-nested-stack.json"
                   ]
                 ]
@@ -585,6 +662,12 @@
                     "ReadUserLambdaFunction",
                     "Arn"
                   ]
+                },
+                "AuthorizeLambdaFunctionArnParameter": {
+                  "Fn::GetAtt": [
+                    "AuthorizeLambdaFunction",
+                    "Arn"
+                  ]
                 }
               },
               "TemplateURL": {
@@ -595,7 +678,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z",
+                    "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z",
                     "cloudformation-template-Permissions-nested-stack.json"
                   ]
                 ]
@@ -603,13 +686,17 @@
             },
             "DependsOn": [
               "APINestedStack",
-              "ReadUserLambdaFunction"
+              "ReadUserLambdaFunction",
+              "AuthorizeLambdaFunction"
             ]
           },
           "VersionsNestedStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
               "Parameters": {
+                "AuthorizeLambdaFunctionParameter": {
+                  "Ref": "AuthorizeLambdaFunction"
+                },
                 "ReadUserLambdaFunctionParameter": {
                   "Ref": "ReadUserLambdaFunction"
                 }
@@ -622,13 +709,14 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z",
+                    "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z",
                     "cloudformation-template-Versions-nested-stack.json"
                   ]
                 ]
               }
             },
             "DependsOn": [
+              "AuthorizeLambdaFunction",
               "ReadUserLambdaFunction"
             ]
           }
@@ -639,12 +727,21 @@
               "Ref": "ServerlessDeploymentBucket"
             }
           },
+          "AuthorizeLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Fn::GetAtt": [
+                "VersionsNestedStack",
+                "Outputs.AuthorizeLambdaVersionly1fuErJN1FrOu0KCLJb80cKJA5whdpuq6yFU9XmbU"
+              ]
+            }
+          },
           "ReadUserLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.ReadUserLambdaVersionWhQvDXhqdiYTJ9szNGguqI7VyCkgqiQOQHj3exEtzM"
+                "Outputs.ReadUserLambdaVersionsCnmCjUuOkJs4WlLt6Kp9HI62mmfl7YtOBfy1SOsok"
               ]
             }
           },
@@ -721,6 +818,17 @@
     ],
     "pluginsData": {},
     "functions": {
+      "authorize": {
+        "handler": "handler.authorize",
+        "cors": true,
+        "events": [],
+        "name": "serverless-user-management-dev-authorize",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
       "readUser": {
         "handler": "handler.readUser",
         "events": [
@@ -728,6 +836,16 @@
             "http": {
               "path": "readUser",
               "method": "get",
+              "authorizer": {
+                "name": "authorize",
+                "arn": {
+                  "Fn::GetAtt": [
+                    "AuthorizeLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "identitySource": "method.request.header.Authorization"
+              },
               "cors": {
                 "origins": [
                   "*"
@@ -927,7 +1045,7 @@
     "artifact": "C:\\Users\\loren\\Desktop\\Stage\\event-driven\\serverless-user-management\\.serverless\\serverless-user-management.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-user-management/dev/1563958569485-2019-07-24T08:56:09.485Z",
+    "artifactDirectoryName": "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z",
     "artifact": "serverless-user-management.zip"
   }
 }

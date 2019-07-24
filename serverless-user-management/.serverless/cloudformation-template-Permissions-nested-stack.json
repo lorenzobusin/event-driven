@@ -7,9 +7,23 @@
     },
     "ReadUserLambdaFunctionArnParameter": {
       "Type": "String"
+    },
+    "AuthorizeLambdaFunctionArnParameter": {
+      "Type": "String"
     }
   },
   "Resources": {
+    "AuthorizeLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "AuthorizeLambdaFunctionArnParameter"
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com"
+      },
+      "DependsOn": []
+    },
     "ReadUserLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {

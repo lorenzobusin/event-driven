@@ -2,27 +2,46 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "VersionsNestedStack nested stack",
   "Parameters": {
+    "AuthorizeLambdaFunctionParameter": {
+      "Type": "String"
+    },
     "ReadUserLambdaFunctionParameter": {
       "Type": "String"
     }
   },
   "Resources": {
-    "ReadUserLambdaVersionWhQvDXhqdiYTJ9szNGguqI7VyCkgqiQOQHj3exEtzM": {
+    "AuthorizeLambdaVersionly1fuErJN1FrOu0KCLJb80cKJA5whdpuq6yFU9XmbU": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "AuthorizeLambdaFunctionParameter"
+        },
+        "CodeSha256": "RzJi7NH3cVAmxWi2EreDFVIe6fJiJ9P14sMpJAKtJk8="
+      },
+      "DependsOn": []
+    },
+    "ReadUserLambdaVersionsCnmCjUuOkJs4WlLt6Kp9HI62mmfl7YtOBfy1SOsok": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ReadUserLambdaFunctionParameter"
         },
-        "CodeSha256": "z4JGayPh6BPzXWOYuJ5IGWENpB67zTbehbpEn2HL0vA="
+        "CodeSha256": "RzJi7NH3cVAmxWi2EreDFVIe6fJiJ9P14sMpJAKtJk8="
       },
       "DependsOn": []
     }
   },
   "Outputs": {
-    "ReadUserLambdaVersionWhQvDXhqdiYTJ9szNGguqI7VyCkgqiQOQHj3exEtzM": {
+    "ReadUserLambdaVersionsCnmCjUuOkJs4WlLt6Kp9HI62mmfl7YtOBfy1SOsok": {
       "Value": {
-        "Ref": "ReadUserLambdaVersionWhQvDXhqdiYTJ9szNGguqI7VyCkgqiQOQHj3exEtzM"
+        "Ref": "ReadUserLambdaVersionsCnmCjUuOkJs4WlLt6Kp9HI62mmfl7YtOBfy1SOsok"
+      }
+    },
+    "AuthorizeLambdaVersionly1fuErJN1FrOu0KCLJb80cKJA5whdpuq6yFU9XmbU": {
+      "Value": {
+        "Ref": "AuthorizeLambdaVersionly1fuErJN1FrOu0KCLJb80cKJA5whdpuq6yFU9XmbU"
       }
     }
   }

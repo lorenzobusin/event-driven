@@ -1,6 +1,6 @@
 'use strict';
 
-const authorizer_handler = equire('./authorizer_handler.js');
+const authorizer_handler = require('./authorizer_handler.js');
 const eventSourcing_handler = require('./eventSourcing_handler.js');
 const user_handler = require('./user_handler.js');
 const role_handler = require('./role_handler.js');

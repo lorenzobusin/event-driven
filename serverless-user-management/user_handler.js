@@ -20,7 +20,7 @@
       callback(null, "User event pushed to SQS");
   });  
 };
-
+*/
 module.exports.pushUpdateUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
@@ -39,10 +39,19 @@ module.exports.pushUpdateUserToSQS = (event, context, callback) => {
       console.log(err);
       callback(null, err);
     }
-    else
-      callback(null, "User event pushed to SQS");
+    else{
+      const response = {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true
+        },
+        body: "User event pushed to SQS"
+      };
+      callback(null, response);
+    }
   });
-};
+};/*
 
 module.exports.pushDeleteUserToSQS = (event, context, callback) => {
   const AWS = require('aws-sdk');
@@ -104,7 +113,7 @@ module.exports.commandCreateUser = async (event, context, callback) => {
     callback(null, "User event stored");
   }
 };
-
+*/
 module.exports.commandUpdateUser = async (event, context, callback) => {
   const utils = require('./utils.js');
 
@@ -133,7 +142,7 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
     utils.storeEvent("user", "executeUpdateUserQueue", bodyParsed.body);
     callback(null, "User event stored");
   }
-};
+};/*
 
 module.exports.commandDeleteUser = (event, context, callback) => {
   const utils = require('./utils.js');
@@ -173,7 +182,7 @@ module.exports.createUser = async (event, context, callback) => {
       callback(null, "User created");
   }).promise();
 };
-
+*/
 module.exports.updateUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -212,7 +221,7 @@ module.exports.updateUser = async (event, context, callback) => {
   }).promise();
 };
 
-module.exports.deleteUser = async (event, context, callback) => {
+/*module.exports.deleteUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 

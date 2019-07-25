@@ -6,8 +6,7 @@ updateProfile.addEventListener('submit', function(e){
   fetch(linkUpdateUserAPI_POST, {
     method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     },
 
     body: JSON.stringify({
@@ -20,6 +19,6 @@ updateProfile.addEventListener('submit', function(e){
       "email": document.getElementById('PROFILE_email').value.trim()
     })
   });
-  document.getElementById('loader_update').style.visibility = "visible";
-  setTimeout(function(){ window.location.href = '/profile'; }, 5000); //wait before redirect
+  //document.getElementById('loader_update').style.visibility = "visible";
+  //setTimeout(function(){ window.location.href = '/profile'; }, 5000); //wait before redirect
 });

@@ -126,7 +126,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1564048297685-2019-07-25T09:51:37.685Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-authorize",
         "Handler": "handler.authorize",
@@ -138,7 +138,13 @@
           ]
         },
         "Runtime": "nodejs10.x",
-        "Timeout": 6
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "AUTH0_CLIENT_ID": "fthCLdyXtBisLDNjLQeuJzakulS0MFYg",
+            "AUTH0_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----"
+          }
+        }
       },
       "DependsOn": [
         "AuthorizeLogGroup",
@@ -152,7 +158,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z/serverless-user-management.zip"
+          "S3Key": "serverless/serverless-user-management/dev/1564048297685-2019-07-25T09:51:37.685Z/serverless-user-management.zip"
         },
         "FunctionName": "serverless-user-management-dev-readUser",
         "Handler": "handler.readUser",
@@ -164,7 +170,13 @@
           ]
         },
         "Runtime": "nodejs10.x",
-        "Timeout": 6
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "AUTH0_CLIENT_ID": "fthCLdyXtBisLDNjLQeuJzakulS0MFYg",
+            "AUTH0_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----"
+          }
+        }
       },
       "DependsOn": [
         "ReadUserLogGroup",
@@ -466,7 +478,7 @@
         "APINestedStack"
       ]
     },
-    "ApiGatewayDeployment1563978571142": {
+    "ApiGatewayDeployment1564048276427": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -609,25 +621,6 @@
       },
       "DependsOn": []
     },
-    "APINestedStack": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "Parameters": {},
-        "TemplateURL": {
-          "Fn::Join": [
-            "/",
-            [
-              "https://s3.eu-central-1.amazonaws.com",
-              {
-                "Ref": "ServerlessDeploymentBucket"
-              },
-              "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z",
-              "cloudformation-template-API-nested-stack.json"
-            ]
-          ]
-        }
-      }
-    },
     "PermissionsNestedStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
@@ -659,7 +652,7 @@
               {
                 "Ref": "ServerlessDeploymentBucket"
               },
-              "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z",
+              "serverless/serverless-user-management/dev/1564048297685-2019-07-25T09:51:37.685Z",
               "cloudformation-template-Permissions-nested-stack.json"
             ]
           ]
@@ -670,6 +663,25 @@
         "ReadUserLambdaFunction",
         "AuthorizeLambdaFunction"
       ]
+    },
+    "APINestedStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "Parameters": {},
+        "TemplateURL": {
+          "Fn::Join": [
+            "/",
+            [
+              "https://s3.eu-central-1.amazonaws.com",
+              {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "serverless/serverless-user-management/dev/1564048297685-2019-07-25T09:51:37.685Z",
+              "cloudformation-template-API-nested-stack.json"
+            ]
+          ]
+        }
+      }
     },
     "VersionsNestedStack": {
       "Type": "AWS::CloudFormation::Stack",
@@ -690,7 +702,7 @@
               {
                 "Ref": "ServerlessDeploymentBucket"
               },
-              "serverless/serverless-user-management/dev/1563978591230-2019-07-24T14:29:51.230Z",
+              "serverless/serverless-user-management/dev/1564048297685-2019-07-25T09:51:37.685Z",
               "cloudformation-template-Versions-nested-stack.json"
             ]
           ]
@@ -713,7 +725,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.AuthorizeLambdaVersionly1fuErJN1FrOu0KCLJb80cKJA5whdpuq6yFU9XmbU"
+          "Outputs.AuthorizeLambdaVersionXjoy2cro3ibe5Tru2VS34x6UUV5TObIIuwIyFDpSeM"
         ]
       }
     },
@@ -722,7 +734,7 @@
       "Value": {
         "Fn::GetAtt": [
           "VersionsNestedStack",
-          "Outputs.ReadUserLambdaVersionsCnmCjUuOkJs4WlLt6Kp9HI62mmfl7YtOBfy1SOsok"
+          "Outputs.ReadUserLambdaVersioneimiPA8h9HaY48y2cP05ldVzJ393NBpY3APdpzaUOs"
         ]
       }
     },

@@ -35,9 +35,12 @@ html
                 br
                 span #{user.emails[0].value}
               script(type='text/javascript').
+                createSession('#{user.id_token}');
                 getUser('#{user.user_id}', '#{navActive}');
             else
               .dropdown
                 a.dropitem(id="qsLoginBtn" href="/login") Login
+              script(type='text/javascript').
+                destroySession();
 
     block content

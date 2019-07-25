@@ -10,38 +10,38 @@
     }
   },
   "Resources": {
-    "AuthorizeLambdaVersionly1fuErJN1FrOu0KCLJb80cKJA5whdpuq6yFU9XmbU": {
+    "AuthorizeLambdaVersionXjoy2cro3ibe5Tru2VS34x6UUV5TObIIuwIyFDpSeM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AuthorizeLambdaFunctionParameter"
         },
-        "CodeSha256": "RzJi7NH3cVAmxWi2EreDFVIe6fJiJ9P14sMpJAKtJk8="
+        "CodeSha256": "3fJdvuJ7xd74ZvB80pMvjwXDsgSoOJjU5+vCgOJEBYE="
       },
       "DependsOn": []
     },
-    "ReadUserLambdaVersionsCnmCjUuOkJs4WlLt6Kp9HI62mmfl7YtOBfy1SOsok": {
+    "ReadUserLambdaVersioneimiPA8h9HaY48y2cP05ldVzJ393NBpY3APdpzaUOs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ReadUserLambdaFunctionParameter"
         },
-        "CodeSha256": "RzJi7NH3cVAmxWi2EreDFVIe6fJiJ9P14sMpJAKtJk8="
+        "CodeSha256": "3fJdvuJ7xd74ZvB80pMvjwXDsgSoOJjU5+vCgOJEBYE="
       },
       "DependsOn": []
     }
   },
   "Outputs": {
-    "ReadUserLambdaVersionsCnmCjUuOkJs4WlLt6Kp9HI62mmfl7YtOBfy1SOsok": {
+    "ReadUserLambdaVersioneimiPA8h9HaY48y2cP05ldVzJ393NBpY3APdpzaUOs": {
       "Value": {
-        "Ref": "ReadUserLambdaVersionsCnmCjUuOkJs4WlLt6Kp9HI62mmfl7YtOBfy1SOsok"
+        "Ref": "ReadUserLambdaVersioneimiPA8h9HaY48y2cP05ldVzJ393NBpY3APdpzaUOs"
       }
     },
-    "AuthorizeLambdaVersionly1fuErJN1FrOu0KCLJb80cKJA5whdpuq6yFU9XmbU": {
+    "AuthorizeLambdaVersionXjoy2cro3ibe5Tru2VS34x6UUV5TObIIuwIyFDpSeM": {
       "Value": {
-        "Ref": "AuthorizeLambdaVersionly1fuErJN1FrOu0KCLJb80cKJA5whdpuq6yFU9XmbU"
+        "Ref": "AuthorizeLambdaVersionXjoy2cro3ibe5Tru2VS34x6UUV5TObIIuwIyFDpSeM"
       }
     }
   }

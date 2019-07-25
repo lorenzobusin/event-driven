@@ -15,6 +15,8 @@ signinUser.addEventListener('submit', function(e){
       "firstName": document.getElementById('SIGNIN_firstName').value.trim(),
       "lastName": document.getElementById('SIGNIN_lastName').value.trim(),
       "date": document.getElementById('SIGNIN_date').value.trim(),
+      "group": "undefined",
+      "role": "undefined",
       "email": document.getElementById('SIGNIN_email').value.trim()
     })
   });

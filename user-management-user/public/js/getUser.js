@@ -5,7 +5,7 @@ function getUser(userId, pageName){
     method: "GET",
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer 4674cc54-bd05-11e7-abc4-cec278b6b50a'
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     }
   }).then(function(response){
       const responseJSON = response.json();
@@ -14,7 +14,6 @@ function getUser(userId, pageName){
       try{
         const stringedResponse = JSON.stringify(data);
         const parsedResponse = JSON.parse(stringedResponse);
-        console.log(stringedResponse);
         const parsedBody = JSON.parse(parsedResponse.body);
         if(pageName == 'index'){
           setTimeout(function(){ window.location.href = '/profile'; }, 3000);
@@ -28,7 +27,7 @@ function getUser(userId, pageName){
           document.getElementById('PROFILE_group').innerHTML = parsedBody.Item.group;
           document.getElementById('PROFILE_email').innerHTML = parsedBody.Item.email;
         }
-        else{
+        else if(pageName == 'update'){
           document.getElementById('PROFILE_userId').value = parsedBody.Item.userId;
           document.getElementById('PROFILE_firstName').value = parsedBody.Item.firstName;
           document.getElementById('PROFILE_lastName').value = parsedBody.Item.lastName;
@@ -42,6 +41,9 @@ function getUser(userId, pageName){
           var optionGroup = document.createElement("option");
           optionGroup.text = parsedBody.Item.group;
           selectGroup.add(optionGroup);
+        }
+        else{
+          throw new e();
         }
       }
       catch(e){

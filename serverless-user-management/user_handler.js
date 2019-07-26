@@ -124,7 +124,9 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed;
+  const check = bodyParsed.body;
+  console.log(JSON.stringify(check));
+  console.log(stringedBody);
 
   const checkEmailParams = {
     TableName: 'user',
@@ -142,7 +144,7 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
     callback(null, "Email/userId already exists or empty attributes");
   }
   else{
-    utils.storeEvent("user", "executeUpdateUserQueue", bodyParsed);
+    utils.storeEvent("user", "executeUpdateUserQueue", bodyParsed.body);
     callback(null, "User event stored");
   }
 };/*

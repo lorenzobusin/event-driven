@@ -176,29 +176,29 @@ functions:
             template:
               application/json: '{ "userId": "$input.params("userId")" }'
 
-  pushUpdateUserToSQS: 
-    handler: handler.pushUpdateUserToSQS 
-    events: 
-      - http:
-          path: /pushupdateusertosqs
-          method: post
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-authorize
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
+ # pushUpdateUserToSQS: 
+  #  handler: handler.pushUpdateUserToSQS 
+    #events: 
+     # - http:
+      #  path: /pushupdateusertosqs
+       #   method: post
+      #    authorizer: 
+      #      arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-authorize
+     #       type: request
+    #        resultTtlInSeconds: 0
+   #       cors: true
 
-  updateUser:
-    handler: handler.updateUser
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue
+  #updateUser:
+    #handler: handler.updateUser
+    #events:
+    #  - sqs:
+   #       arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue
 
-  commandUpdateUser:
-    handler: handler.commandUpdateUser
-    timeout: 10
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:updateUserQueue
+  #commandUpdateUser:
+  #  handler: handler.commandUpdateUser
+ #   timeout: 10
+#    events:
+ #     - sqs:
+ #         arn: arn:aws:sqs:eu-central-1:582373673306:updateUserQueue
 
   

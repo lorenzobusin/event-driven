@@ -3,16 +3,15 @@ module.exports.authorize = (event, context, callback) => {
     const utils = require('./utils.js');
     const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID; //get variables from environment
 		const AUTH0_CLIENT_PUBLIC_KEY = process.env.AUTH0_CLIENT_PUBLIC_KEY; 
-		const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
-		console.log("1: " + AUTH0_CLIENT_ID);
-		console.log("2: " + AUTH0_CLIENT_PUBLIC_KEY);
-		console.log("3: " + AUTH0_DOMAIN);
+    const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
 
-    if (!event.authorizationToken) {
+    const token = event.headers.Authorization
+
+    if (!token) {
       return callback('Unauthorized');
     }
   
-    const tokenParts = event.authorizationToken.split(' ');
+    const tokenParts = token.split(' ');
     const tokenValue = tokenParts[1];
   
     if (!(tokenParts[0].toLowerCase() === 'bearer' && tokenValue)) { // no auth token

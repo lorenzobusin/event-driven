@@ -82,4 +82,4 @@ module.exports.generatePolicy = (principalId, effect, resource) => {
     authResponse.policyDocument = policyDocument;
   }
   return authResponse;
-}
+};

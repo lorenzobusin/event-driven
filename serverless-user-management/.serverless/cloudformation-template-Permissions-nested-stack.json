@@ -8,7 +8,7 @@
     "ReadUserLambdaFunctionArnParameter": {
       "Type": "String"
     },
-    "AuthorizeLambdaFunctionArnParameter": {
+    "PushUpdateUserToSQSLambdaFunctionArnParameter": {
       "Type": "String"
     }
   },
@@ -16,11 +16,44 @@
     "AuthorizeLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
-        "FunctionName": {
-          "Ref": "AuthorizeLambdaFunctionArnParameter"
-        },
+        "FunctionName": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-authorize",
         "Action": "lambda:InvokeFunction",
         "Principal": "apigateway.amazonaws.com"
+      },
+      "DependsOn": []
+    },
+    "PushUpdateUserToSQSLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "PushUpdateUserToSQSLambdaFunctionArnParameter"
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApiParameter"
+              },
+              "/*/*"
+            ]
+          ]
+        }
       },
       "DependsOn": []
     },

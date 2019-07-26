@@ -47,7 +47,8 @@ function getUser(userId, pageName){
         }
       }
       catch(e){
-        window.location.href = '/signin';
+        console.log(e);
+        //window.location.href = '/signin';
       }
   });
 };

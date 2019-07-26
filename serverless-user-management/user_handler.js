@@ -21,10 +21,9 @@
   });  
 };
 */
-module.exports.pushUpdateUserToSQS = (event, context, callback) => {
+module.exports.pushUpdateUserToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
-  const utils = require('./utils.js');
   
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
@@ -34,23 +33,27 @@ module.exports.pushUpdateUserToSQS = (event, context, callback) => {
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateUserQueue"
   };
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
+  try{
+    const res = await SQS.sendMessage(params).promise();
+    console.log(res);
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify(res)
     }
-    else{
-      const response = {
-        statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
-        body: "User event pushed to SQS"
-      };
-      callback(null, response);
+  }
+  catch(e){
+    console.log(e);
+    return {
+      statusCode: 500
     }
-  });
+  }
+
+  
 };/*
 
 module.exports.pushDeleteUserToSQS = (event, context, callback) => {
@@ -121,7 +124,7 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed);
   const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
+  const check = bodyParsed;
 
   const checkEmailParams = {
     TableName: 'user',
@@ -132,14 +135,14 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
         ":checkUserId": check.userId
     }
   };
-
+  
   const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
   
   if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists)){
     callback(null, "Email/userId already exists or empty attributes");
   }
   else{
-    utils.storeEvent("user", "executeUpdateUserQueue", bodyParsed.body);
+    utils.storeEvent("user", "executeUpdateUserQueue", bodyParsed);
     callback(null, "User event stored");
   }
 };/*
@@ -186,6 +189,7 @@ module.exports.createUser = async (event, context, callback) => {
 module.exports.updateUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
+  
 
   const stringedBody = event.Records[0].body.toString('utf-8');
   const parsedBody = JSON.parse(stringedBody);

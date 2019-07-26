@@ -63,6 +63,27 @@
             },
             "DependsOn": []
           },
+          "PushUpdateUserToSQSLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-pushUpdateUserToSQS"
+            },
+            "DependsOn": []
+          },
+          "UpdateUserLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-updateUser"
+            },
+            "DependsOn": []
+          },
+          "CommandUpdateUserLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-commandUpdateUser"
+            },
+            "DependsOn": []
+          },
           "IamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -121,6 +142,28 @@
                       },
                       {
                         "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "sqs:ReceiveMessage",
+                          "sqs:DeleteMessage",
+                          "sqs:GetQueueAttributes"
+                        ],
+                        "Resource": [
+                          "arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue"
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "sqs:ReceiveMessage",
+                          "sqs:DeleteMessage",
+                          "sqs:GetQueueAttributes"
+                        ],
+                        "Resource": [
+                          "arn:aws:sqs:eu-central-1:582373673306:updateUserQueue"
+                        ]
                       }
                     ]
                   }
@@ -150,7 +193,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564070428815-2019-07-25T16:00:28.815Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564154785084-2019-07-26T15:26:25.084Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-authorize",
               "Handler": "handler.authorize",
@@ -183,7 +226,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564070428815-2019-07-25T16:00:28.815Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564154785084-2019-07-26T15:26:25.084Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-readUser",
               "Handler": "handler.readUser",
@@ -206,6 +249,105 @@
             },
             "DependsOn": [
               "ReadUserLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "PushUpdateUserToSQSLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-user-management/dev/1564154785084-2019-07-26T15:26:25.084Z/serverless-user-management.zip"
+              },
+              "FunctionName": "serverless-user-management-dev-pushUpdateUserToSQS",
+              "Handler": "handler.pushUpdateUserToSQS",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "AUTH0_CLIENT_ID": "fthCLdyXtBisLDNjLQeuJzakulS0MFYg",
+                  "AUTH0_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
+                  "AUTH0_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----"
+                }
+              }
+            },
+            "DependsOn": [
+              "PushUpdateUserToSQSLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "UpdateUserLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-user-management/dev/1564154785084-2019-07-26T15:26:25.084Z/serverless-user-management.zip"
+              },
+              "FunctionName": "serverless-user-management-dev-updateUser",
+              "Handler": "handler.updateUser",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "AUTH0_CLIENT_ID": "fthCLdyXtBisLDNjLQeuJzakulS0MFYg",
+                  "AUTH0_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
+                  "AUTH0_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----"
+                }
+              }
+            },
+            "DependsOn": [
+              "UpdateUserLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "CommandUpdateUserLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-user-management/dev/1564154785084-2019-07-26T15:26:25.084Z/serverless-user-management.zip"
+              },
+              "FunctionName": "serverless-user-management-dev-commandUpdateUser",
+              "Handler": "handler.commandUpdateUser",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 10,
+              "Environment": {
+                "Variables": {
+                  "AUTH0_CLIENT_ID": "fthCLdyXtBisLDNjLQeuJzakulS0MFYg",
+                  "AUTH0_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
+                  "AUTH0_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----"
+                }
+              }
+            },
+            "DependsOn": [
+              "CommandUpdateUserLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
@@ -252,6 +394,62 @@
                 "Fn::GetAtt": [
                   "APINestedStack",
                   "Outputs.ApiGatewayResourceReaduser"
+                ]
+              },
+              "RestApiId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayRestApi"
+                ]
+              }
+            },
+            "DependsOn": [
+              "APINestedStack"
+            ]
+          },
+          "ApiGatewayMethodPushupdateusertosqsOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayResourcePushupdateusertosqs"
                 ]
               },
               "RestApiId": {
@@ -464,9 +662,66 @@
               "APINestedStack"
             ]
           },
+          "ApiGatewayMethodPushupdateusertosqsPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayResourcePushupdateusertosqs"
+                ]
+              },
+              "RestApiId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayRestApi"
+                ]
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "CUSTOM",
+              "AuthorizerId": {
+                "Ref": "AuthorizeApiGatewayAuthorizer"
+              },
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "PushUpdateUserToSQSLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "AuthorizeApiGatewayAuthorizer",
+              "APINestedStack"
+            ]
+          },
           "AuthorizeApiGatewayAuthorizer": {
             "Type": "AWS::ApiGateway::Authorizer",
             "Properties": {
+              "AuthorizerResultTtlInSeconds": 0,
               "IdentitySource": "method.request.header.Authorization",
               "Name": "authorize",
               "RestApiId": {
@@ -488,23 +743,18 @@
                       "Ref": "AWS::Region"
                     },
                     ":lambda:path/2015-03-31/functions/",
-                    {
-                      "Fn::GetAtt": [
-                        "AuthorizeLambdaFunction",
-                        "Arn"
-                      ]
-                    },
+                    "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-authorize",
                     "/invocations"
                   ]
                 ]
               },
-              "Type": "TOKEN"
+              "Type": "REQUEST"
             },
             "DependsOn": [
               "APINestedStack"
             ]
           },
-          "ApiGatewayDeployment1564070409577": {
+          "ApiGatewayDeployment1564154765654": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -517,9 +767,45 @@
             },
             "DependsOn": [
               "ApiGatewayMethodReaduserOptions",
+              "ApiGatewayMethodPushupdateusertosqsOptions",
               "ApiGatewayMethodReaduserGet",
+              "ApiGatewayMethodPushupdateusertosqsPost",
               "APINestedStack"
             ]
+          },
+          "UpdateUserEventSourceMappingSQSExecuteUpdateUserQueue": {
+            "Type": "AWS::Lambda::EventSourceMapping",
+            "DependsOn": [
+              "IamRoleLambdaExecution"
+            ],
+            "Properties": {
+              "BatchSize": 10,
+              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue",
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateUserLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Enabled": "True"
+            }
+          },
+          "CommandUpdateUserEventSourceMappingSQSUpdateUserQueue": {
+            "Type": "AWS::Lambda::EventSourceMapping",
+            "DependsOn": [
+              "IamRoleLambdaExecution"
+            ],
+            "Properties": {
+              "BatchSize": 10,
+              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:updateUserQueue",
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "CommandUpdateUserLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Enabled": "True"
+            }
           },
           "GatewayResponse": {
             "Type": "AWS::ApiGateway::GatewayResponse",
@@ -556,6 +842,44 @@
                 ]
               },
               "StatusCode": "401"
+            },
+            "DependsOn": [
+              "APINestedStack"
+            ]
+          },
+          "Failure400GatewayResponse": {
+            "Type": "AWS::ApiGateway::GatewayResponse",
+            "Properties": {
+              "ResponseParameters": {
+                "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+                "gatewayresponse.header.Access-Control-Allow-Headers": "'*'"
+              },
+              "ResponseType": "DEFAULT_4XX",
+              "RestApiId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayRestApi"
+                ]
+              }
+            },
+            "DependsOn": [
+              "APINestedStack"
+            ]
+          },
+          "Failure500GatewayResponse": {
+            "Type": "AWS::ApiGateway::GatewayResponse",
+            "Properties": {
+              "ResponseParameters": {
+                "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+                "gatewayresponse.header.Access-Control-Allow-Headers": "'*'"
+              },
+              "ResponseType": "DEFAULT_5XX",
+              "RestApiId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayRestApi"
+                ]
+              }
             },
             "DependsOn": [
               "APINestedStack"
@@ -687,25 +1011,6 @@
             },
             "DependsOn": []
           },
-          "APINestedStack": {
-            "Type": "AWS::CloudFormation::Stack",
-            "Properties": {
-              "Parameters": {},
-              "TemplateURL": {
-                "Fn::Join": [
-                  "/",
-                  [
-                    "https://s3.eu-central-1.amazonaws.com",
-                    {
-                      "Ref": "ServerlessDeploymentBucket"
-                    },
-                    "serverless/serverless-user-management/dev/1564070428815-2019-07-25T16:00:28.815Z",
-                    "cloudformation-template-API-nested-stack.json"
-                  ]
-                ]
-              }
-            }
-          },
           "PermissionsNestedStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
@@ -722,9 +1027,9 @@
                     "Arn"
                   ]
                 },
-                "AuthorizeLambdaFunctionArnParameter": {
+                "PushUpdateUserToSQSLambdaFunctionArnParameter": {
                   "Fn::GetAtt": [
-                    "AuthorizeLambdaFunction",
+                    "PushUpdateUserToSQSLambdaFunction",
                     "Arn"
                   ]
                 }
@@ -737,7 +1042,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1564070428815-2019-07-25T16:00:28.815Z",
+                    "serverless/serverless-user-management/dev/1564154785084-2019-07-26T15:26:25.084Z",
                     "cloudformation-template-Permissions-nested-stack.json"
                   ]
                 ]
@@ -746,8 +1051,27 @@
             "DependsOn": [
               "APINestedStack",
               "ReadUserLambdaFunction",
-              "AuthorizeLambdaFunction"
+              "PushUpdateUserToSQSLambdaFunction"
             ]
+          },
+          "APINestedStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+              "Parameters": {},
+              "TemplateURL": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "https://s3.eu-central-1.amazonaws.com",
+                    {
+                      "Ref": "ServerlessDeploymentBucket"
+                    },
+                    "serverless/serverless-user-management/dev/1564154785084-2019-07-26T15:26:25.084Z",
+                    "cloudformation-template-API-nested-stack.json"
+                  ]
+                ]
+              }
+            }
           },
           "VersionsNestedStack": {
             "Type": "AWS::CloudFormation::Stack",
@@ -758,6 +1082,15 @@
                 },
                 "ReadUserLambdaFunctionParameter": {
                   "Ref": "ReadUserLambdaFunction"
+                },
+                "PushUpdateUserToSQSLambdaFunctionParameter": {
+                  "Ref": "PushUpdateUserToSQSLambdaFunction"
+                },
+                "UpdateUserLambdaFunctionParameter": {
+                  "Ref": "UpdateUserLambdaFunction"
+                },
+                "CommandUpdateUserLambdaFunctionParameter": {
+                  "Ref": "CommandUpdateUserLambdaFunction"
                 }
               },
               "TemplateURL": {
@@ -768,7 +1101,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1564070428815-2019-07-25T16:00:28.815Z",
+                    "serverless/serverless-user-management/dev/1564154785084-2019-07-26T15:26:25.084Z",
                     "cloudformation-template-Versions-nested-stack.json"
                   ]
                 ]
@@ -776,7 +1109,10 @@
             },
             "DependsOn": [
               "AuthorizeLambdaFunction",
-              "ReadUserLambdaFunction"
+              "ReadUserLambdaFunction",
+              "PushUpdateUserToSQSLambdaFunction",
+              "UpdateUserLambdaFunction",
+              "CommandUpdateUserLambdaFunction"
             ]
           }
         },
@@ -791,7 +1127,7 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.AuthorizeLambdaVersionEpMT09EI9JpmzAp55rOc4iHhpRUr1F7kKwOum4zwpM"
+                "Outputs.AuthorizeLambdaVersionakaoyZ7chuZASugvWoIimuAiw5rj2646WSG3iu30"
               ]
             }
           },
@@ -800,7 +1136,34 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.ReadUserLambdaVersionzGTsOyPvjWHne58HTC2MwrA9xmst7jczHBbT7WFxJQ"
+                "Outputs.ReadUserLambdaVersiondENCjSn5H0D2Y2SXrxrZruNsYwKZ0czrHFiTJJ1T2CI"
+              ]
+            }
+          },
+          "PushUpdateUserToSQSLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Fn::GetAtt": [
+                "VersionsNestedStack",
+                "Outputs.PushUpdateUserToSQSLambdaVersionJSAE0LibSLtaHhGQZe2TIv0j684sFTxgQYyyAEb5k"
+              ]
+            }
+          },
+          "UpdateUserLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Fn::GetAtt": [
+                "VersionsNestedStack",
+                "Outputs.UpdateUserLambdaVersionDMPZCXNIPmDO70sZ4zjJ2YqSvGxYwph1mc2LRgYfo0"
+              ]
+            }
+          },
+          "CommandUpdateUserLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Fn::GetAtt": [
+                "VersionsNestedStack",
+                "Outputs.CommandUpdateUserLambdaVersionE8fBw3dQTRXzzD1yI8scf4teuQwDE3hqI1hDFXN8Fw"
               ]
             }
           },
@@ -904,14 +1267,12 @@
               "path": "readUser",
               "method": "get",
               "authorizer": {
+                "type": "request",
                 "name": "authorize",
-                "arn": {
-                  "Fn::GetAtt": [
-                    "AuthorizeLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "identitySource": "method.request.header.Authorization"
+                "arn": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-authorize",
+                "resultTtlInSeconds": 0,
+                "identitySource": "method.request.header.Authorization",
+                "claims": []
               },
               "cors": {
                 "origins": [
@@ -979,6 +1340,83 @@
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {}
+      },
+      "pushUpdateUserToSQS": {
+        "handler": "handler.pushUpdateUserToSQS",
+        "events": [
+          {
+            "http": {
+              "path": "pushupdateusertosqs",
+              "method": "post",
+              "authorizer": {
+                "type": "request",
+                "name": "authorize",
+                "arn": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-authorize",
+                "resultTtlInSeconds": 0,
+                "identitySource": "method.request.header.Authorization",
+                "claims": []
+              },
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-pushUpdateUserToSQS",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "updateUser": {
+        "handler": "handler.updateUser",
+        "events": [
+          {
+            "sqs": {
+              "arn": "arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue"
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-updateUser",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "commandUpdateUser": {
+        "handler": "handler.commandUpdateUser",
+        "timeout": 10,
+        "events": [
+          {
+            "sqs": {
+              "arn": "arn:aws:sqs:eu-central-1:582373673306:updateUserQueue"
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-commandUpdateUser",
+        "package": {},
+        "memory": 1024,
+        "runtime": "nodejs10.x",
+        "vpc": {}
       }
     },
     "resources": {
@@ -1009,6 +1447,32 @@
               "Ref": "ApiGatewayRestApi"
             },
             "StatusCode": "401"
+          }
+        },
+        "Failure400GatewayResponse": {
+          "Type": "AWS::ApiGateway::GatewayResponse",
+          "Properties": {
+            "ResponseParameters": {
+              "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+              "gatewayresponse.header.Access-Control-Allow-Headers": "'*'"
+            },
+            "ResponseType": "DEFAULT_4XX",
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
+          }
+        },
+        "Failure500GatewayResponse": {
+          "Type": "AWS::ApiGateway::GatewayResponse",
+          "Properties": {
+            "ResponseParameters": {
+              "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+              "gatewayresponse.header.Access-Control-Allow-Headers": "'*'"
+            },
+            "ResponseType": "DEFAULT_5XX",
+            "RestApiId": {
+              "Ref": "ApiGatewayRestApi"
+            }
           }
         },
         "UsersDynamoDBTable": {
@@ -1140,7 +1604,7 @@
     "artifact": "C:\\Users\\loren\\Desktop\\Stage\\event-driven\\serverless-user-management\\.serverless\\serverless-user-management.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-user-management/dev/1564070428815-2019-07-25T16:00:28.815Z",
+    "artifactDirectoryName": "serverless/serverless-user-management/dev/1564154785084-2019-07-26T15:26:25.084Z",
     "artifact": "serverless-user-management.zip"
   }
 }

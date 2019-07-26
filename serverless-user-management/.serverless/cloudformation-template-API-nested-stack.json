@@ -3,6 +3,22 @@
   "Description": "APINestedStack nested stack",
   "Parameters": {},
   "Resources": {
+    "ApiGatewayResourcePushupdateusertosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "pushupdateusertosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      },
+      "DependsOn": []
+    },
     "ApiGatewayResourceReaduser": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -41,6 +57,11 @@
     "ApiGatewayResourceReaduser": {
       "Value": {
         "Ref": "ApiGatewayResourceReaduser"
+      }
+    },
+    "ApiGatewayResourcePushupdateusertosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushupdateusertosqs"
       }
     }
   }

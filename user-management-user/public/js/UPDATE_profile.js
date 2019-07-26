@@ -3,10 +3,22 @@
 const updateProfile = document.getElementById('UPDATE_PROFILE');
 updateProfile.addEventListener('submit', function(e){
   e.preventDefault();
+
+  if(!document.getElementById('PROFILE_role').value)
+    var roleValue = "undefined";
+  else
+    var roleValue = document.getElementById('PROFILE_role').value;
+
+  if(!document.getElementById('PROFILE_group').value)
+    var groupValue = "undefined";
+  else
+    var groupValue = document.getElementById('PROFILE_group').value;
+
   fetch(linkUpdateUserAPI_POST, {
     method: "post",
     headers: {
-      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')      
     },
 
     body: JSON.stringify({
@@ -14,11 +26,21 @@ updateProfile.addEventListener('submit', function(e){
       "firstName": document.getElementById('PROFILE_firstName').value.trim(),
       "lastName": document.getElementById('PROFILE_lastName').value.trim(),
       "date": document.getElementById('PROFILE_date').value.trim(),
-      "role": document.getElementById('PROFILE_role').value,
-      "group": document.getElementById('PROFILE_group').value,
+      "role": roleValue,
+      "group": groupValue,
       "email": document.getElementById('PROFILE_email').value.trim()
     })
+  }).then(function(response){
+      const responseJSON = response.json();
+      return responseJSON;
+  }).then(function(data){
+      try{
+        const stringedResponse = JSON.stringify(data);
+        console.log(stringedResponse);
+      }
+      catch(e){
+        console.log(e);
+        //window.location.href = '/signin';
+      };
   });
-  //document.getElementById('loader_update').style.visibility = "visible";
-  //setTimeout(function(){ window.location.href = '/profile'; }, 5000); //wait before redirect
 });

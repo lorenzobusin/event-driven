@@ -34,7 +34,6 @@ provider:
 
 resources:
   Resources:
-
     GatewayResponse:
       Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:
@@ -45,7 +44,6 @@ resources:
         RestApiId:
           Ref: 'ApiGatewayRestApi'
         StatusCode: '401'
-
     AuthFailureGatewayResponse:
       Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:
@@ -56,7 +54,24 @@ resources:
         RestApiId:
           Ref: 'ApiGatewayRestApi'
         StatusCode: '401'
-
+    Failure400GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    Failure500GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
     #USER TABLE
     UsersDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
@@ -151,33 +166,39 @@ functions:
       - http: 
           path: /readUser
           method: get
-          authorizer: authorize
+          authorizer: 
+            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-authorize
+            type: request
+            resultTtlInSeconds: 0
           cors: true
           integration: lambda
           request:
             template:
               application/json: '{ "userId": "$input.params("userId")" }'
 
-  #pushUpdateUserToSQS: 
-  #  handler: handler.pushUpdateUserToSQS 
-  #  events: 
-  #    - http:
-  #        path: /pushupdateusertosqs
-  #        method: post
-  #        authorizer: authorize
-  #        cors: true
+  pushUpdateUserToSQS: 
+    handler: handler.pushUpdateUserToSQS 
+    events: 
+      - http:
+          path: /pushupdateusertosqs
+          method: post
+          authorizer: 
+            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-authorize
+            type: request
+            resultTtlInSeconds: 0
+          cors: true
 
-  #updateUser:
-  #  handler: handler.updateUser
-  #  events:
-   #   - sqs:
-  #        arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue
+  updateUser:
+    handler: handler.updateUser
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue
 
-  #commandUpdateUser:
-  #  handler: handler.commandUpdateUser
-  #  timeout: 10
-   # events:
-  #    - sqs:
-   #       arn: arn:aws:sqs:eu-central-1:582373673306:updateUserQueue
+  commandUpdateUser:
+    handler: handler.commandUpdateUser
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateUserQueue
 
   

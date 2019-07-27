@@ -7,41 +7,79 @@
     },
     "ReadUserLambdaFunctionParameter": {
       "Type": "String"
+    },
+    "PushUpdateUserToSQSLambdaFunctionParameter": {
+      "Type": "String"
+    },
+    "CommandUpdateUserLambdaFunctionParameter": {
+      "Type": "String"
     }
   },
   "Resources": {
-    "AuthorizeLambdaVersionFioiAdoyZB8fJk93WMcVfjL5kScCTPOIAszeUxHxg": {
+    "AuthorizeLambdaVersionMl2mvzARwqW8vhusj5TvGuLDjrIcwPQ1OTWiYXXc90": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AuthorizeLambdaFunctionParameter"
         },
-        "CodeSha256": "+j7aoGumbt/zlNWtPRD6KMfj/wr1mLyNZAP4yC+bq4w="
+        "CodeSha256": "/pK5gqq43YPeS61vgmTQhz5hO/jVmQGojrcgnosPDi0="
       },
       "DependsOn": []
     },
-    "ReadUserLambdaVersionYQxmQvx9ydl0UmLEaLeXT5IFerm5kiyB5fQCzL924": {
+    "ReadUserLambdaVersionsiNCRGCKcEKwSqzQf50zzscH4reHvDe3wbUIkzW8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ReadUserLambdaFunctionParameter"
         },
-        "CodeSha256": "+j7aoGumbt/zlNWtPRD6KMfj/wr1mLyNZAP4yC+bq4w="
+        "CodeSha256": "/pK5gqq43YPeS61vgmTQhz5hO/jVmQGojrcgnosPDi0="
+      },
+      "DependsOn": []
+    },
+    "PushUpdateUserToSQSLambdaVersionysJftaw5PMSZJmmS279rnv5GcN8Ixo698in1UboJk": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "PushUpdateUserToSQSLambdaFunctionParameter"
+        },
+        "CodeSha256": "/pK5gqq43YPeS61vgmTQhz5hO/jVmQGojrcgnosPDi0="
+      },
+      "DependsOn": []
+    },
+    "CommandUpdateUserLambdaVersiondbVSLwlb9DMxy7O64XcZExDAWyqpbfrqFUqsec7k": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "CommandUpdateUserLambdaFunctionParameter"
+        },
+        "CodeSha256": "/pK5gqq43YPeS61vgmTQhz5hO/jVmQGojrcgnosPDi0="
       },
       "DependsOn": []
     }
   },
   "Outputs": {
-    "ReadUserLambdaVersionYQxmQvx9ydl0UmLEaLeXT5IFerm5kiyB5fQCzL924": {
+    "CommandUpdateUserLambdaVersiondbVSLwlb9DMxy7O64XcZExDAWyqpbfrqFUqsec7k": {
       "Value": {
-        "Ref": "ReadUserLambdaVersionYQxmQvx9ydl0UmLEaLeXT5IFerm5kiyB5fQCzL924"
+        "Ref": "CommandUpdateUserLambdaVersiondbVSLwlb9DMxy7O64XcZExDAWyqpbfrqFUqsec7k"
       }
     },
-    "AuthorizeLambdaVersionFioiAdoyZB8fJk93WMcVfjL5kScCTPOIAszeUxHxg": {
+    "PushUpdateUserToSQSLambdaVersionysJftaw5PMSZJmmS279rnv5GcN8Ixo698in1UboJk": {
       "Value": {
-        "Ref": "AuthorizeLambdaVersionFioiAdoyZB8fJk93WMcVfjL5kScCTPOIAszeUxHxg"
+        "Ref": "PushUpdateUserToSQSLambdaVersionysJftaw5PMSZJmmS279rnv5GcN8Ixo698in1UboJk"
+      }
+    },
+    "ReadUserLambdaVersionsiNCRGCKcEKwSqzQf50zzscH4reHvDe3wbUIkzW8": {
+      "Value": {
+        "Ref": "ReadUserLambdaVersionsiNCRGCKcEKwSqzQf50zzscH4reHvDe3wbUIkzW8"
+      }
+    },
+    "AuthorizeLambdaVersionMl2mvzARwqW8vhusj5TvGuLDjrIcwPQ1OTWiYXXc90": {
+      "Value": {
+        "Ref": "AuthorizeLambdaVersionMl2mvzARwqW8vhusj5TvGuLDjrIcwPQ1OTWiYXXc90"
       }
     }
   }

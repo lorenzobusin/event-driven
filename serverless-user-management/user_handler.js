@@ -35,7 +35,6 @@ module.exports.pushUpdateUserToSQS = async (event, context, callback) => {
 
   try{
     const res = await SQS.sendMessage(params).promise();
-    console.log(res);
     return {
       statusCode: 200,
       headers: {
@@ -122,11 +121,9 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
-  const stringedBody = JSON.stringify(eventParsed);
+  const stringedBody = JSON.stringify(eventParsed.body);
   const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
-  console.log(JSON.stringify(check));
-  console.log(stringedBody);
+  const check = JSON.parse(bodyParsed);
 
   const checkEmailParams = {
     TableName: 'user',
@@ -144,7 +141,7 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
     callback(null, "Email/userId already exists or empty attributes");
   }
   else{
-    utils.storeEvent("user", "executeUpdateUserQueue", bodyParsed.body);
+    utils.storeEvent("user", "executeUpdateUserQueue", check);
     callback(null, "User event stored");
   }
 };/*

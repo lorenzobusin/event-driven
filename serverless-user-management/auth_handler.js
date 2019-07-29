@@ -1,61 +1,88 @@
-  module.exports.pushCreateAuthToSQS = (event, context, callback) => {
+  module.exports.pushCreateAuthToSQS = async (event, context, callback) => {
     const AWS = require('aws-sdk');
     const SQS = new AWS.SQS();
-    const stringedEvent = JSON.stringify(event);
   
     const params = {
-      MessageBody: stringedEvent,
+      MessageBody: JSON.stringify(event),
       QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createAuthQueue"
     };
   
-    SQS.sendMessage(params, function(err,data){
-      if(err){
-        console.log(err);
-        callback(null, err);
-      }
-      else
-        callback(null, "Auth event pushed to SQS");
-    });
+    try{
+      const res = await SQS.sendMessage(params).promise();
+      return callback(null, {
+        statusCode: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true
+        },
+        body: JSON.stringify(res)
+      });
+    }
+    catch(error){
+      console.log(error);
+      return callback(null, {
+        statusCode: 500
+      });
+    } 
   };
 
-  module.exports.pushUpdateAuthToSQS = (event, context, callback) => {
+  module.exports.pushUpdateAuthToSQS = async (event, context, callback) => {
     const AWS = require('aws-sdk');
     const SQS = new AWS.SQS();
-    const stringedEvent = JSON.stringify(event);
   
     const params = {
-      MessageBody: stringedEvent,
+      MessageBody: JSON.stringify(event),
       QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateAuthQueue"
     };
   
-    SQS.sendMessage(params, function(err,data){
-      if(err){
-        console.log(err);
-        callback(null, err);
-      }
-      else
-        callback(null, "Auth event pushed to SQS");
-    });
+    try{
+      const res = await SQS.sendMessage(params).promise();
+      return callback(null, {
+        statusCode: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true
+        },
+        body: JSON.stringify(res)
+      });
+    }
+    catch(error){
+      console.log(error);
+      return callback(null, {
+        statusCode: 500
+      });
+    } 
   };
 
-  module.exports.pushDeleteAuthToSQS = (event, context, callback) => {
+  module.exports.pushDeleteAuthToSQS = async (event, context, callback) => {
     const AWS = require('aws-sdk');
     const SQS = new AWS.SQS();
-    const stringedEvent = JSON.stringify(event);
   
     const params = {
-      MessageBody: stringedEvent,
+      MessageBody: JSON.stringify(event),
       QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/deleteAuthQueue"
     };
   
-    SQS.sendMessage(params, function(err,data){
-      if(err){
-        console.log(err);
-        callback(null, err);
-      }
-      else
-        callback(null, "Auth event pushed to SQS");
-    });
+    try{
+      const res = await SQS.sendMessage(params).promise();
+      return callback(null, {
+        statusCode: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true
+        },
+        body: JSON.stringify(res)
+      });
+    }
+    catch(error){
+      console.log(error);
+      return callback(null, {
+        statusCode: 500
+      });
+    } 
   };
 
   module.exports.commandCreateAuth = async (event, context, callback) => {
@@ -63,9 +90,8 @@
 
     const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
     const eventParsed = JSON.parse(stringedEvent);
-    const stringedBody = JSON.stringify(eventParsed);
-    const bodyParsed = JSON.parse(stringedBody);
-    const check = bodyParsed.body;
+    const stringedBody = JSON.stringify(eventParsed.body);
+    const eventToCheck = JSON.parse(stringedBody);
   
     const checkNameParams = {
       TableName: 'auth',
@@ -75,16 +101,16 @@
       ProjectionExpression: "#authname",
       FilterExpression: "#authname = :checkname",
       ExpressionAttributeValues: {
-          ":checkname": check.name
+          ":checkname": eventToCheck.name
       }
     };
   
     const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
     
-    if((check.authId == "" || check.name == "" || check.desc == "") || nameAlreadyExists)
+    if((eventToCheck.authId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
       callback(null, "Name already exists or empty attributes");
     else{
-      utils.storeEvent("auth", "executeCreateAuthQueue", bodyParsed.body);
+      utils.storeEvent("auth", "executeCreateAuthQueue", eventToCheck);
       callback(null, "Auth event stored");
     }
   };
@@ -94,9 +120,8 @@
 
     const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
     const eventParsed = JSON.parse(stringedEvent);
-    const stringedBody = JSON.stringify(eventParsed);
-    const bodyParsed = JSON.parse(stringedBody);
-    const check = bodyParsed.body;
+    const stringedBody = JSON.stringify(eventParsed.body);
+    const eventToCheck = JSON.parse(stringedBody);
   
     const checkNameParams = {
       TableName: 'auth',
@@ -106,33 +131,32 @@
       ProjectionExpression: "#authname",
       FilterExpression: "#authname = :checkname",
       ExpressionAttributeValues: {
-          ":checkname": check.name
+          ":checkname": eventToCheck.name
       }
     };
   
     const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
     
-    if((check.authId == "" || check.name == "" || check.desc == "") || nameAlreadyExists)
+    if((eventToCheck.authId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
       callback(null, "Name already exists or empty attributes");
     else{
-      utils.storeEvent("auth", "executeUpdateAuthQueue", bodyParsed.body);
+      utils.storeEvent("auth", "executeUpdateAuthQueue", eventToCheck);
       callback(null, "Auth event stored");
     }
   };
 
-  module.exports.commandDeleteAuth = (event, context, callback) => {
+  module.exports.commandDeleteAuth = async (event, context, callback) => {
     const utils = require('./utils.js');
 
     const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
     const eventParsed = JSON.parse(stringedEvent);
-    const stringedBody = JSON.stringify(eventParsed);
-    const bodyParsed = JSON.parse(stringedBody);
-    const check = bodyParsed.body;
+    const stringedBody = JSON.stringify(eventParsed.body);
+    const eventToCheck = JSON.parse(stringedBody);
     
-    if(check.authId == "")
+    if(eventToCheck.authId == "")
       callback(null, "Empty attribute");
     else{
-      utils.storeEvent("auth", "executeDeleteAuthQueue", bodyParsed.body);
+      utils.storeEvent("auth", "executeDeleteAuthQueue", eventToCheck);
       callback(null, "Auth event stored");
     }
   };
@@ -221,7 +245,6 @@
   };
 
   //READ MODE LAMBDAs
-
   module.exports.readAuth = (event, context, callback) => {
     const AWS = require('aws-sdk');
     const dynamoDb = new AWS.DynamoDB.DocumentClient();

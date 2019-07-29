@@ -3,7 +3,7 @@
   "Description": "APINestedStack nested stack",
   "Parameters": {},
   "Resources": {
-    "ApiGatewayResourceGetallroles": {
+    "ApiGatewayResourceGetallauths": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -12,14 +12,14 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "getAllRoles",
+        "PathPart": "getAllAuths",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       },
       "DependsOn": []
     },
-    "ApiGatewayResourcePushcreateroletosqs": {
+    "ApiGatewayResourcePushcreateauthtosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -28,14 +28,14 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "pushcreateroletosqs",
+        "PathPart": "pushcreateauthtosqs",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       },
       "DependsOn": []
     },
-    "ApiGatewayResourcePushdeleteroletosqs": {
+    "ApiGatewayResourcePushdeleteauthtosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -44,14 +44,14 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "pushdeleteroletosqs",
+        "PathPart": "pushdeleteauthtosqs",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       },
       "DependsOn": []
     },
-    "ApiGatewayResourcePushupdateroletosqs": {
+    "ApiGatewayResourcePushupdateauthtosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -60,14 +60,14 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "pushupdateroletosqs",
+        "PathPart": "pushupdateauthtosqs",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       },
       "DependsOn": []
     },
-    "ApiGatewayResourceReadrole": {
+    "ApiGatewayResourceReadauth": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -76,7 +76,7 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "readRole",
+        "PathPart": "readAuth",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -118,29 +118,29 @@
         "Ref": "ApiGatewayRestApi"
       }
     },
-    "ApiGatewayResourcePushcreateroletosqs": {
+    "ApiGatewayResourcePushcreateauthtosqs": {
       "Value": {
-        "Ref": "ApiGatewayResourcePushcreateroletosqs"
+        "Ref": "ApiGatewayResourcePushcreateauthtosqs"
       }
     },
-    "ApiGatewayResourcePushupdateroletosqs": {
+    "ApiGatewayResourcePushupdateauthtosqs": {
       "Value": {
-        "Ref": "ApiGatewayResourcePushupdateroletosqs"
+        "Ref": "ApiGatewayResourcePushupdateauthtosqs"
       }
     },
-    "ApiGatewayResourcePushdeleteroletosqs": {
+    "ApiGatewayResourcePushdeleteauthtosqs": {
       "Value": {
-        "Ref": "ApiGatewayResourcePushdeleteroletosqs"
+        "Ref": "ApiGatewayResourcePushdeleteauthtosqs"
       }
     },
-    "ApiGatewayResourceReadrole": {
+    "ApiGatewayResourceReadauth": {
       "Value": {
-        "Ref": "ApiGatewayResourceReadrole"
+        "Ref": "ApiGatewayResourceReadauth"
       }
     },
-    "ApiGatewayResourceGetallroles": {
+    "ApiGatewayResourceGetallauths": {
       "Value": {
-        "Ref": "ApiGatewayResourceGetallroles"
+        "Ref": "ApiGatewayResourceGetallauths"
       }
     },
     "ApiGatewayResourceRecovery": {

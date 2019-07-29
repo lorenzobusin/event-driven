@@ -261,7 +261,6 @@ module.exports.deleteUser = async (event, context, callback) => {
 };
 
 //READ MODE LAMBDA
-
 module.exports.readUser = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();

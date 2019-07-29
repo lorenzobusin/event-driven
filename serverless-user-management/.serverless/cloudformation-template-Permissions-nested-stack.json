@@ -5,19 +5,19 @@
     "ApiGatewayRestApiParameter": {
       "Type": "String"
     },
-    "PushCreateRoleToSQSLambdaFunctionArnParameter": {
+    "PushCreateAuthToSQSLambdaFunctionArnParameter": {
       "Type": "String"
     },
-    "PushUpdateRoleToSQSLambdaFunctionArnParameter": {
+    "PushUpdateAuthToSQSLambdaFunctionArnParameter": {
       "Type": "String"
     },
-    "PushDeleteRoleToSQSLambdaFunctionArnParameter": {
+    "PushDeleteAuthToSQSLambdaFunctionArnParameter": {
       "Type": "String"
     },
-    "ReadRoleLambdaFunctionArnParameter": {
+    "ReadAuthLambdaFunctionArnParameter": {
       "Type": "String"
     },
-    "GetAllRolesLambdaFunctionArnParameter": {
+    "GetAllAuthsLambdaFunctionArnParameter": {
       "Type": "String"
     },
     "RecoveryLambdaFunctionArnParameter": {
@@ -34,11 +34,11 @@
       },
       "DependsOn": []
     },
-    "GetAllRolesLambdaPermissionApiGateway": {
+    "GetAllAuthsLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
-          "Ref": "GetAllRolesLambdaFunctionArnParameter"
+          "Ref": "GetAllAuthsLambdaFunctionArnParameter"
         },
         "Action": "lambda:InvokeFunction",
         "Principal": "apigateway.amazonaws.com",
@@ -69,11 +69,11 @@
       },
       "DependsOn": []
     },
-    "PushCreateRoleToSQSLambdaPermissionApiGateway": {
+    "PushCreateAuthToSQSLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
-          "Ref": "PushCreateRoleToSQSLambdaFunctionArnParameter"
+          "Ref": "PushCreateAuthToSQSLambdaFunctionArnParameter"
         },
         "Action": "lambda:InvokeFunction",
         "Principal": "apigateway.amazonaws.com",
@@ -104,11 +104,11 @@
       },
       "DependsOn": []
     },
-    "PushDeleteRoleToSQSLambdaPermissionApiGateway": {
+    "PushDeleteAuthToSQSLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
-          "Ref": "PushDeleteRoleToSQSLambdaFunctionArnParameter"
+          "Ref": "PushDeleteAuthToSQSLambdaFunctionArnParameter"
         },
         "Action": "lambda:InvokeFunction",
         "Principal": "apigateway.amazonaws.com",
@@ -139,11 +139,11 @@
       },
       "DependsOn": []
     },
-    "PushUpdateRoleToSQSLambdaPermissionApiGateway": {
+    "PushUpdateAuthToSQSLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
-          "Ref": "PushUpdateRoleToSQSLambdaFunctionArnParameter"
+          "Ref": "PushUpdateAuthToSQSLambdaFunctionArnParameter"
         },
         "Action": "lambda:InvokeFunction",
         "Principal": "apigateway.amazonaws.com",
@@ -174,11 +174,11 @@
       },
       "DependsOn": []
     },
-    "ReadRoleLambdaPermissionApiGateway": {
+    "ReadAuthLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
-          "Ref": "ReadRoleLambdaFunctionArnParameter"
+          "Ref": "ReadAuthLambdaFunctionArnParameter"
         },
         "Action": "lambda:InvokeFunction",
         "Principal": "apigateway.amazonaws.com",

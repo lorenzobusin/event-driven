@@ -2,15 +2,17 @@ extends layout
 block content
 
   .row.form-section
-    form#CREATE_AUTH.form.col-md-4
+    form#UPDATE_AUTH.form.col-md-4
       .form-group
         h3.crud_title Update authorization
         if locals.user
+          label authId
+          input#UPDATE_authId.form-control(type='text', name='authid', required='')
           label Name
           input#UPDATE_name.form-control(type='text', name='name', required='')
           label Description
           textarea#UPDATE_desc.form-control(name='desc', required='')
-          button.btn.btn-success(type='submit') Create
+          button.btn.btn-success(type='submit') Update
           span#messageSuccessUPDATE.messageSuccess
         else
           h4 You are not logged in! Please #[a(href="/login") Log In] to continue.

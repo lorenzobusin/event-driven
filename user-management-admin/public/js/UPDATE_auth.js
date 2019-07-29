@@ -7,8 +7,8 @@ updateAuth.addEventListener('submit', function(e){
   fetch(linkUpdateAuthAPI_POST, {
     method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     },
 
     body: JSON.stringify({
@@ -16,12 +16,16 @@ updateAuth.addEventListener('submit', function(e){
       "name": document.getElementById('UPDATE_name').value.trim(),
       "desc": document.getElementById('UPDATE_desc').value.trim()
     })
+  }).then(function(){
+      document.getElementById('UPDATE_authId').value = "";
+      document.getElementById('UPDATE_name').value = "";
+      document.getElementById('UPDATE_desc').value = "";
+  }).catch(function(error){
+      document.getElementById('messageSuccessUPDATE').style.color = 'red';
+      document.getElementById('messageSuccessUPDATE').innerHTML = 'Authorization not updated';
   });
 
-  document.getElementById('messageSuccessUPDATE').style.color = 'green';
-  document.getElementById('messageSuccessUPDATE').innerHTML = 'Authorization updated';
+  
 
-  document.getElementById('UPDATE_authId').value = "";
-  document.getElementById('UPDATE_name').value = "";
-  document.getElementById('UPDATE_desc').value = "";
+ 
 });

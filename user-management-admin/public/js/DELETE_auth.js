@@ -6,16 +6,17 @@ deleteAuth.addEventListener('submit', function(e){
   fetch(linkDeleteAuthAPI_POST, {
     method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     },
 
     body: JSON.stringify({
       "authId": document.getElementById('DELETE_authId').value.trim()
     })
+  }).then(function(){
+      document.getElementById('DELETE_authId').value = "";
+  }).catch(function(error){
+      document.getElementById('messageSuccessDELETE').style.color = 'red';
+      document.getElementById('messageSuccessDELETE').innerHTML = "Authorization not deleted";
   });
-
-  document.getElementById('messageSuccessDELETE').style.color = 'green';
-  document.getElementById('messageSuccessDELETE').innerHTML = "Authorization deleted";
-  document.getElementById('DELETE_authId').value = "";
 });

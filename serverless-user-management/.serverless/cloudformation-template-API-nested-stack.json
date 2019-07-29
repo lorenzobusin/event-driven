@@ -3,7 +3,7 @@
   "Description": "APINestedStack nested stack",
   "Parameters": {},
   "Resources": {
-    "ApiGatewayResourceGetprofileinfo": {
+    "ApiGatewayResourceGetallroles": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -12,14 +12,14 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "getprofileinfo",
+        "PathPart": "getAllRoles",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       },
       "DependsOn": []
     },
-    "ApiGatewayResourcePushcreateusertosqs": {
+    "ApiGatewayResourcePushcreateroletosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -28,14 +28,14 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "pushcreateusertosqs",
+        "PathPart": "pushcreateroletosqs",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       },
       "DependsOn": []
     },
-    "ApiGatewayResourcePushdeleteusertosqs": {
+    "ApiGatewayResourcePushdeleteroletosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -44,14 +44,14 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "pushdeleteusertosqs",
+        "PathPart": "pushdeleteroletosqs",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       },
       "DependsOn": []
     },
-    "ApiGatewayResourcePushsigninusertosqs": {
+    "ApiGatewayResourcePushupdateroletosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -60,14 +60,14 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "pushsigninusertosqs",
+        "PathPart": "pushupdateroletosqs",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
       },
       "DependsOn": []
     },
-    "ApiGatewayResourcePushupdateprofiletosqs": {
+    "ApiGatewayResourceReadrole": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -76,39 +76,7 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "pushupdateprofiletosqs",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      },
-      "DependsOn": []
-    },
-    "ApiGatewayResourcePushupdateusertosqs": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "PathPart": "pushupdateusertosqs",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      },
-      "DependsOn": []
-    },
-    "ApiGatewayResourceReaduser": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "PathPart": "readUser",
+        "PathPart": "readRole",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -150,44 +118,34 @@
         "Ref": "ApiGatewayRestApi"
       }
     },
-    "ApiGatewayResourcePushcreateusertosqs": {
+    "ApiGatewayResourcePushcreateroletosqs": {
       "Value": {
-        "Ref": "ApiGatewayResourcePushcreateusertosqs"
+        "Ref": "ApiGatewayResourcePushcreateroletosqs"
       }
     },
-    "ApiGatewayResourcePushupdateusertosqs": {
+    "ApiGatewayResourcePushupdateroletosqs": {
       "Value": {
-        "Ref": "ApiGatewayResourcePushupdateusertosqs"
+        "Ref": "ApiGatewayResourcePushupdateroletosqs"
       }
     },
-    "ApiGatewayResourcePushdeleteusertosqs": {
+    "ApiGatewayResourcePushdeleteroletosqs": {
       "Value": {
-        "Ref": "ApiGatewayResourcePushdeleteusertosqs"
+        "Ref": "ApiGatewayResourcePushdeleteroletosqs"
       }
     },
-    "ApiGatewayResourceReaduser": {
+    "ApiGatewayResourceReadrole": {
       "Value": {
-        "Ref": "ApiGatewayResourceReaduser"
+        "Ref": "ApiGatewayResourceReadrole"
+      }
+    },
+    "ApiGatewayResourceGetallroles": {
+      "Value": {
+        "Ref": "ApiGatewayResourceGetallroles"
       }
     },
     "ApiGatewayResourceRecovery": {
       "Value": {
         "Ref": "ApiGatewayResourceRecovery"
-      }
-    },
-    "ApiGatewayResourcePushsigninusertosqs": {
-      "Value": {
-        "Ref": "ApiGatewayResourcePushsigninusertosqs"
-      }
-    },
-    "ApiGatewayResourcePushupdateprofiletosqs": {
-      "Value": {
-        "Ref": "ApiGatewayResourcePushupdateprofiletosqs"
-      }
-    },
-    "ApiGatewayResourceGetprofileinfo": {
-      "Value": {
-        "Ref": "ApiGatewayResourceGetprofileinfo"
       }
     }
   }

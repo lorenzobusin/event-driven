@@ -6,16 +6,17 @@ deleteRole.addEventListener('submit', function(e){
   fetch(linkDeleteRoleAPI_POST, {
     method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     },
 
     body: JSON.stringify({
       "roleId": document.getElementById('DELETE_roleId').value.trim()
     })
-  });
-
-  document.getElementById('messageSuccessDELETE').style.color = 'green';
-  document.getElementById('messageSuccessDELETE').innerHTML = "Role deleted";
-  document.getElementById('DELETE_roleId').value = "";
+  }).then(function(){
+      document.getElementById('DELETE_roleId').value = "";
+  }).catch(function(error){
+      document.getElementById('messageSuccessDELETE').style.color = 'red';
+      document.getElementById('messageSuccessDELETE').innerHTML = "Role not deleted";
+  }); 
 });

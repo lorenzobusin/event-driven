@@ -8,7 +8,8 @@ html
     link(rel='shortcut icon', type='image/png', href='img/favicon.png')
     script(type='text/javascript', src='js/utils.js', charset='utf-8')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-  body(onload='getAllRoles("CREATE_role"); getAllGroups("CREATE_group");')
+    script(type='text/javascript', src='js/getAllAuths.js', charset='utf-8')
+  body
     .navbar
       ul
         li
@@ -56,6 +57,7 @@ html
                 span #{user.emails[0].value}
               script(type='text/javascript').
                 createSession('#{user.id_token}');
+                getAllAuths("CREATE_auth");
             else
               .dropdown
                 a.dropitem(id="qsLoginBtn" href="/login") Login
@@ -65,6 +67,8 @@ html
   form#CREATE_ROLE.form.col-md-4
     .form-group
       h3.crud_title Create role
+      label roleId
+      input#CREATE_roleId.form-control(type='text', name='roleid', required='')
       label Name
       input#CREATE_name.form-control(type='text', name='name', required='')
       label Description
@@ -72,7 +76,7 @@ html
       label Authorizations JSON
       textarea#CREATE_auth.form-control(name='auth', readonly='', required='')
         | {
-        |   "Authorizations":  [
+        |         "Authorizations":  [ 
       button.btn.btn-success(type='submit') Create
       span#messageSuccessCREATE.messageSuccess
   .col-md-6.addAuth
@@ -80,4 +84,3 @@ html
     ul#ul-Auth
     input#btn-reset.btn.btn-success(type='button', value='Reset', onclick='resetAuth("CREATE_auth", "ul-Auth")')
 script(type='text/javascript', src='js/CREATE_role.js', charset='utf-8')
-script(type='text/javascript', src='js/getAllAuths.js', charset='utf-8')

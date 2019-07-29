@@ -169,6 +169,115 @@ functions:
 
   
 
+  # ------------------------------- ROLE FUNCTIONS ------------------------------- #
+
+  pushCreateRoleToSQS: 
+    handler: handler.pushCreateRoleToSQS 
+    events: 
+      - http:
+          path: /pushcreateroletosqs
+          method: post
+          authorizer: 
+            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
+            type: request
+            resultTtlInSeconds: 0
+          cors: true
+          integration: lambda
+
+  pushUpdateRoleToSQS: 
+    handler: handler.pushUpdateRoleToSQS 
+    events: 
+      - http:
+          path: /pushupdateroletosqs
+          method: post
+          authorizer: 
+            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
+            type: request
+            resultTtlInSeconds: 0
+          cors: true
+          integration: lambda
+
+  pushDeleteRoleToSQS: 
+    handler: handler.pushDeleteRoleToSQS 
+    events: 
+      - http:
+          path: /pushdeleteroletosqs
+          method: post
+          authorizer: 
+            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
+            type: request
+            resultTtlInSeconds: 0
+          cors: true
+          integration: lambda
+
+  commandCreateRole:
+    handler: handler.commandCreateRole
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:createRoleQueue
+
+  commandUpdateRole:
+    handler: handler.commandUpdateRole
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:updateRoleQueue 
+
+  commandDeleteRole:
+    handler: handler.commandDeleteRole
+    timeout: 10
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:deleteRoleQueue 
+
+  createRole:
+    handler: handler.createRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateRoleQueue
+
+  updateRole:
+    handler: handler.updateRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateRoleQueue
+
+  deleteRole: 
+    handler: handler.deleteRole
+    events:
+      - sqs:
+          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteRoleQueue
+
+  readRole: 
+    handler: handler.readRole
+    events: 
+      - http: 
+          path: /readRole
+          method: get
+          authorizer: 
+            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
+            type: request
+            resultTtlInSeconds: 0
+          cors: true
+          integration: lambda
+          request:
+            template:
+              application/json: '{ "roleId": "$input.params("roleId")" }'
+  
+  getAllRoles: 
+    handler: handler.getAllRoles
+    events: 
+      - http: 
+          path: /getAllRoles
+          method: get
+          authorizer: 
+            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
+            type: request
+            resultTtlInSeconds: 0
+          cors: true
+          integration: lambda
+
   # ------------------------------- EVENT SOURCING FUNCTIONS ------------------------------- #
 
   recovery: 

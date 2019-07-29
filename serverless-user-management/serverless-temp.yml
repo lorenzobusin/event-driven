@@ -9,6 +9,7 @@
           authorizer: 
             arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
             type: request
+            resultTtlInSeconds: 0
           cors: true
           integration: lambda
 

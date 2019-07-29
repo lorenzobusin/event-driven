@@ -1,44 +1,62 @@
-module.exports.pushCreateRoleToSQS = (event, context, callback) => {
+module.exports.pushCreateRoleToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
-  const stringedEvent = JSON.stringify(event);
 
   const params = {
-    MessageBody: stringedEvent,
+    MessageBody: JSON.stringify(event),
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createRoleQueue"
   };
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "Role event pushed to SQS");
-  });
+  try{
+    const res = await SQS.sendMessage(params).promise();
+    return callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify(res)
+    });
+  }
+  catch(error){
+    console.log(error);
+    return callback(null, {
+      statusCode: 500
+    });
+  } 
 };
 
-module.exports.pushUpdateRoleToSQS = (event, context, callback) => {
+module.exports.pushUpdateRoleToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
-  const stringedEvent = JSON.stringify(event);
 
   const params = {
-    MessageBody: stringedEvent,
+    MessageBody: JSON.stringify(event),
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateRoleQueue"
   };
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "Role event pushed to SQS");
-  });
+  try{
+    const res = await SQS.sendMessage(params).promise();
+    return callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify(res)
+    });
+  }
+  catch(error){
+    console.log(error);
+    return callback(null, {
+      statusCode: 500
+    });
+  } 
 };
 
-module.exports.pushDeleteRoleToSQS = (event, context, callback) => {
+module.exports.pushDeleteRoleToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
   const stringedEvent = JSON.stringify(event);
@@ -48,14 +66,24 @@ module.exports.pushDeleteRoleToSQS = (event, context, callback) => {
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/deleteRoleQueue"
   };
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "Role event pushed to SQS");
-  });
+  try{
+    const res = await SQS.sendMessage(params).promise();
+    return callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify(res)
+    });
+  }
+  catch(error){
+    console.log(error);
+    return callback(null, {
+      statusCode: 500
+    });
+  } 
 };
 
 module.exports.commandCreateRole = async (event, context, callback) => {
@@ -63,10 +91,9 @@ module.exports.commandCreateRole = async (event, context, callback) => {
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
-  const stringedBody = JSON.stringify(eventParsed);
-  const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
-
+  const stringedBody = JSON.stringify(eventParsed.body);
+  const eventToCheck = JSON.parse(stringedBody);
+   
   const checkNameParams = {
     TableName: 'role',
     ExpressionAttributeNames:{
@@ -75,16 +102,16 @@ module.exports.commandCreateRole = async (event, context, callback) => {
     ProjectionExpression: "#rolename",
     FilterExpression: "#rolename = :checkname",
     ExpressionAttributeValues: {
-        ":checkname": check.name
+        ":checkname": eventToCheck.name
     }
   };
 
   const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
   
-  if((check.roleId == "" || check.name == "" || check.desc == "") || nameAlreadyExists)
+  if((eventToCheck.roleId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
     callback(null, "Name already exists or empty attributes");
   else{
-    utils.storeEvent("role", "executeCreateRoleQueue", bodyParsed.body);
+    utils.storeEvent("role", "executeCreateRoleQueue", eventToCheck);
     callback(null, "Role event stored");
   }
     
@@ -95,9 +122,8 @@ module.exports.commandUpdateRole = async (event, context, callback) => {
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
-  const stringedBody = JSON.stringify(eventParsed);
-  const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
+  const stringedBody = JSON.stringify(eventParsed.body);
+  const eventToCheck = JSON.parse(stringedBody);
 
   const checkNameParams = {
     TableName: 'role',
@@ -107,16 +133,16 @@ module.exports.commandUpdateRole = async (event, context, callback) => {
     ProjectionExpression: "#rolename",
     FilterExpression: "#rolename = :checkname",
     ExpressionAttributeValues: {
-        ":checkname": check.name
+        ":checkname": eventToCheck.name
     }
   };
 
   const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
   
-  if((check.roleId == "" || check.name == "" || check.desc == "") || nameAlreadyExists)
+  if((eventToCheck.roleId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
     callback(null, "Name already exists or empty attributes");
   else{
-    utils.storeEvent("role", "executeUpdateRoleQueue", bodyParsed.body);
+    utils.storeEvent("role", "executeUpdateRoleQueue", eventToCheck);
     callback(null, "Role event stored");
   }
 };
@@ -126,14 +152,13 @@ module.exports.commandDeleteRole = (event, context, callback) => {
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
-  const stringedBody = JSON.stringify(eventParsed);
-  const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
+  const stringedBody = JSON.stringify(eventParsed.body);
+  const eventToCheck = JSON.parse(stringedBody);
   
-  if(check.roleId == "")
+  if(eventToCheck.roleId == "")
     callback(null, "Empty attribute");
   else{
-    utils.storeEvent("role", "executeDeleteRoleQueue", bodyParsed.body);
+    utils.storeEvent("role", "executeDeleteRoleQueue", eventToCheck);
     callback(null, "Role event stored");
   }
 };

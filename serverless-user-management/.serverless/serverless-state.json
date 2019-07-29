@@ -66,73 +66,80 @@
             },
             "DependsOn": []
           },
-          "PushCreateUserToSQSLogGroup": {
+          "PushCreateRoleToSQSLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-pushCreateUserToSQS"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-pushCreateRoleToSQS"
             },
             "DependsOn": []
           },
-          "PushUpdateUserToSQSLogGroup": {
+          "PushUpdateRoleToSQSLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-pushUpdateUserToSQS"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-pushUpdateRoleToSQS"
             },
             "DependsOn": []
           },
-          "PushDeleteUserToSQSLogGroup": {
+          "PushDeleteRoleToSQSLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-pushDeleteUserToSQS"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-pushDeleteRoleToSQS"
             },
             "DependsOn": []
           },
-          "CommandCreateUserLogGroup": {
+          "CommandCreateRoleLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-commandCreateUser"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-commandCreateRole"
             },
             "DependsOn": []
           },
-          "CommandUpdateUserLogGroup": {
+          "CommandUpdateRoleLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-commandUpdateUser"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-commandUpdateRole"
             },
             "DependsOn": []
           },
-          "CommandDeleteUserLogGroup": {
+          "CommandDeleteRoleLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-commandDeleteUser"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-commandDeleteRole"
             },
             "DependsOn": []
           },
-          "CreateUserLogGroup": {
+          "CreateRoleLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-createUser"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-createRole"
             },
             "DependsOn": []
           },
-          "UpdateUserLogGroup": {
+          "UpdateRoleLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-updateUser"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-updateRole"
             },
             "DependsOn": []
           },
-          "DeleteUserLogGroup": {
+          "DeleteRoleLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-deleteUser"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-deleteRole"
             },
             "DependsOn": []
           },
-          "ReadUserLogGroup": {
+          "ReadRoleLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-readUser"
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-readRole"
+            },
+            "DependsOn": []
+          },
+          "GetAllRolesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-user-management-dev-getAllRoles"
             },
             "DependsOn": []
           },
@@ -147,27 +154,6 @@
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/serverless-user-management-dev-mediator"
-            },
-            "DependsOn": []
-          },
-          "PushSigninUserToSQSLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-pushSigninUserToSQS"
-            },
-            "DependsOn": []
-          },
-          "PushUpdateProfileToSQSLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-pushUpdateProfileToSQS"
-            },
-            "DependsOn": []
-          },
-          "GetProfileInfoLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/lambda/serverless-user-management-dev-getProfileInfo"
             },
             "DependsOn": []
           },
@@ -250,7 +236,7 @@
                           "sqs:GetQueueAttributes"
                         ],
                         "Resource": [
-                          "arn:aws:sqs:eu-central-1:582373673306:createUserQueue"
+                          "arn:aws:sqs:eu-central-1:582373673306:createRoleQueue"
                         ]
                       },
                       {
@@ -261,7 +247,7 @@
                           "sqs:GetQueueAttributes"
                         ],
                         "Resource": [
-                          "arn:aws:sqs:eu-central-1:582373673306:updateUserQueue"
+                          "arn:aws:sqs:eu-central-1:582373673306:updateRoleQueue"
                         ]
                       },
                       {
@@ -272,7 +258,7 @@
                           "sqs:GetQueueAttributes"
                         ],
                         "Resource": [
-                          "arn:aws:sqs:eu-central-1:582373673306:deleteUserQueue"
+                          "arn:aws:sqs:eu-central-1:582373673306:deleteRoleQueue"
                         ]
                       },
                       {
@@ -283,7 +269,7 @@
                           "sqs:GetQueueAttributes"
                         ],
                         "Resource": [
-                          "arn:aws:sqs:eu-central-1:582373673306:executeCreateUserQueue"
+                          "arn:aws:sqs:eu-central-1:582373673306:executeCreateRoleQueue"
                         ]
                       },
                       {
@@ -294,7 +280,7 @@
                           "sqs:GetQueueAttributes"
                         ],
                         "Resource": [
-                          "arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue"
+                          "arn:aws:sqs:eu-central-1:582373673306:executeUpdateRoleQueue"
                         ]
                       },
                       {
@@ -305,7 +291,7 @@
                           "sqs:GetQueueAttributes"
                         ],
                         "Resource": [
-                          "arn:aws:sqs:eu-central-1:582373673306:executeDeleteUserQueue"
+                          "arn:aws:sqs:eu-central-1:582373673306:executeDeleteRoleQueue"
                         ]
                       }
                     ]
@@ -336,7 +322,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-admin_authorizer",
               "Handler": "handler.admin_authorizer",
@@ -372,7 +358,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-user_authorizer",
               "Handler": "handler.user_authorizer",
@@ -401,17 +387,17 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PushCreateUserToSQSLambdaFunction": {
+          "PushCreateRoleToSQSLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-pushCreateUserToSQS",
-              "Handler": "handler.pushCreateUserToSQS",
+              "FunctionName": "serverless-user-management-dev-pushCreateRoleToSQS",
+              "Handler": "handler.pushCreateRoleToSQS",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -433,21 +419,21 @@
               }
             },
             "DependsOn": [
-              "PushCreateUserToSQSLogGroup",
+              "PushCreateRoleToSQSLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "PushUpdateUserToSQSLambdaFunction": {
+          "PushUpdateRoleToSQSLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-pushUpdateUserToSQS",
-              "Handler": "handler.pushUpdateUserToSQS",
+              "FunctionName": "serverless-user-management-dev-pushUpdateRoleToSQS",
+              "Handler": "handler.pushUpdateRoleToSQS",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -469,21 +455,21 @@
               }
             },
             "DependsOn": [
-              "PushUpdateUserToSQSLogGroup",
+              "PushUpdateRoleToSQSLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "PushDeleteUserToSQSLambdaFunction": {
+          "PushDeleteRoleToSQSLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-pushDeleteUserToSQS",
-              "Handler": "handler.pushDeleteUserToSQS",
+              "FunctionName": "serverless-user-management-dev-pushDeleteRoleToSQS",
+              "Handler": "handler.pushDeleteRoleToSQS",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -505,21 +491,21 @@
               }
             },
             "DependsOn": [
-              "PushDeleteUserToSQSLogGroup",
+              "PushDeleteRoleToSQSLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "CommandCreateUserLambdaFunction": {
+          "CommandCreateRoleLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-commandCreateUser",
-              "Handler": "handler.commandCreateUser",
+              "FunctionName": "serverless-user-management-dev-commandCreateRole",
+              "Handler": "handler.commandCreateRole",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -541,21 +527,21 @@
               }
             },
             "DependsOn": [
-              "CommandCreateUserLogGroup",
+              "CommandCreateRoleLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "CommandUpdateUserLambdaFunction": {
+          "CommandUpdateRoleLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-commandUpdateUser",
-              "Handler": "handler.commandUpdateUser",
+              "FunctionName": "serverless-user-management-dev-commandUpdateRole",
+              "Handler": "handler.commandUpdateRole",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -577,21 +563,21 @@
               }
             },
             "DependsOn": [
-              "CommandUpdateUserLogGroup",
+              "CommandUpdateRoleLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "CommandDeleteUserLambdaFunction": {
+          "CommandDeleteRoleLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-commandDeleteUser",
-              "Handler": "handler.commandDeleteUser",
+              "FunctionName": "serverless-user-management-dev-commandDeleteRole",
+              "Handler": "handler.commandDeleteRole",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -613,21 +599,21 @@
               }
             },
             "DependsOn": [
-              "CommandDeleteUserLogGroup",
+              "CommandDeleteRoleLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "CreateUserLambdaFunction": {
+          "CreateRoleLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-createUser",
-              "Handler": "handler.createUser",
+              "FunctionName": "serverless-user-management-dev-createRole",
+              "Handler": "handler.createRole",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -649,21 +635,21 @@
               }
             },
             "DependsOn": [
-              "CreateUserLogGroup",
+              "CreateRoleLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "UpdateUserLambdaFunction": {
+          "UpdateRoleLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-updateUser",
-              "Handler": "handler.updateUser",
+              "FunctionName": "serverless-user-management-dev-updateRole",
+              "Handler": "handler.updateRole",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -685,21 +671,21 @@
               }
             },
             "DependsOn": [
-              "UpdateUserLogGroup",
+              "UpdateRoleLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "DeleteUserLambdaFunction": {
+          "DeleteRoleLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-deleteUser",
-              "Handler": "handler.deleteUser",
+              "FunctionName": "serverless-user-management-dev-deleteRole",
+              "Handler": "handler.deleteRole",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -721,21 +707,21 @@
               }
             },
             "DependsOn": [
-              "DeleteUserLogGroup",
+              "DeleteRoleLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
-          "ReadUserLambdaFunction": {
+          "ReadRoleLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
-              "FunctionName": "serverless-user-management-dev-readUser",
-              "Handler": "handler.readUser",
+              "FunctionName": "serverless-user-management-dev-readRole",
+              "Handler": "handler.readRole",
               "MemorySize": 1024,
               "Role": {
                 "Fn::GetAtt": [
@@ -757,7 +743,43 @@
               }
             },
             "DependsOn": [
-              "ReadUserLogGroup",
+              "ReadRoleLogGroup",
+              "IamRoleLambdaExecution"
+            ]
+          },
+          "GetAllRolesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
+              },
+              "FunctionName": "serverless-user-management-dev-getAllRoles",
+              "Handler": "handler.getAllRoles",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs10.x",
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "AUTH0_ADMIN_CLIENT_ID": "AyBS8w5gRCvth0wcsWRUo8FoLrcrGCtx",
+                  "AUTH0_ADMIN_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
+                  "AUTH0_ADMIN_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----",
+                  "AUTH0_USER_CLIENT_ID": "fthCLdyXtBisLDNjLQeuJzakulS0MFYg",
+                  "AUTH0_USER_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
+                  "AUTH0_USER_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----"
+                }
+              }
+            },
+            "DependsOn": [
+              "GetAllRolesLogGroup",
               "IamRoleLambdaExecution"
             ]
           },
@@ -768,7 +790,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-recovery",
               "Handler": "handler.recovery",
@@ -804,7 +826,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-mediator",
               "Handler": "handler.mediator",
@@ -833,115 +855,7 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "PushSigninUserToSQSLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
-              },
-              "FunctionName": "serverless-user-management-dev-pushSigninUserToSQS",
-              "Handler": "handler.pushSigninUserToSQS",
-              "MemorySize": 1024,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              },
-              "Runtime": "nodejs10.x",
-              "Timeout": 6,
-              "Environment": {
-                "Variables": {
-                  "AUTH0_ADMIN_CLIENT_ID": "AyBS8w5gRCvth0wcsWRUo8FoLrcrGCtx",
-                  "AUTH0_ADMIN_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
-                  "AUTH0_ADMIN_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----",
-                  "AUTH0_USER_CLIENT_ID": "fthCLdyXtBisLDNjLQeuJzakulS0MFYg",
-                  "AUTH0_USER_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
-                  "AUTH0_USER_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----"
-                }
-              }
-            },
-            "DependsOn": [
-              "PushSigninUserToSQSLogGroup",
-              "IamRoleLambdaExecution"
-            ]
-          },
-          "PushUpdateProfileToSQSLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
-              },
-              "FunctionName": "serverless-user-management-dev-pushUpdateProfileToSQS",
-              "Handler": "handler.pushUpdateProfileToSQS",
-              "MemorySize": 1024,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              },
-              "Runtime": "nodejs10.x",
-              "Timeout": 6,
-              "Environment": {
-                "Variables": {
-                  "AUTH0_ADMIN_CLIENT_ID": "AyBS8w5gRCvth0wcsWRUo8FoLrcrGCtx",
-                  "AUTH0_ADMIN_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
-                  "AUTH0_ADMIN_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----",
-                  "AUTH0_USER_CLIENT_ID": "fthCLdyXtBisLDNjLQeuJzakulS0MFYg",
-                  "AUTH0_USER_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
-                  "AUTH0_USER_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----"
-                }
-              }
-            },
-            "DependsOn": [
-              "PushUpdateProfileToSQSLogGroup",
-              "IamRoleLambdaExecution"
-            ]
-          },
-          "GetProfileInfoLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z/serverless-user-management.zip"
-              },
-              "FunctionName": "serverless-user-management-dev-getProfileInfo",
-              "Handler": "handler.getProfileInfo",
-              "MemorySize": 1024,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              },
-              "Runtime": "nodejs10.x",
-              "Timeout": 6,
-              "Environment": {
-                "Variables": {
-                  "AUTH0_ADMIN_CLIENT_ID": "AyBS8w5gRCvth0wcsWRUo8FoLrcrGCtx",
-                  "AUTH0_ADMIN_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
-                  "AUTH0_ADMIN_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----",
-                  "AUTH0_USER_CLIENT_ID": "fthCLdyXtBisLDNjLQeuJzakulS0MFYg",
-                  "AUTH0_USER_DOMAIN": "https://dev-d9nf58as.eu.auth0.com/",
-                  "AUTH0_USER_CLIENT_PUBLIC_KEY": "-----BEGIN CERTIFICATE-----\r\nMIIDDTCCAfWgAwIBAgIJCdIBoNMgo3kHMA0GCSqGSIb3DQEBCwUAMCQxIjAgBgNV\r\nBAMTGWRldi1kOW5mNThhcy5ldS5hdXRoMC5jb20wHhcNMTkwNzE2MTAxNDA2WhcN\r\nMzMwMzI0MTAxNDA2WjAkMSIwIAYDVQQDExlkZXYtZDluZjU4YXMuZXUuYXV0aDAu\r\nY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqusNJHoVd4lsfh5r\r\n4coxUl6uTKRfmvPRhgn7Udt5zg/N02FFf3dn25LqQJICKL0GFrS5hZ5y97KA7hhM\r\nnO3X5XfC1XDotAr0eTdAtS8a0D5R+5JHrvkS7B1Ytl5WkdxrOa9QtjnCke6mqyxS\r\n4Tkc9UkNcEFntKW7PFn3NHpn33Ra1CEpl9enWFCAfgG+5DFbvloG83PWaWsB8jkf\r\nZMVcW0569s7u4GHKo4QruXlCQuWLk/D08WBsEsxOZ+fMoB1GZRnWGzUsP2MkTAED\r\nBrGYcUv63rsXlxkRGn7Va67rbwRfOGlMpbqVbBYToxpTVUthnv1e1lF4eNZath49\r\ncSrKTQIDAQABo0IwQDAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRuBI2PfKE1\r\nPOkEcnCMiMxuwMUeFzAOBgNVHQ8BAf8EBAMCAoQwDQYJKoZIhvcNAQELBQADggEB\r\nAA3PGseAwn/P6LXBhRDAa97kfbAG6UQvYty8L5gEAJCoAHPVDJZEzGxL7gY50e3E\r\nWNqh9VNk5pe67RMn+L/Lx18sLNv2gP4LHWHgk70Bt1UJlmz5Vy7q7Kn0abtsXtSY\r\nGd8atwwA6044IAso3KUd1SaUWhXyD7cFS2Wnan9K1Cpc+8IhrHarBTPi0hqBzh7F\r\n/okiWjttSSYaLBYvNUb4I9zrvqUkoeDx4cm3tXpbJL/3Y9h+i4f3w1ZUS6xVJNtY\r\n5xUdqDz5yZIMON9JykvfXACNadp7bl87LWXT1tZr/QuUIStL2xHrYHGZ1iM+MYUK\r\nXsTw0Z8TBf+J87y6K03iFQw=\r\n-----END CERTIFICATE-----"
-                }
-              }
-            },
-            "DependsOn": [
-              "GetProfileInfoLogGroup",
-              "IamRoleLambdaExecution"
-            ]
-          },
-          "ApiGatewayMethodPushcreateusertosqsOptions": {
+          "ApiGatewayMethodPushcreateroletosqsOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "AuthorizationType": "NONE",
@@ -983,7 +897,7 @@
               "ResourceId": {
                 "Fn::GetAtt": [
                   "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushcreateusertosqs"
+                  "Outputs.ApiGatewayResourcePushcreateroletosqs"
                 ]
               },
               "RestApiId": {
@@ -997,7 +911,7 @@
               "APINestedStack"
             ]
           },
-          "ApiGatewayMethodPushupdateusertosqsOptions": {
+          "ApiGatewayMethodPushupdateroletosqsOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "AuthorizationType": "NONE",
@@ -1039,7 +953,7 @@
               "ResourceId": {
                 "Fn::GetAtt": [
                   "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushupdateusertosqs"
+                  "Outputs.ApiGatewayResourcePushupdateroletosqs"
                 ]
               },
               "RestApiId": {
@@ -1053,7 +967,7 @@
               "APINestedStack"
             ]
           },
-          "ApiGatewayMethodPushdeleteusertosqsOptions": {
+          "ApiGatewayMethodPushdeleteroletosqsOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "AuthorizationType": "NONE",
@@ -1095,7 +1009,7 @@
               "ResourceId": {
                 "Fn::GetAtt": [
                   "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushdeleteusertosqs"
+                  "Outputs.ApiGatewayResourcePushdeleteroletosqs"
                 ]
               },
               "RestApiId": {
@@ -1109,7 +1023,7 @@
               "APINestedStack"
             ]
           },
-          "ApiGatewayMethodReaduserOptions": {
+          "ApiGatewayMethodReadroleOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "AuthorizationType": "NONE",
@@ -1151,7 +1065,63 @@
               "ResourceId": {
                 "Fn::GetAtt": [
                   "APINestedStack",
-                  "Outputs.ApiGatewayResourceReaduser"
+                  "Outputs.ApiGatewayResourceReadrole"
+                ]
+              },
+              "RestApiId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayRestApi"
+                ]
+              }
+            },
+            "DependsOn": [
+              "APINestedStack"
+            ]
+          },
+          "ApiGatewayMethodGetallrolesOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayResourceGetallroles"
                 ]
               },
               "RestApiId": {
@@ -1221,175 +1191,7 @@
               "APINestedStack"
             ]
           },
-          "ApiGatewayMethodPushsigninusertosqsOptions": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true,
-                    "method.response.header.Access-Control-Allow-Credentials": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
-                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushsigninusertosqs"
-                ]
-              },
-              "RestApiId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayRestApi"
-                ]
-              }
-            },
-            "DependsOn": [
-              "APINestedStack"
-            ]
-          },
-          "ApiGatewayMethodPushupdateprofiletosqsOptions": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true,
-                    "method.response.header.Access-Control-Allow-Credentials": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
-                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushupdateprofiletosqs"
-                ]
-              },
-              "RestApiId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayRestApi"
-                ]
-              }
-            },
-            "DependsOn": [
-              "APINestedStack"
-            ]
-          },
-          "ApiGatewayMethodGetprofileinfoOptions": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true,
-                    "method.response.header.Access-Control-Allow-Credentials": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'",
-                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayResourceGetprofileinfo"
-                ]
-              },
-              "RestApiId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayRestApi"
-                ]
-              }
-            },
-            "DependsOn": [
-              "APINestedStack"
-            ]
-          },
-          "ApiGatewayMethodPushcreateusertosqsPost": {
+          "ApiGatewayMethodPushcreateroletosqsPost": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "POST",
@@ -1397,7 +1199,7 @@
               "ResourceId": {
                 "Fn::GetAtt": [
                   "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushcreateusertosqs"
+                  "Outputs.ApiGatewayResourcePushcreateroletosqs"
                 ]
               },
               "RestApiId": {
@@ -1429,7 +1231,7 @@
                       ":lambda:path/2015-03-31/functions/",
                       {
                         "Fn::GetAtt": [
-                          "PushCreateUserToSQSLambdaFunction",
+                          "PushCreateRoleToSQSLambdaFunction",
                           "Arn"
                         ]
                       },
@@ -1588,7 +1390,7 @@
               "APINestedStack"
             ]
           },
-          "ApiGatewayMethodPushupdateusertosqsPost": {
+          "ApiGatewayMethodPushupdateroletosqsPost": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "POST",
@@ -1596,63 +1398,7 @@
               "ResourceId": {
                 "Fn::GetAtt": [
                   "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushupdateusertosqs"
-                ]
-              },
-              "RestApiId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayRestApi"
-                ]
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "CUSTOM",
-              "AuthorizerId": {
-                "Ref": "AdminUnderscoreauthorizerApiGatewayAuthorizer"
-              },
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "PushUpdateUserToSQSLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": []
-            },
-            "DependsOn": [
-              "AdminUnderscoreauthorizerApiGatewayAuthorizer",
-              "APINestedStack"
-            ]
-          },
-          "ApiGatewayMethodPushdeleteusertosqsPost": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "POST",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushdeleteusertosqs"
+                  "Outputs.ApiGatewayResourcePushupdateroletosqs"
                 ]
               },
               "RestApiId": {
@@ -1684,7 +1430,7 @@
                       ":lambda:path/2015-03-31/functions/",
                       {
                         "Fn::GetAtt": [
-                          "PushDeleteUserToSQSLambdaFunction",
+                          "PushUpdateRoleToSQSLambdaFunction",
                           "Arn"
                         ]
                       },
@@ -1843,7 +1589,206 @@
               "APINestedStack"
             ]
           },
-          "ApiGatewayMethodReaduserGet": {
+          "ApiGatewayMethodPushdeleteroletosqsPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayResourcePushdeleteroletosqs"
+                ]
+              },
+              "RestApiId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayRestApi"
+                ]
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "CUSTOM",
+              "AuthorizerId": {
+                "Ref": "AdminUnderscoreauthorizerApiGatewayAuthorizer"
+              },
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "PushDeleteRoleToSQSLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                },
+                "PassthroughBehavior": "NEVER",
+                "RequestTemplates": {
+                  "application/json": "\n    #set( $body = $input.json(\"$\") )\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  ",
+                  "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  "
+                },
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": 200,
+                    "SelectionPattern": "",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 400,
+                    "SelectionPattern": "[\\s\\S]*\\[400\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 401,
+                    "SelectionPattern": "[\\s\\S]*\\[401\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 403,
+                    "SelectionPattern": "[\\s\\S]*\\[403\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 404,
+                    "SelectionPattern": "[\\s\\S]*\\[404\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 422,
+                    "SelectionPattern": "[\\s\\S]*\\[422\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 500,
+                    "SelectionPattern": "[\\s\\S]*(Process\\s?exited\\s?before\\s?completing\\s?request|\\[500\\])[\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 502,
+                    "SelectionPattern": "[\\s\\S]*\\[502\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 504,
+                    "SelectionPattern": "([\\s\\S]*\\[504\\][\\s\\S]*)|(.*Task timed out after \\d+\\.\\d+ seconds$)",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  }
+                ]
+              },
+              "MethodResponses": [
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 200
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 400
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 401
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 403
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 404
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 422
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 500
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 502
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 504
+                }
+              ]
+            },
+            "DependsOn": [
+              "AdminUnderscoreauthorizerApiGatewayAuthorizer",
+              "APINestedStack"
+            ]
+          },
+          "ApiGatewayMethodReadroleGet": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "GET",
@@ -1851,7 +1796,7 @@
               "ResourceId": {
                 "Fn::GetAtt": [
                   "APINestedStack",
-                  "Outputs.ApiGatewayResourceReaduser"
+                  "Outputs.ApiGatewayResourceReadrole"
                 ]
               },
               "RestApiId": {
@@ -1883,7 +1828,7 @@
                       ":lambda:path/2015-03-31/functions/",
                       {
                         "Fn::GetAtt": [
-                          "ReadUserLambdaFunction",
+                          "ReadRoleLambdaFunction",
                           "Arn"
                         ]
                       },
@@ -1893,7 +1838,206 @@
                 },
                 "PassthroughBehavior": "NEVER",
                 "RequestTemplates": {
-                  "application/json": "{ \"userId\": \"$input.params(\"userId\")\" }",
+                  "application/json": "{ \"roleId\": \"$input.params(\"roleId\")\" }",
+                  "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  "
+                },
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": 200,
+                    "SelectionPattern": "",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 400,
+                    "SelectionPattern": "[\\s\\S]*\\[400\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 401,
+                    "SelectionPattern": "[\\s\\S]*\\[401\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 403,
+                    "SelectionPattern": "[\\s\\S]*\\[403\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 404,
+                    "SelectionPattern": "[\\s\\S]*\\[404\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 422,
+                    "SelectionPattern": "[\\s\\S]*\\[422\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 500,
+                    "SelectionPattern": "[\\s\\S]*(Process\\s?exited\\s?before\\s?completing\\s?request|\\[500\\])[\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 502,
+                    "SelectionPattern": "[\\s\\S]*\\[502\\][\\s\\S]*",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  },
+                  {
+                    "StatusCode": 504,
+                    "SelectionPattern": "([\\s\\S]*\\[504\\][\\s\\S]*)|(.*Task timed out after \\d+\\.\\d+ seconds$)",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'"
+                    },
+                    "ResponseTemplates": {}
+                  }
+                ]
+              },
+              "MethodResponses": [
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 200
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 400
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 401
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 403
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 404
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 422
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 500
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 502
+                },
+                {
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true
+                  },
+                  "ResponseModels": {},
+                  "StatusCode": 504
+                }
+              ]
+            },
+            "DependsOn": [
+              "AdminUnderscoreauthorizerApiGatewayAuthorizer",
+              "APINestedStack"
+            ]
+          },
+          "ApiGatewayMethodGetallrolesGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayResourceGetallroles"
+                ]
+              },
+              "RestApiId": {
+                "Fn::GetAtt": [
+                  "APINestedStack",
+                  "Outputs.ApiGatewayRestApi"
+                ]
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "CUSTOM",
+              "AuthorizerId": {
+                "Ref": "AdminUnderscoreauthorizerApiGatewayAuthorizer"
+              },
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "GetAllRolesLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                },
+                "PassthroughBehavior": "NEVER",
+                "RequestTemplates": {
+                  "application/json": "\n    #set( $body = $input.json(\"$\") )\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  ",
                   "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  "
                 },
                 "IntegrationResponses": [
@@ -2241,603 +2385,6 @@
               "APINestedStack"
             ]
           },
-          "ApiGatewayMethodPushsigninusertosqsPost": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "POST",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushsigninusertosqs"
-                ]
-              },
-              "RestApiId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayRestApi"
-                ]
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "CUSTOM",
-              "AuthorizerId": {
-                "Ref": "UserUnderscoreauthorizerApiGatewayAuthorizer"
-              },
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "PushSigninUserToSQSLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                },
-                "PassthroughBehavior": "NEVER",
-                "RequestTemplates": {
-                  "application/json": "\n    #set( $body = $input.json(\"$\") )\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  ",
-                  "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  "
-                },
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": 200,
-                    "SelectionPattern": "",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 400,
-                    "SelectionPattern": "[\\s\\S]*\\[400\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 401,
-                    "SelectionPattern": "[\\s\\S]*\\[401\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 403,
-                    "SelectionPattern": "[\\s\\S]*\\[403\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 404,
-                    "SelectionPattern": "[\\s\\S]*\\[404\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 422,
-                    "SelectionPattern": "[\\s\\S]*\\[422\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 500,
-                    "SelectionPattern": "[\\s\\S]*(Process\\s?exited\\s?before\\s?completing\\s?request|\\[500\\])[\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 502,
-                    "SelectionPattern": "[\\s\\S]*\\[502\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 504,
-                    "SelectionPattern": "([\\s\\S]*\\[504\\][\\s\\S]*)|(.*Task timed out after \\d+\\.\\d+ seconds$)",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  }
-                ]
-              },
-              "MethodResponses": [
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 200
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 400
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 401
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 403
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 404
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 422
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 500
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 502
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 504
-                }
-              ]
-            },
-            "DependsOn": [
-              "UserUnderscoreauthorizerApiGatewayAuthorizer",
-              "APINestedStack"
-            ]
-          },
-          "ApiGatewayMethodPushupdateprofiletosqsPost": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "POST",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayResourcePushupdateprofiletosqs"
-                ]
-              },
-              "RestApiId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayRestApi"
-                ]
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "CUSTOM",
-              "AuthorizerId": {
-                "Ref": "UserUnderscoreauthorizerApiGatewayAuthorizer"
-              },
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "PushUpdateProfileToSQSLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                },
-                "PassthroughBehavior": "NEVER",
-                "RequestTemplates": {
-                  "application/json": "\n    #set( $body = $input.json(\"$\") )\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  ",
-                  "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  "
-                },
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": 200,
-                    "SelectionPattern": "",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 400,
-                    "SelectionPattern": "[\\s\\S]*\\[400\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 401,
-                    "SelectionPattern": "[\\s\\S]*\\[401\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 403,
-                    "SelectionPattern": "[\\s\\S]*\\[403\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 404,
-                    "SelectionPattern": "[\\s\\S]*\\[404\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 422,
-                    "SelectionPattern": "[\\s\\S]*\\[422\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 500,
-                    "SelectionPattern": "[\\s\\S]*(Process\\s?exited\\s?before\\s?completing\\s?request|\\[500\\])[\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 502,
-                    "SelectionPattern": "[\\s\\S]*\\[502\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 504,
-                    "SelectionPattern": "([\\s\\S]*\\[504\\][\\s\\S]*)|(.*Task timed out after \\d+\\.\\d+ seconds$)",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  }
-                ]
-              },
-              "MethodResponses": [
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 200
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 400
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 401
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 403
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 404
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 422
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 500
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 502
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 504
-                }
-              ]
-            },
-            "DependsOn": [
-              "UserUnderscoreauthorizerApiGatewayAuthorizer",
-              "APINestedStack"
-            ]
-          },
-          "ApiGatewayMethodGetprofileinfoGet": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "GET",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayResourceGetprofileinfo"
-                ]
-              },
-              "RestApiId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayRestApi"
-                ]
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "CUSTOM",
-              "AuthorizerId": {
-                "Ref": "UserUnderscoreauthorizerApiGatewayAuthorizer"
-              },
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "GetProfileInfoLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                },
-                "PassthroughBehavior": "NEVER",
-                "RequestTemplates": {
-                  "application/json": "{ \"userId\": \"$input.params(\"userId\")\" }",
-                  "application/x-www-form-urlencoded": "\n    #define( $body )\n      {\n      #foreach( $token in $input.path('$').split('&') )\n        #set( $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size() )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0])) )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n          #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key) )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n    \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\",\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\n    #set( $map = $context.authorizer )\n    \"enhancedAuthContext\": $loop,\n\n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n    #set( $map = $context.identity )\n    \"identity\": $loop,\n\n    #set( $map = $stageVariables )\n    \"stageVariables\": $loop,\n\n    \"requestPath\": \"$context.resourcePath\"\n  }\n\n  "
-                },
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": 200,
-                    "SelectionPattern": "",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 400,
-                    "SelectionPattern": "[\\s\\S]*\\[400\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 401,
-                    "SelectionPattern": "[\\s\\S]*\\[401\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 403,
-                    "SelectionPattern": "[\\s\\S]*\\[403\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 404,
-                    "SelectionPattern": "[\\s\\S]*\\[404\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 422,
-                    "SelectionPattern": "[\\s\\S]*\\[422\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 500,
-                    "SelectionPattern": "[\\s\\S]*(Process\\s?exited\\s?before\\s?completing\\s?request|\\[500\\])[\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 502,
-                    "SelectionPattern": "[\\s\\S]*\\[502\\][\\s\\S]*",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  },
-                  {
-                    "StatusCode": 504,
-                    "SelectionPattern": "([\\s\\S]*\\[504\\][\\s\\S]*)|(.*Task timed out after \\d+\\.\\d+ seconds$)",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'"
-                    },
-                    "ResponseTemplates": {}
-                  }
-                ]
-              },
-              "MethodResponses": [
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 200
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 400
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 401
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 403
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 404
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 422
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 500
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 502
-                },
-                {
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true
-                  },
-                  "ResponseModels": {},
-                  "StatusCode": 504
-                }
-              ]
-            },
-            "DependsOn": [
-              "UserUnderscoreauthorizerApiGatewayAuthorizer",
-              "APINestedStack"
-            ]
-          },
           "AdminUnderscoreauthorizerApiGatewayAuthorizer": {
             "Type": "AWS::ApiGateway::Authorizer",
             "Properties": {
@@ -2874,43 +2421,7 @@
               "APINestedStack"
             ]
           },
-          "UserUnderscoreauthorizerApiGatewayAuthorizer": {
-            "Type": "AWS::ApiGateway::Authorizer",
-            "Properties": {
-              "AuthorizerResultTtlInSeconds": 0,
-              "IdentitySource": "method.request.header.Authorization",
-              "Name": "user_authorizer",
-              "RestApiId": {
-                "Fn::GetAtt": [
-                  "APINestedStack",
-                  "Outputs.ApiGatewayRestApi"
-                ]
-              },
-              "AuthorizerUri": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":apigateway:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":lambda:path/2015-03-31/functions/",
-                    "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-user_authorizer",
-                    "/invocations"
-                  ]
-                ]
-              },
-              "Type": "REQUEST"
-            },
-            "DependsOn": [
-              "APINestedStack"
-            ]
-          },
-          "ApiGatewayDeployment1564407622370": {
+          "ApiGatewayDeployment1564413780871": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -2922,22 +2433,18 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodPushcreateusertosqsOptions",
-              "ApiGatewayMethodPushupdateusertosqsOptions",
-              "ApiGatewayMethodPushdeleteusertosqsOptions",
-              "ApiGatewayMethodReaduserOptions",
+              "ApiGatewayMethodPushcreateroletosqsOptions",
+              "ApiGatewayMethodPushupdateroletosqsOptions",
+              "ApiGatewayMethodPushdeleteroletosqsOptions",
+              "ApiGatewayMethodReadroleOptions",
+              "ApiGatewayMethodGetallrolesOptions",
               "ApiGatewayMethodRecoveryOptions",
-              "ApiGatewayMethodPushsigninusertosqsOptions",
-              "ApiGatewayMethodPushupdateprofiletosqsOptions",
-              "ApiGatewayMethodGetprofileinfoOptions",
-              "ApiGatewayMethodPushcreateusertosqsPost",
-              "ApiGatewayMethodPushupdateusertosqsPost",
-              "ApiGatewayMethodPushdeleteusertosqsPost",
-              "ApiGatewayMethodReaduserGet",
+              "ApiGatewayMethodPushcreateroletosqsPost",
+              "ApiGatewayMethodPushupdateroletosqsPost",
+              "ApiGatewayMethodPushdeleteroletosqsPost",
+              "ApiGatewayMethodReadroleGet",
+              "ApiGatewayMethodGetallrolesGet",
               "ApiGatewayMethodRecoveryPost",
-              "ApiGatewayMethodPushsigninusertosqsPost",
-              "ApiGatewayMethodPushupdateprofiletosqsPost",
-              "ApiGatewayMethodGetprofileinfoGet",
               "APINestedStack"
             ]
           },
@@ -2959,102 +2466,102 @@
               "Enabled": "True"
             }
           },
-          "CommandCreateUserEventSourceMappingSQSCreateUserQueue": {
+          "CommandCreateRoleEventSourceMappingSQSCreateRoleQueue": {
             "Type": "AWS::Lambda::EventSourceMapping",
             "DependsOn": [
               "IamRoleLambdaExecution"
             ],
             "Properties": {
               "BatchSize": 10,
-              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:createUserQueue",
+              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:createRoleQueue",
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "CommandCreateUserLambdaFunction",
+                  "CommandCreateRoleLambdaFunction",
                   "Arn"
                 ]
               },
               "Enabled": "True"
             }
           },
-          "CommandUpdateUserEventSourceMappingSQSUpdateUserQueue": {
+          "CommandUpdateRoleEventSourceMappingSQSUpdateRoleQueue": {
             "Type": "AWS::Lambda::EventSourceMapping",
             "DependsOn": [
               "IamRoleLambdaExecution"
             ],
             "Properties": {
               "BatchSize": 10,
-              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:updateUserQueue",
+              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:updateRoleQueue",
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "CommandUpdateUserLambdaFunction",
+                  "CommandUpdateRoleLambdaFunction",
                   "Arn"
                 ]
               },
               "Enabled": "True"
             }
           },
-          "CommandDeleteUserEventSourceMappingSQSDeleteUserQueue": {
+          "CommandDeleteRoleEventSourceMappingSQSDeleteRoleQueue": {
             "Type": "AWS::Lambda::EventSourceMapping",
             "DependsOn": [
               "IamRoleLambdaExecution"
             ],
             "Properties": {
               "BatchSize": 10,
-              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:deleteUserQueue",
+              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:deleteRoleQueue",
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "CommandDeleteUserLambdaFunction",
+                  "CommandDeleteRoleLambdaFunction",
                   "Arn"
                 ]
               },
               "Enabled": "True"
             }
           },
-          "CreateUserEventSourceMappingSQSExecuteCreateUserQueue": {
+          "CreateRoleEventSourceMappingSQSExecuteCreateRoleQueue": {
             "Type": "AWS::Lambda::EventSourceMapping",
             "DependsOn": [
               "IamRoleLambdaExecution"
             ],
             "Properties": {
               "BatchSize": 10,
-              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:executeCreateUserQueue",
+              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:executeCreateRoleQueue",
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "CreateUserLambdaFunction",
+                  "CreateRoleLambdaFunction",
                   "Arn"
                 ]
               },
               "Enabled": "True"
             }
           },
-          "UpdateUserEventSourceMappingSQSExecuteUpdateUserQueue": {
+          "UpdateRoleEventSourceMappingSQSExecuteUpdateRoleQueue": {
             "Type": "AWS::Lambda::EventSourceMapping",
             "DependsOn": [
               "IamRoleLambdaExecution"
             ],
             "Properties": {
               "BatchSize": 10,
-              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue",
+              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:executeUpdateRoleQueue",
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "UpdateUserLambdaFunction",
+                  "UpdateRoleLambdaFunction",
                   "Arn"
                 ]
               },
               "Enabled": "True"
             }
           },
-          "DeleteUserEventSourceMappingSQSExecuteDeleteUserQueue": {
+          "DeleteRoleEventSourceMappingSQSExecuteDeleteRoleQueue": {
             "Type": "AWS::Lambda::EventSourceMapping",
             "DependsOn": [
               "IamRoleLambdaExecution"
             ],
             "Properties": {
               "BatchSize": 10,
-              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:executeDeleteUserQueue",
+              "EventSourceArn": "arn:aws:sqs:eu-central-1:582373673306:executeDeleteRoleQueue",
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "DeleteUserLambdaFunction",
+                  "DeleteRoleLambdaFunction",
                   "Arn"
                 ]
               },
@@ -3275,51 +2782,39 @@
                     "Outputs.ApiGatewayRestApi"
                   ]
                 },
-                "PushCreateUserToSQSLambdaFunctionArnParameter": {
+                "PushCreateRoleToSQSLambdaFunctionArnParameter": {
                   "Fn::GetAtt": [
-                    "PushCreateUserToSQSLambdaFunction",
+                    "PushCreateRoleToSQSLambdaFunction",
                     "Arn"
                   ]
                 },
-                "PushUpdateUserToSQSLambdaFunctionArnParameter": {
+                "PushUpdateRoleToSQSLambdaFunctionArnParameter": {
                   "Fn::GetAtt": [
-                    "PushUpdateUserToSQSLambdaFunction",
+                    "PushUpdateRoleToSQSLambdaFunction",
                     "Arn"
                   ]
                 },
-                "PushDeleteUserToSQSLambdaFunctionArnParameter": {
+                "PushDeleteRoleToSQSLambdaFunctionArnParameter": {
                   "Fn::GetAtt": [
-                    "PushDeleteUserToSQSLambdaFunction",
+                    "PushDeleteRoleToSQSLambdaFunction",
                     "Arn"
                   ]
                 },
-                "ReadUserLambdaFunctionArnParameter": {
+                "ReadRoleLambdaFunctionArnParameter": {
                   "Fn::GetAtt": [
-                    "ReadUserLambdaFunction",
+                    "ReadRoleLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "GetAllRolesLambdaFunctionArnParameter": {
+                  "Fn::GetAtt": [
+                    "GetAllRolesLambdaFunction",
                     "Arn"
                   ]
                 },
                 "RecoveryLambdaFunctionArnParameter": {
                   "Fn::GetAtt": [
                     "RecoveryLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "PushSigninUserToSQSLambdaFunctionArnParameter": {
-                  "Fn::GetAtt": [
-                    "PushSigninUserToSQSLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "PushUpdateProfileToSQSLambdaFunctionArnParameter": {
-                  "Fn::GetAtt": [
-                    "PushUpdateProfileToSQSLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "GetProfileInfoLambdaFunctionArnParameter": {
-                  "Fn::GetAtt": [
-                    "GetProfileInfoLambdaFunction",
                     "Arn"
                   ]
                 }
@@ -3332,7 +2827,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z",
+                    "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z",
                     "cloudformation-template-Permissions-nested-stack.json"
                   ]
                 ]
@@ -3340,14 +2835,12 @@
             },
             "DependsOn": [
               "APINestedStack",
-              "PushCreateUserToSQSLambdaFunction",
-              "PushUpdateUserToSQSLambdaFunction",
-              "PushDeleteUserToSQSLambdaFunction",
-              "ReadUserLambdaFunction",
-              "RecoveryLambdaFunction",
-              "PushSigninUserToSQSLambdaFunction",
-              "PushUpdateProfileToSQSLambdaFunction",
-              "GetProfileInfoLambdaFunction"
+              "PushCreateRoleToSQSLambdaFunction",
+              "PushUpdateRoleToSQSLambdaFunction",
+              "PushDeleteRoleToSQSLambdaFunction",
+              "ReadRoleLambdaFunction",
+              "GetAllRolesLambdaFunction",
+              "RecoveryLambdaFunction"
             ]
           },
           "APINestedStack": {
@@ -3362,7 +2855,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z",
+                    "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z",
                     "cloudformation-template-API-nested-stack.json"
                   ]
                 ]
@@ -3379,50 +2872,44 @@
                 "UserUnderscoreauthorizerLambdaFunctionParameter": {
                   "Ref": "UserUnderscoreauthorizerLambdaFunction"
                 },
-                "PushCreateUserToSQSLambdaFunctionParameter": {
-                  "Ref": "PushCreateUserToSQSLambdaFunction"
+                "PushCreateRoleToSQSLambdaFunctionParameter": {
+                  "Ref": "PushCreateRoleToSQSLambdaFunction"
                 },
-                "PushUpdateUserToSQSLambdaFunctionParameter": {
-                  "Ref": "PushUpdateUserToSQSLambdaFunction"
+                "PushUpdateRoleToSQSLambdaFunctionParameter": {
+                  "Ref": "PushUpdateRoleToSQSLambdaFunction"
                 },
-                "PushDeleteUserToSQSLambdaFunctionParameter": {
-                  "Ref": "PushDeleteUserToSQSLambdaFunction"
+                "PushDeleteRoleToSQSLambdaFunctionParameter": {
+                  "Ref": "PushDeleteRoleToSQSLambdaFunction"
                 },
-                "CommandCreateUserLambdaFunctionParameter": {
-                  "Ref": "CommandCreateUserLambdaFunction"
+                "CommandCreateRoleLambdaFunctionParameter": {
+                  "Ref": "CommandCreateRoleLambdaFunction"
                 },
-                "CommandUpdateUserLambdaFunctionParameter": {
-                  "Ref": "CommandUpdateUserLambdaFunction"
+                "CommandUpdateRoleLambdaFunctionParameter": {
+                  "Ref": "CommandUpdateRoleLambdaFunction"
                 },
-                "CommandDeleteUserLambdaFunctionParameter": {
-                  "Ref": "CommandDeleteUserLambdaFunction"
+                "CommandDeleteRoleLambdaFunctionParameter": {
+                  "Ref": "CommandDeleteRoleLambdaFunction"
                 },
-                "CreateUserLambdaFunctionParameter": {
-                  "Ref": "CreateUserLambdaFunction"
+                "CreateRoleLambdaFunctionParameter": {
+                  "Ref": "CreateRoleLambdaFunction"
                 },
-                "UpdateUserLambdaFunctionParameter": {
-                  "Ref": "UpdateUserLambdaFunction"
+                "UpdateRoleLambdaFunctionParameter": {
+                  "Ref": "UpdateRoleLambdaFunction"
                 },
-                "DeleteUserLambdaFunctionParameter": {
-                  "Ref": "DeleteUserLambdaFunction"
+                "DeleteRoleLambdaFunctionParameter": {
+                  "Ref": "DeleteRoleLambdaFunction"
                 },
-                "ReadUserLambdaFunctionParameter": {
-                  "Ref": "ReadUserLambdaFunction"
+                "ReadRoleLambdaFunctionParameter": {
+                  "Ref": "ReadRoleLambdaFunction"
+                },
+                "GetAllRolesLambdaFunctionParameter": {
+                  "Ref": "GetAllRolesLambdaFunction"
                 },
                 "RecoveryLambdaFunctionParameter": {
                   "Ref": "RecoveryLambdaFunction"
                 },
                 "MediatorLambdaFunctionParameter": {
                   "Ref": "MediatorLambdaFunction"
-                },
-                "PushSigninUserToSQSLambdaFunctionParameter": {
-                  "Ref": "PushSigninUserToSQSLambdaFunction"
-                },
-                "PushUpdateProfileToSQSLambdaFunctionParameter": {
-                  "Ref": "PushUpdateProfileToSQSLambdaFunction"
-                },
-                "GetProfileInfoLambdaFunctionParameter": {
-                  "Ref": "GetProfileInfoLambdaFunction"
                 }
               },
               "TemplateURL": {
@@ -3433,7 +2920,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z",
+                    "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z",
                     "cloudformation-template-Versions-nested-stack.json"
                   ]
                 ]
@@ -3442,21 +2929,19 @@
             "DependsOn": [
               "AdminUnderscoreauthorizerLambdaFunction",
               "UserUnderscoreauthorizerLambdaFunction",
-              "PushCreateUserToSQSLambdaFunction",
-              "PushUpdateUserToSQSLambdaFunction",
-              "PushDeleteUserToSQSLambdaFunction",
-              "CommandCreateUserLambdaFunction",
-              "CommandUpdateUserLambdaFunction",
-              "CommandDeleteUserLambdaFunction",
-              "CreateUserLambdaFunction",
-              "UpdateUserLambdaFunction",
-              "DeleteUserLambdaFunction",
-              "ReadUserLambdaFunction",
+              "PushCreateRoleToSQSLambdaFunction",
+              "PushUpdateRoleToSQSLambdaFunction",
+              "PushDeleteRoleToSQSLambdaFunction",
+              "CommandCreateRoleLambdaFunction",
+              "CommandUpdateRoleLambdaFunction",
+              "CommandDeleteRoleLambdaFunction",
+              "CreateRoleLambdaFunction",
+              "UpdateRoleLambdaFunction",
+              "DeleteRoleLambdaFunction",
+              "ReadRoleLambdaFunction",
+              "GetAllRolesLambdaFunction",
               "RecoveryLambdaFunction",
-              "MediatorLambdaFunction",
-              "PushSigninUserToSQSLambdaFunction",
-              "PushUpdateProfileToSQSLambdaFunction",
-              "GetProfileInfoLambdaFunction"
+              "MediatorLambdaFunction"
             ]
           }
         },
@@ -3471,7 +2956,7 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.AdminUnderscoreauthorizerLambdaVersionFv2mZfxdu7s2Dy4jjSXbsuUQ9c6xk2WVwnLkv81Ps"
+                "Outputs.AdminUnderscoreauthorizerLambdaVersionp6bbssI8LFZ6yWZOrJcxRYebaLS5eVeFuC4LBL5n0"
               ]
             }
           },
@@ -3480,97 +2965,106 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.UserUnderscoreauthorizerLambdaVersionGnzwRCBNB8v3q19a3c1iYVaUmXWd7zB2ZrCpZaBuAKw"
+                "Outputs.UserUnderscoreauthorizerLambdaVersionSaOrbF2ymUJsNXo2BiNPEmbrg281RZVKjZOy1YnDA"
               ]
             }
           },
-          "PushCreateUserToSQSLambdaFunctionQualifiedArn": {
+          "PushCreateRoleToSQSLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.PushCreateUserToSQSLambdaVersionHWpJENR9HRYj12Q0i4LHzzHQS7qgHZP2UpjiLVPg"
+                "Outputs.PushCreateRoleToSQSLambdaVersionrnl4nRUj2U1fcMxiZqxdAiTrX28IKsBcUVmbgMkyx74"
               ]
             }
           },
-          "PushUpdateUserToSQSLambdaFunctionQualifiedArn": {
+          "PushUpdateRoleToSQSLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.PushUpdateUserToSQSLambdaVersionDgBRq9aR1BL8aaJ39YyukonyrsrHKXsu8JsASd3bEw"
+                "Outputs.PushUpdateRoleToSQSLambdaVersionDlhZxpcEspQInBjhv7O9Mxj3WdpqqgVbqKSz2jqor1o"
               ]
             }
           },
-          "PushDeleteUserToSQSLambdaFunctionQualifiedArn": {
+          "PushDeleteRoleToSQSLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.PushDeleteUserToSQSLambdaVersionyG11bP9AfZEPU0ejeHevwRZZEwzDtfxI6TXCAMUX4uE"
+                "Outputs.PushDeleteRoleToSQSLambdaVersiongi9YxbkhzYAmarPBYj7uFXLbnCUOsJdMs2tHVKdbE"
               ]
             }
           },
-          "CommandCreateUserLambdaFunctionQualifiedArn": {
+          "CommandCreateRoleLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.CommandCreateUserLambdaVersionvSz4KJXafv86HPPBj7sUoELj7bCRfNV400D1io9SVQ"
+                "Outputs.CommandCreateRoleLambdaVersionpeM8RRrgun961FUqeZMWWYaL7CfZRGpM9wAvzx1l7Q"
               ]
             }
           },
-          "CommandUpdateUserLambdaFunctionQualifiedArn": {
+          "CommandUpdateRoleLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.CommandUpdateUserLambdaVersion4elc6dbx8Oj4rLMWLoj50qlejdZeTp0nr6z7BJEB4"
+                "Outputs.CommandUpdateRoleLambdaVersion4ykOLDGUX4aQ5YovYt7VgASafWeQ6OjEDSHXkZv8"
               ]
             }
           },
-          "CommandDeleteUserLambdaFunctionQualifiedArn": {
+          "CommandDeleteRoleLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.CommandDeleteUserLambdaVersion2CjP4Qin2DaH5f7dND42e9qxcnzIZE9FJJ2NXfJRDE"
+                "Outputs.CommandDeleteRoleLambdaVersionbjFFuGwiewJOc0OE4fPjiV8sICqiEANq4uZtcHyzDM4"
               ]
             }
           },
-          "CreateUserLambdaFunctionQualifiedArn": {
+          "CreateRoleLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.CreateUserLambdaVersionIXRzK2FqcPzWRGOZbQc91PHzD42LPon0CGPq4xdg"
+                "Outputs.CreateRoleLambdaVersionSlNeQgm119zCqzrZt2hYIJZFizLl2DcJGpFmpCx8"
               ]
             }
           },
-          "UpdateUserLambdaFunctionQualifiedArn": {
+          "UpdateRoleLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.UpdateUserLambdaVersion4utEAhnB7EGt195TZdO2Kx6woTt8fAg71Eigmjyo"
+                "Outputs.UpdateRoleLambdaVersionTdbxJAT98BbcbQMNkCrow1v9fhoM2kYcpx3uTGvh8"
               ]
             }
           },
-          "DeleteUserLambdaFunctionQualifiedArn": {
+          "DeleteRoleLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.DeleteUserLambdaVersionLTlW9nGCShdKCUUJZlfISTgU3ByjdtWdjD581rag"
+                "Outputs.DeleteRoleLambdaVersionFSmmGplxfQ5GYtfw5bn5z6rBW1VfldsCroF1K95l8"
               ]
             }
           },
-          "ReadUserLambdaFunctionQualifiedArn": {
+          "ReadRoleLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.ReadUserLambdaVersionSmTg8ZTrzz5FTR1NewckctBHK8TcrRbZm9CVI5ZpSg"
+                "Outputs.ReadRoleLambdaVersionjjMnGZ1Pahtv8itWYWvt350TzptpSEfOcQS7GpYAqVE"
+              ]
+            }
+          },
+          "GetAllRolesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Fn::GetAtt": [
+                "VersionsNestedStack",
+                "Outputs.GetAllRolesLambdaVersionnHzNJZluvafKG6NcufL7dOA2RfQQojqgpb58ScK8"
               ]
             }
           },
@@ -3579,7 +3073,7 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.RecoveryLambdaVersionpvIgLA05wTJaTr9Kt3FKFc47MDhAgZu5AIUajnY7So"
+                "Outputs.RecoveryLambdaVersion4AAXflfbQmAuHC2DklcBQHC6XD1tGG6jCbUyu6hE"
               ]
             }
           },
@@ -3588,34 +3082,7 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.MediatorLambdaVersionlGPBQkPx3fMupSjxQLkP0hr8GVQHdFK6UuMCRfO30s"
-              ]
-            }
-          },
-          "PushSigninUserToSQSLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Fn::GetAtt": [
-                "VersionsNestedStack",
-                "Outputs.PushSigninUserToSQSLambdaVersionpEFnl2UhUMdbp1n3i7wVtCkA5cy9oPOx1B6BAx1TJY"
-              ]
-            }
-          },
-          "PushUpdateProfileToSQSLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Fn::GetAtt": [
-                "VersionsNestedStack",
-                "Outputs.PushUpdateProfileToSQSLambdaVersionVdASMlELYh1hieOPzq73fa1VCYGj6peGQui8axzjLMY"
-              ]
-            }
-          },
-          "GetProfileInfoLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Fn::GetAtt": [
-                "VersionsNestedStack",
-                "Outputs.GetProfileInfoLambdaVersionApBKGKmWEIR2jsSyYFi7vmVmYFO3ze2H0FNwfrJSIgk"
+                "Outputs.MediatorLambdaVersionmde71RprHg1ySGxRj8tTlyyOfBINCmVPr2DlY18mA00"
               ]
             }
           },
@@ -3720,18 +3187,18 @@
         "runtime": "nodejs10.x",
         "vpc": {}
       },
-      "pushCreateUserToSQS": {
-        "handler": "handler.pushCreateUserToSQS",
+      "pushCreateRoleToSQS": {
+        "handler": "handler.pushCreateRoleToSQS",
         "events": [
           {
             "http": {
-              "path": "pushcreateusertosqs",
+              "path": "pushcreateroletosqs",
               "method": "post",
               "authorizer": {
                 "type": "request",
                 "name": "admin_authorizer",
                 "arn": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer",
-                "resultTtlInSeconds": 300,
+                "resultTtlInSeconds": 0,
                 "identitySource": "method.request.header.Authorization",
                 "claims": []
               },
@@ -3792,64 +3259,19 @@
             }
           }
         ],
-        "name": "serverless-user-management-dev-pushCreateUserToSQS",
+        "name": "serverless-user-management-dev-pushCreateRoleToSQS",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {}
       },
-      "pushUpdateUserToSQS": {
-        "handler": "handler.pushUpdateUserToSQS",
+      "pushUpdateRoleToSQS": {
+        "handler": "handler.pushUpdateRoleToSQS",
         "events": [
           {
             "http": {
-              "path": "pushupdateusertosqs",
-              "method": "post",
-              "authorizer": {
-                "type": "request",
-                "name": "admin_authorizer",
-                "arn": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer",
-                "resultTtlInSeconds": 0,
-                "identitySource": "method.request.header.Authorization",
-                "claims": []
-              },
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "POST"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "integration": "AWS_PROXY"
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-pushUpdateUserToSQS",
-        "package": {},
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "pushDeleteUserToSQS": {
-        "handler": "handler.pushDeleteUserToSQS",
-        "events": [
-          {
-            "http": {
-              "path": "pushdeleteusertosqs",
+              "path": "pushupdateroletosqs",
               "method": "post",
               "authorizer": {
                 "type": "request",
@@ -3884,121 +3306,174 @@
               },
               "response": {
                 "statusCodes": {
-                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateUserToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
+                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateRoleToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
                 }
               }
             }
           }
         ],
-        "name": "serverless-user-management-dev-pushDeleteUserToSQS",
+        "name": "serverless-user-management-dev-pushUpdateRoleToSQS",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs10.x",
         "vpc": {}
       },
-      "commandCreateUser": {
-        "handler": "handler.commandCreateUser",
-        "timeout": 10,
-        "events": [
-          {
-            "sqs": {
-              "arn": "arn:aws:sqs:eu-central-1:582373673306:createUserQueue"
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-commandCreateUser",
-        "package": {},
-        "memory": 1024,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "commandUpdateUser": {
-        "handler": "handler.commandUpdateUser",
-        "timeout": 10,
-        "events": [
-          {
-            "sqs": {
-              "arn": "arn:aws:sqs:eu-central-1:582373673306:updateUserQueue"
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-commandUpdateUser",
-        "package": {},
-        "memory": 1024,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "commandDeleteUser": {
-        "handler": "handler.commandDeleteUser",
-        "timeout": 10,
-        "events": [
-          {
-            "sqs": {
-              "arn": "arn:aws:sqs:eu-central-1:582373673306:deleteUserQueue"
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-commandDeleteUser",
-        "package": {},
-        "memory": 1024,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "createUser": {
-        "handler": "handler.createUser",
-        "events": [
-          {
-            "sqs": {
-              "arn": "arn:aws:sqs:eu-central-1:582373673306:executeCreateUserQueue"
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-createUser",
-        "package": {},
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "updateUser": {
-        "handler": "handler.updateUser",
-        "events": [
-          {
-            "sqs": {
-              "arn": "arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue"
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-updateUser",
-        "package": {},
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "deleteUser": {
-        "handler": "handler.deleteUser",
-        "events": [
-          {
-            "sqs": {
-              "arn": "arn:aws:sqs:eu-central-1:582373673306:executeDeleteUserQueue"
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-deleteUser",
-        "package": {},
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "readUser": {
-        "handler": "handler.readUser",
+      "pushDeleteRoleToSQS": {
+        "handler": "handler.pushDeleteRoleToSQS",
         "events": [
           {
             "http": {
-              "path": "readUser",
+              "path": "pushdeleteroletosqs",
+              "method": "post",
+              "authorizer": {
+                "type": "request",
+                "name": "admin_authorizer",
+                "arn": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer",
+                "resultTtlInSeconds": 0,
+                "identitySource": "method.request.header.Authorization",
+                "claims": []
+              },
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "integration": "AWS",
+              "request": {
+                "passThrough": "NEVER"
+              },
+              "response": {
+                "statusCodes": {
+                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateRoleToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
+                }
+              }
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-pushDeleteRoleToSQS",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "commandCreateRole": {
+        "handler": "handler.commandCreateRole",
+        "timeout": 10,
+        "events": [
+          {
+            "sqs": {
+              "arn": "arn:aws:sqs:eu-central-1:582373673306:createRoleQueue"
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-commandCreateRole",
+        "package": {},
+        "memory": 1024,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "commandUpdateRole": {
+        "handler": "handler.commandUpdateRole",
+        "timeout": 10,
+        "events": [
+          {
+            "sqs": {
+              "arn": "arn:aws:sqs:eu-central-1:582373673306:updateRoleQueue"
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-commandUpdateRole",
+        "package": {},
+        "memory": 1024,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "commandDeleteRole": {
+        "handler": "handler.commandDeleteRole",
+        "timeout": 10,
+        "events": [
+          {
+            "sqs": {
+              "arn": "arn:aws:sqs:eu-central-1:582373673306:deleteRoleQueue"
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-commandDeleteRole",
+        "package": {},
+        "memory": 1024,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "createRole": {
+        "handler": "handler.createRole",
+        "events": [
+          {
+            "sqs": {
+              "arn": "arn:aws:sqs:eu-central-1:582373673306:executeCreateRoleQueue"
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-createRole",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "updateRole": {
+        "handler": "handler.updateRole",
+        "events": [
+          {
+            "sqs": {
+              "arn": "arn:aws:sqs:eu-central-1:582373673306:executeUpdateRoleQueue"
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-updateRole",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "deleteRole": {
+        "handler": "handler.deleteRole",
+        "events": [
+          {
+            "sqs": {
+              "arn": "arn:aws:sqs:eu-central-1:582373673306:executeDeleteRoleQueue"
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-deleteRole",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "readRole": {
+        "handler": "handler.readRole",
+        "events": [
+          {
+            "http": {
+              "path": "readRole",
               "method": "get",
               "authorizer": {
                 "type": "request",
@@ -4030,19 +3505,72 @@
               "integration": "AWS",
               "request": {
                 "template": {
-                  "application/json": "{ \"userId\": \"$input.params(\"userId\")\" }"
+                  "application/json": "{ \"roleId\": \"$input.params(\"roleId\")\" }"
                 },
                 "passThrough": "NEVER"
               },
               "response": {
                 "statusCodes": {
-                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateUserToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
+                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateRoleToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
                 }
               }
             }
           }
         ],
-        "name": "serverless-user-management-dev-readUser",
+        "name": "serverless-user-management-dev-readRole",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs10.x",
+        "vpc": {}
+      },
+      "getAllRoles": {
+        "handler": "handler.getAllRoles",
+        "events": [
+          {
+            "http": {
+              "path": "getAllRoles",
+              "method": "get",
+              "authorizer": {
+                "type": "request",
+                "name": "admin_authorizer",
+                "arn": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer",
+                "resultTtlInSeconds": 0,
+                "identitySource": "method.request.header.Authorization",
+                "claims": []
+              },
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "integration": "AWS",
+              "request": {
+                "passThrough": "NEVER"
+              },
+              "response": {
+                "statusCodes": {
+                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateRoleToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
+                }
+              }
+            }
+          }
+        ],
+        "name": "serverless-user-management-dev-getAllRoles",
         "package": {},
         "memory": 1024,
         "timeout": 6,
@@ -4090,7 +3618,7 @@
               },
               "response": {
                 "statusCodes": {
-                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateUserToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
+                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateRoleToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
                 }
               }
             }
@@ -4110,168 +3638,6 @@
           }
         ],
         "name": "serverless-user-management-dev-mediator",
-        "package": {},
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "pushSigninUserToSQS": {
-        "handler": "handler.pushSigninUserToSQS",
-        "events": [
-          {
-            "http": {
-              "path": "pushsigninusertosqs",
-              "method": "post",
-              "authorizer": {
-                "type": "request",
-                "name": "user_authorizer",
-                "arn": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-user_authorizer",
-                "resultTtlInSeconds": 0,
-                "identitySource": "method.request.header.Authorization",
-                "claims": []
-              },
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "POST"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "integration": "AWS",
-              "request": {
-                "passThrough": "NEVER"
-              },
-              "response": {
-                "statusCodes": {
-                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateUserToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
-                }
-              }
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-pushSigninUserToSQS",
-        "package": {},
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "pushUpdateProfileToSQS": {
-        "handler": "handler.pushUpdateProfileToSQS",
-        "events": [
-          {
-            "http": {
-              "path": "pushupdateprofiletosqs",
-              "method": "post",
-              "authorizer": {
-                "type": "request",
-                "name": "user_authorizer",
-                "arn": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-user_authorizer",
-                "resultTtlInSeconds": 0,
-                "identitySource": "method.request.header.Authorization",
-                "claims": []
-              },
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "POST"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "integration": "AWS",
-              "request": {
-                "passThrough": "NEVER"
-              },
-              "response": {
-                "statusCodes": {
-                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateUserToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
-                }
-              }
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-pushUpdateProfileToSQS",
-        "package": {},
-        "memory": 1024,
-        "timeout": 6,
-        "runtime": "nodejs10.x",
-        "vpc": {}
-      },
-      "getProfileInfo": {
-        "handler": "handler.getProfileInfo",
-        "events": [
-          {
-            "http": {
-              "path": "getprofileinfo",
-              "method": "get",
-              "authorizer": {
-                "type": "request",
-                "name": "user_authorizer",
-                "arn": "arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-user_authorizer",
-                "resultTtlInSeconds": 0,
-                "identitySource": "method.request.header.Authorization",
-                "claims": []
-              },
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "GET"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "integration": "AWS",
-              "request": {
-                "template": {
-                  "application/json": "{ \"userId\": \"$input.params(\"userId\")\" }"
-                },
-                "passThrough": "NEVER"
-              },
-              "response": {
-                "statusCodes": {
-                  "$ref": "$[\"service\"][\"functions\"][\"pushCreateUserToSQS\"][\"events\"][0][\"http\"][\"response\"][\"statusCodes\"]"
-                }
-              }
-            }
-          }
-        ],
-        "name": "serverless-user-management-dev-getProfileInfo",
         "package": {},
         "memory": 1024,
         "timeout": 6,
@@ -4464,7 +3830,7 @@
     "artifact": "C:\\Users\\loren\\Desktop\\Stage\\event-driven\\serverless-user-management\\.serverless\\serverless-user-management.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-user-management/dev/1564407641756-2019-07-29T13:40:41.756Z",
+    "artifactDirectoryName": "serverless/serverless-user-management/dev/1564413803960-2019-07-29T15:23:23.960Z",
     "artifact": "serverless-user-management.zip"
   }
 }

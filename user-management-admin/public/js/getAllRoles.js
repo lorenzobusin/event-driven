@@ -21,7 +21,7 @@ function getAllRoles(elementId){
       }
       document.getElementById(elementId).innerHTML = getItems;
   }).catch(function(error){
-
+      
   });
 }
 

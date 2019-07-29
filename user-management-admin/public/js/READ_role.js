@@ -20,7 +20,8 @@ function addRow(n, d, a) { //attributes
     fetch(linkRoleAPI_GET + document.getElementById('READ_roleId').value.trim(), {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('id_token')
       }
     }).then(function(response){
         const responseJSON = response.json();
@@ -33,13 +34,13 @@ function addRow(n, d, a) { //attributes
 
         const parsedAuth = JSON.parse(parsedBody.Item.auth);
 
-        document.getElementById('messageSuccessREAD').style.color = 'green';
-        document.getElementById('messageSuccessREAD').innerHTML = 'Role read';
-
         document.getElementById('READ_roleId').value = "";
         document.getElementById("tableResult").style.visibility = "visible";
 
         addRow(parsedBody.Item.name, parsedBody.Item.desc, parsedAuth.Authorizations);
+    }).catch(function(error){
+        document.getElementById('messageSuccessREAD').style.color = 'red';
+        document.getElementById('messageSuccessREAD').innerHTML = 'Role not read';
     });
 
   });

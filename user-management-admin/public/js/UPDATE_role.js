@@ -11,8 +11,8 @@ updateRole.addEventListener('submit', function(e){
   fetch(linkUpdateRoleAPI_POST, {
     method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     },
 
     body: JSON.stringify({
@@ -21,13 +21,13 @@ updateRole.addEventListener('submit', function(e){
       "desc": document.getElementById('UPDATE_desc').value.trim(),
       "auth": document.getElementById('UPDATE_auth').value.trim()
     })
+  }).then(function(){
+      document.getElementById('UPDATE_roleId').value = "";
+      document.getElementById('UPDATE_name').value = "";
+      document.getElementById('UPDATE_desc').value = "";
+      resetAuth("UPDATE_auth", "ul-Auth");
+  }).catch(function(error){
+      document.getElementById('messageSuccessUPDATE').style.color = 'red';
+      document.getElementById('messageSuccessUPDATE').innerHTML = 'Role not updated';
   });
-
-  document.getElementById('messageSuccessUPDATE').style.color = 'green';
-  document.getElementById('messageSuccessUPDATE').innerHTML = 'Role updated';
-
-  document.getElementById('UPDATE_roleId').value = "";
-  document.getElementById('UPDATE_name').value = "";
-  document.getElementById('UPDATE_desc').value = "";
-  resetAuth("UPDATE_auth", "ul-Auth");
 });

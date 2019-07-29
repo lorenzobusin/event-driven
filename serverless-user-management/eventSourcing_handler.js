@@ -62,7 +62,6 @@ module.exports.recovery = (event, context, callback) => {
           if (a1 > b1) return 1;
           return 0;
         });
-        console.log(events);
         utils.asyncPushToExecutionQueue(events); 
         callback(null, "Recovering...");
       }

@@ -27,7 +27,8 @@ function addRow(fn, ln, d, r, g, e) { //attributes
     fetch(linkUserAPI_GET + document.getElementById('READ_userId').value.trim(), {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('id_token')
       }
     }).then(function(response){
         const responseJSON = response.json();
@@ -38,13 +39,13 @@ function addRow(fn, ln, d, r, g, e) { //attributes
         const parsedResponse = JSON.parse(stringedResponse);
         const parsedBody = JSON.parse(parsedResponse.body);
 
-        document.getElementById('messageSuccessREAD').style.color = 'green';
-        document.getElementById('messageSuccessREAD').innerHTML = 'User read';
-
         document.getElementById('READ_userId').value = "";
         document.getElementById("tableResult").style.visibility = "visible";
 
         addRow(parsedBody.Item.firstName, parsedBody.Item.lastName, parsedBody.Item.date, parsedBody.Item.role, parsedBody.Item.group, parsedBody.Item.email);
+    }).catch(function(error){
+        document.getElementById('messageSuccessREAD').style.color = 'red';
+        document.getElementById('messageSuccessREAD').innerHTML = 'User not read';
     });
 
   });

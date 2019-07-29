@@ -3,7 +3,8 @@ function getAllAuths(elementId){
     fetch(linkGetAllAuths_GET, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('id_token')
       }
     }).then(function(response){
         const responseJSON = response.json();
@@ -19,7 +20,8 @@ function getAllAuths(elementId){
           newListItem.innerHTML = '<input type="button" class="btn-addAuth" value="+" id="btn-auth-'+ i + '" onclick=\'addAuth("' + elementId + '", "' + parsedBody.Items[i].name + '", "btn-auth-' + i + '")\'/><label>' + parsedBody.Items[i].name + '</label>';
           document.getElementById("ul-Auth").appendChild(newListItem); // Append <li> to <ul>
         }
-    });
+    }).catch(function(error){
+  });
 
 }
 

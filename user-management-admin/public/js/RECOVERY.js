@@ -7,18 +7,17 @@ recovery.addEventListener('submit', function(e){
   fetch(linkRecovery_POST, {
     method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     },
 
     body: JSON.stringify({
       "timestamp": document.getElementById('RECOVERY_timestamp').value.trim()
     })
+  }).then(function(){
+      document.getElementById('RECOVERY_timestamp').value = "";
+  }).catch(function(error){
+      document.getElementById('messageSuccessRECOVERY').style.color = 'red';
+      document.getElementById('messageSuccessRECOVERY').innerHTML = 'Recovery error';
   });
-
-  document.getElementById('messageSuccessRECOVERY').style.color = 'green';
-  document.getElementById('messageSuccessRECOVERY').innerHTML = 'Recovery completed';
-
-  document.getElementById('RECOVERY_timestamp').value = "";
-  
 });

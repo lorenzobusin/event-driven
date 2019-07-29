@@ -6,8 +6,8 @@ deleteUser.addEventListener('submit', function(e){
   fetch(linkDeleteUserAPI_POST, {
     method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     },
 
     body: JSON.stringify({
@@ -15,7 +15,7 @@ deleteUser.addEventListener('submit', function(e){
     })
   });
 
-  document.getElementById('messageSuccessDELETE').style.color = 'green';
-  document.getElementById('messageSuccessDELETE').innerHTML = "User deleted";
+  //document.getElementById('messageSuccessDELETE').style.color = 'green';
+  //document.getElementById('messageSuccessDELETE').innerHTML = "User deleted";
   document.getElementById('DELETE_userId').value = "";
 });

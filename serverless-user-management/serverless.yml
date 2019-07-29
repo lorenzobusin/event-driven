@@ -10,9 +10,12 @@ custom:
     perType: true
   dotenv: 
     include:
-      - AUTH0_CLIENT_ID
-      - AUTH0_CLIENT_PUBLIC_KEY
-      - AUTH0_DOMAIN
+      - AUTH0_ADMIN_CLIENT_ID
+      - AUTH0_ADMIN_CLIENT_PUBLIC_KEY
+      - AUTH0_ADMIN_DOMAIN
+      - AUTH0_USER_CLIENT_ID
+      - AUTH0_USER_CLIENT_PUBLIC_KEY
+      - AUTH0_USER_DOMAIN
 provider:
   name: aws
   runtime: nodejs10.x
@@ -152,6 +155,8 @@ resources:
       
 functions:
 
+  # ------------------------------- AUTHORIZER FUNCTIONS ------------------------------- #
+
   admin_authorizer:
     handler: handler.admin_authorizer
     cors: true
@@ -160,97 +165,9 @@ functions:
     handler: handler.user_authorizer
     cors: true
 
-  pushCreateUserToSQS: 
-    handler: handler.pushCreateUserToSQS 
-    events: 
-      - http:
-          path: /pushcreateusertosqs
-          method: post
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
-            type: request
-          cors: true
-          integration: lambda
+  # ------------------------------- USER FUNCTIONS ------------------------------- #
 
-  pushUpdateUserToSQS: 
-    handler: handler.pushUpdateUserToSQS 
-    events: 
-      - http:
-          path: /pushupdateusertosqs
-          method: post
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-
-  pushDeleteUserToSQS: 
-    handler: handler.pushDeleteUserToSQS 
-    events: 
-      - http:
-          path: /pushdeleteusertosqs
-          method: post
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
-
-  commandCreateUser:
-    handler: handler.commandCreateUser
-    timeout: 10
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:createUserQueue #set ARN of an existing queue 
-
-  commandUpdateUser:
-    handler: handler.commandUpdateUser
-    timeout: 10
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:updateUserQueue
-          
-  commandDeleteUser:
-    handler: handler.commandDeleteUser
-    timeout: 10
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:deleteUserQueue 
-
-  createUser:
-    handler: handler.createUser
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateUserQueue
-
-  updateUser:
-    handler: handler.updateUser
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateUserQueue
-
-  deleteUser: 
-    handler: handler.deleteUser
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteUserQueue
-
-  readUser: 
-    handler: handler.readUser
-    events: 
-      - http: 
-          path: /readUser
-          method: get
-          #authorizer: 
-            #arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
-            #type: request
-            #resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
-          request:
-            template:
-              application/json: '{ "userId": "$input.params("userId")" }'
+  
 
   # ------------------------------- EVENT SOURCING FUNCTIONS ------------------------------- #
 
@@ -275,47 +192,7 @@ functions:
 
   # ------------------------------- USER APP FUNCTIONS ------------------------------- #
 
-  pushSigninUserToSQS: 
-    handler: handler.pushSigninUserToSQS 
-    events: 
-      - http:
-          path: /pushsigninusertosqs
-          method: post
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-user_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
 
-  pushUpdateProfileToSQS: 
-    handler: handler.pushUpdateProfileToSQS 
-    events: 
-      - http:
-          path: /pushupdateprofiletosqs
-          method: post
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-user_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
-
-  getProfileInfo: 
-    handler: handler.getProfileInfo
-    events: 
-      - http: 
-          path: /getprofileinfo
-          method: get
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-user_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
-          request:
-            template:
-              application/json: '{ "userId": "$input.params("userId")" }'
 
               
 

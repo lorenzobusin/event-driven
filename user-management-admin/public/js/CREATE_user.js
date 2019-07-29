@@ -3,38 +3,41 @@
 const createUser = document.getElementById('CREATE_USER');
 createUser.addEventListener('submit', function(e){
   e.preventDefault();
+
+  if(!document.getElementById('CREATE_role').value)
+    var roleValue = "undefined";
+  else
+    var roleValue = document.getElementById('CREATE_role').value;
+
+  if(!document.getElementById('CREATE_group').value)
+    var groupValue = "undefined";
+  else
+    var groupValue = document.getElementById('CREATE_group').value;
+
   fetch(linkCreateUserAPI_POST, {
     method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     },
 
     body: JSON.stringify({
-      "userId": document.getElementById('CREATE_userId').value.trim().substr(6),
+      "userId": document.getElementById('CREATE_userId').value.trim(),
       "firstName": document.getElementById('CREATE_firstName').value.trim(),
       "lastName": document.getElementById('CREATE_lastName').value.trim(),
       "date": document.getElementById('CREATE_date').value.trim(),
-      "role": document.getElementById('CREATE_role').value,
-      "group": document.getElementById('CREATE_group').value,
+      "role": roleValue,
+      "group": groupValue,
       "email": document.getElementById('CREATE_email').value.trim()
     })
-  }).then(function(response){
-        const responseJSON = response.json();
-        return responseJSON;
-  }).then(function(data){;
-
-    console.log(JSON.stringify(data));
-    document.getElementById('messageSuccessCREATE').style.color = 'green';
-    document.getElementById('messageSuccessCREATE').innerHTML = 'User created';
-
-    document.getElementById('CREATE_userId').value = "";
-    document.getElementById('CREATE_firstName').value = "";
-    document.getElementById('CREATE_lastName').value = "";
-    document.getElementById('CREATE_date').value = "";
-    document.getElementById('CREATE_email').value = "";
+  }).catch(function(error){
+      document.getElementById('messageSuccessCREATE').style.color = 'red';
+      document.getElementById('messageSuccessCREATE').innerHTML = 'User not created';
   });
 
-  //document.getElementById('messageSuccessCREATE').style.color = 'red';
-  //document.getElementById('messageSuccessCREATE').innerHTML = 'User not created';
+  document.getElementById('CREATE_userId').value = "";
+  document.getElementById('CREATE_firstName').value = "";
+  document.getElementById('CREATE_lastName').value = "";
+  document.getElementById('CREATE_date').value = "";
+  document.getElementById('CREATE_email').value = "";
 });

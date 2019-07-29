@@ -1,12 +1,9 @@
 module.exports.pushCreateUserToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
-  
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
-      MessageBody: JSON.stringify(parsedEvent),
+      MessageBody: JSON.stringify(event),
       QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createUserQueue"
   };
 
@@ -33,12 +30,9 @@ module.exports.pushCreateUserToSQS = async (event, context, callback) => {
 module.exports.pushUpdateUserToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
-  
-  const stringedEvent = JSON.stringify(event);
-  const parsedEvent = JSON.parse(stringedEvent);
 
   const params = {
-    MessageBody: JSON.stringify(parsedEvent),
+    MessageBody: JSON.stringify(event),
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateUserQueue"
   };
 
@@ -65,10 +59,9 @@ module.exports.pushUpdateUserToSQS = async (event, context, callback) => {
 module.exports.pushDeleteUserToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
-  const stringedEvent = JSON.stringify(event);
 
   const params = {
-    MessageBody: stringedEvent,
+    MessageBody: JSON.stringify(event),
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/deleteUserQueue"
   };
 
@@ -99,7 +92,6 @@ module.exports.commandCreateUser = async (event, context, callback) => {
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
-  //const eventToCheck = JSON.parse(bodyParsed);
 
   const checkIdParams = {
     TableName: 'user',
@@ -138,8 +130,9 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed.body);
-  const eventToCheck = JSON.parse(stringedBody);
-  //const eventToCheck = JSON.parse(bodyParsed);
+  var eventToCheck = JSON.parse(stringedBody);
+  if(!eventToCheck.userId)
+    eventToCheck = JSON.parse(eventToCheck);
 
   const checkEmailParams = {
     TableName: 'user',
@@ -169,7 +162,6 @@ module.exports.commandDeleteUser = async (event, context, callback) => {
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
-  //const eventToCheck = JSON.parse(bodyParsed);
   
   if(eventToCheck.userId == "" )
     callback(null, "Empty attribute");
@@ -423,13 +415,4 @@ module.exports.getProfileInfo = (event, context, callback) => {
     }
   });
 };
-
-
-
-
-
-
-
-
-
 

@@ -1,13 +1,13 @@
-//UPDATE
+//SIGNIN
 
 const signinUser = document.getElementById('SIGNIN_USER');
 signinUser.addEventListener('submit', function(e){
   e.preventDefault();
-  fetch(linkCreateUserAPI_POST, {
+  fetch(linkSigninUserAPI_POST, {
     method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     },
 
     body: JSON.stringify({

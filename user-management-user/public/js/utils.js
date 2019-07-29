@@ -1,7 +1,7 @@
 //define API link
-const linkCreateUserAPI_POST = "https://njy6q7lc8a.execute-api.eu-central-1.amazonaws.com/dev/pushcreateusertosqs";
-const linkUpdateUserAPI_POST = "https://69plnh6488.execute-api.eu-central-1.amazonaws.com/dev/pushupdateusertosqs";
-const linkReadUserAPI_GET = "https://69plnh6488.execute-api.eu-central-1.amazonaws.com/dev/readUser?userId=";
+const linkSigninUserAPI_POST = "https://vd1uu19ije.execute-api.eu-central-1.amazonaws.com/dev/pushsigninusertosqs";
+const linkUpdateProfileAPI_POST = "https://vd1uu19ije.execute-api.eu-central-1.amazonaws.com/dev/pushupdateprofiletosqs";
+const linkGetProfileInfoAPI_GET = "https://vd1uu19ije.execute-api.eu-central-1.amazonaws.com/dev/getprofileinfo?userId=";
 
 
 function setUserId(auth0Id){

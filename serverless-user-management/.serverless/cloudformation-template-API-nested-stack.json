@@ -3,6 +3,86 @@
   "Description": "APINestedStack nested stack",
   "Parameters": {},
   "Resources": {
+    "ApiGatewayResourceGetprofileinfo": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "getprofileinfo",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushcreateusertosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "pushcreateusertosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushdeleteusertosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "pushdeleteusertosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushsigninusertosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "pushsigninusertosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      },
+      "DependsOn": []
+    },
+    "ApiGatewayResourcePushupdateprofiletosqs": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "pushupdateprofiletosqs",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      },
+      "DependsOn": []
+    },
     "ApiGatewayResourcePushupdateusertosqs": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -35,6 +115,22 @@
       },
       "DependsOn": []
     },
+    "ApiGatewayResourceRecovery": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "recovery",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      },
+      "DependsOn": []
+    },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
@@ -54,14 +150,44 @@
         "Ref": "ApiGatewayRestApi"
       }
     },
-    "ApiGatewayResourceReaduser": {
+    "ApiGatewayResourcePushcreateusertosqs": {
       "Value": {
-        "Ref": "ApiGatewayResourceReaduser"
+        "Ref": "ApiGatewayResourcePushcreateusertosqs"
       }
     },
     "ApiGatewayResourcePushupdateusertosqs": {
       "Value": {
         "Ref": "ApiGatewayResourcePushupdateusertosqs"
+      }
+    },
+    "ApiGatewayResourcePushdeleteusertosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushdeleteusertosqs"
+      }
+    },
+    "ApiGatewayResourceReaduser": {
+      "Value": {
+        "Ref": "ApiGatewayResourceReaduser"
+      }
+    },
+    "ApiGatewayResourceRecovery": {
+      "Value": {
+        "Ref": "ApiGatewayResourceRecovery"
+      }
+    },
+    "ApiGatewayResourcePushsigninusertosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushsigninusertosqs"
+      }
+    },
+    "ApiGatewayResourcePushupdateprofiletosqs": {
+      "Value": {
+        "Ref": "ApiGatewayResourcePushupdateprofiletosqs"
+      }
+    },
+    "ApiGatewayResourceGetprofileinfo": {
+      "Value": {
+        "Ref": "ApiGatewayResourceGetprofileinfo"
       }
     }
   }

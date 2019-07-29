@@ -1,4 +1,4 @@
-module.exports.authorize = (event, context, callback) => {
+module.exports.user_authorizer = (event, context, callback) => {
     const jwt = require('jsonwebtoken');
     const utils = require('./utils.js');
     const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID; //get variables from environment

@@ -14,7 +14,7 @@ updateProfile.addEventListener('submit', function(e){
   else
     var groupValue = document.getElementById('PROFILE_group').value;
 
-  fetch(linkUpdateUserAPI_POST, {
+  fetch(linkUpdateProfileAPI_POST, {
     method: "post",
     headers: {
       'Content-Type': 'application/json',
@@ -30,17 +30,5 @@ updateProfile.addEventListener('submit', function(e){
       "group": groupValue,
       "email": document.getElementById('PROFILE_email').value.trim()
     })
-  }).then(function(response){
-      const responseJSON = response.json();
-      return responseJSON;
-  }).then(function(data){
-      try{
-        const stringedResponse = JSON.stringify(data);
-        console.log(stringedResponse);
-      }
-      catch(e){
-        console.log(e);
-        //window.location.href = '/signin';
-      };
   });
 });

@@ -1,7 +1,6 @@
-/*module.exports.pushCreateUserToSQS = (event, context, callback) => {
+module.exports.pushCreateUserToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
-  const utils = require('./utils.js');
   
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
@@ -11,16 +10,26 @@
       QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createUserQueue"
   };
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "User event pushed to SQS");
-  });  
+  try{
+    const res = await SQS.sendMessage(params).promise();
+    return callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify(res)
+    });
+  }
+  catch(error){
+    console.log(error);
+    return callback(null, {
+      statusCode: 500
+    });
+  } 
 };
-*/
+
 module.exports.pushUpdateUserToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
@@ -35,7 +44,7 @@ module.exports.pushUpdateUserToSQS = async (event, context, callback) => {
 
   try{
     const res = await SQS.sendMessage(params).promise();
-    return {
+    return callback(null, {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
@@ -43,19 +52,17 @@ module.exports.pushUpdateUserToSQS = async (event, context, callback) => {
         'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify(res)
-    }
+    });
   }
-  catch(e){
-    console.log(e);
-    return {
+  catch(error){
+    console.log(error);
+    return callback(null, {
       statusCode: 500
-    }
-  }
+    });
+  } 
+};
 
-  
-};/*
-
-module.exports.pushDeleteUserToSQS = (event, context, callback) => {
+module.exports.pushDeleteUserToSQS = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
   const stringedEvent = JSON.stringify(event);
@@ -65,14 +72,24 @@ module.exports.pushDeleteUserToSQS = (event, context, callback) => {
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/deleteUserQueue"
   };
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "User event pushed to SQS")
-  });
+  try{
+    const res = await SQS.sendMessage(params).promise();
+    return callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify(res)
+    });
+  }
+  catch(error){
+    console.log(error);
+    return callback(null, {
+      statusCode: 500
+    });
+  } 
 };
 
 module.exports.commandCreateUser = async (event, context, callback) => {
@@ -80,16 +97,16 @@ module.exports.commandCreateUser = async (event, context, callback) => {
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
-  const stringedBody = JSON.stringify(eventParsed);
-  const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
+  const stringedBody = JSON.stringify(eventParsed.body);
+  const eventToCheck = JSON.parse(stringedBody);
+  //const eventToCheck = JSON.parse(bodyParsed);
 
   const checkIdParams = {
     TableName: 'user',
     ProjectionExpression: "userId",
     FilterExpression: "userId = :checkId",
     ExpressionAttributeValues: {
-        ":checkId": check.userId
+        ":checkId": eventToCheck.userId
     }
   };
 
@@ -100,65 +117,64 @@ module.exports.commandCreateUser = async (event, context, callback) => {
     ProjectionExpression: "email",
     FilterExpression: "email = :checkEmail",
     ExpressionAttributeValues: {
-        ":checkEmail": check.email
+        ":checkEmail": eventToCheck.email
     }
   };
 
   const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
   
-  if((check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (userIdAlreadyExists) || (emailAlreadyExists)){
+  if((eventToCheck.firstName == "" || eventToCheck.lastName == "" || eventToCheck.date == "" || eventToCheck.role == "" || eventToCheck.group == "") || (userIdAlreadyExists) || (emailAlreadyExists)){
     callback(null, "Email/userId already exists or empty attributes");
   }
   else{
-    console.log("user stored");
-    utils.storeEvent("user", "executeCreateUserQueue", bodyParsed.body);
+    utils.storeEvent("user", "executeCreateUserQueue", eventToCheck);
     callback(null, "User event stored");
   }
 };
-*/
+
 module.exports.commandUpdateUser = async (event, context, callback) => {
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed.body);
-  const bodyParsed = JSON.parse(stringedBody);
-  const check = JSON.parse(bodyParsed);
+  const eventToCheck = JSON.parse(stringedBody);
+  //const eventToCheck = JSON.parse(bodyParsed);
 
   const checkEmailParams = {
     TableName: 'user',
     ProjectionExpression: "email, userId",
     FilterExpression: "email=:checkEmail and userId<>:checkUserId",
     ExpressionAttributeValues: {
-        ":checkEmail": check.email,
-        ":checkUserId": check.userId
+        ":checkEmail": eventToCheck.email,
+        ":checkUserId": eventToCheck.userId
     }
   };
   
   const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
   
-  if((check.userId == "" || check.firstName == "" || check.lastName == "" || check.date == "" || check.role == "" || check.group == "") || (emailAlreadyExists)){
+  if((eventToCheck.userId == "" || eventToCheck.firstName == "" || eventToCheck.lastName == "" || eventToCheck.date == "" || eventToCheck.role == "" || eventToCheck.group == "") || (emailAlreadyExists)){
     callback(null, "Email/userId already exists or empty attributes");
   }
   else{
-    utils.storeEvent("user", "executeUpdateUserQueue", check);
+    utils.storeEvent("user", "executeUpdateUserQueue", eventToCheck);
     callback(null, "User event stored");
   }
-};/*
+};
 
-module.exports.commandDeleteUser = (event, context, callback) => {
+module.exports.commandDeleteUser = async (event, context, callback) => {
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
-  const stringedBody = JSON.stringify(eventParsed);
-  const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
+  const stringedBody = JSON.stringify(eventParsed.body);
+  const eventToCheck = JSON.parse(stringedBody);
+  //const eventToCheck = JSON.parse(bodyParsed);
   
-  if(check.userId == "" )
+  if(eventToCheck.userId == "" )
     callback(null, "Empty attribute");
   else{
-    utils.storeEvent("user", "executeDeleteUserQueue", bodyParsed.body);
+    utils.storeEvent("user", "executeDeleteUserQueue", eventToCheck);
     callback(null, "User event stored");
   }
 };
@@ -184,7 +200,7 @@ module.exports.createUser = async (event, context, callback) => {
       callback(null, "User created");
   }).promise();
 };
-*/
+
 module.exports.updateUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -224,7 +240,7 @@ module.exports.updateUser = async (event, context, callback) => {
   }).promise();
 };
 
-/*module.exports.deleteUser = async (event, context, callback) => {
+module.exports.deleteUser = async (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -251,7 +267,7 @@ module.exports.updateUser = async (event, context, callback) => {
       callback(null, "User deleted")
   }).promise();
 };
-*/
+
 //READ MODE LAMBDA
 
 module.exports.readUser = (event, context, callback) => {
@@ -297,6 +313,119 @@ module.exports.readUser = (event, context, callback) => {
     }
   });
 };
+
+
+//USER APP
+module.exports.pushSigninUserToSQS = async (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const SQS = new AWS.SQS();
+  
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+
+  const params = {
+      MessageBody: JSON.stringify(parsedEvent),
+      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createUserQueue"
+  };
+
+  try{
+    const res = await SQS.sendMessage(params).promise();
+    return callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify(res)
+    });
+  }
+  catch(error){
+    console.log(error);
+    return callback(null, {
+      statusCode: 500
+    });
+  } 
+};
+
+module.exports.pushUpdateProfileToSQS = async (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const SQS = new AWS.SQS();
+  
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+
+  const params = {
+    MessageBody: JSON.stringify(parsedEvent),
+    QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateUserQueue"
+  };
+
+  try{
+    const res = await SQS.sendMessage(params).promise();
+    return callback(null, {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify(res)
+    });
+  }
+  catch(error){
+    console.log(error);
+    return callback(null, {
+      statusCode: 500
+    });
+  } 
+};
+
+module.exports.getProfileInfo = (event, context, callback) => {
+  const AWS = require('aws-sdk');
+  const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+  const stringedEvent = JSON.stringify(event);
+  const parsedEvent = JSON.parse(stringedEvent);
+
+  const params = {
+    TableName: 'user',
+    Key: {
+      "userId": parsedEvent.userId
+    },
+    KeyConditionExpression: "userId = :id",
+    ExpressionAttributeValues: {
+        ":id": parsedEvent.userId
+    }
+  };
+
+  dynamoDb.get(params, (err, data) => {
+    const stringedData = JSON.stringify(data);
+    if (err){
+      console.log(err);
+      callback(null, err);
+    }
+    else{
+      if(data.Count == 0){
+        callback(null, "User not found");
+      }
+      else{
+        const response = {
+          statusCode: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true
+          },
+          body: stringedData
+        };
+        callback(null, response);
+      }      
+    }
+  });
+};
+
+
+
 
 
 

@@ -54,9 +54,13 @@ html
                 img(src=user.picture)
                 br
                 span #{user.emails[0].value}
+              script(type='text/javascript').
+                createSession('#{user.id_token}');
             else
               .dropdown
                 a.dropitem(id="qsLoginBtn" href="/login") Login
+              script(type='text/javascript').
+                destroySession();
     .row.form-section
       form#UPDATE_USER.form.col-md-4
         .form-group

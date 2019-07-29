@@ -1,7 +1,7 @@
   //READ
 function getUser(userId, pageName){
   const dynamoDB_userId = userId.trim().substr(6);
-  fetch(linkReadUserAPI_GET + dynamoDB_userId, {
+  fetch(linkGetProfileInfoAPI_GET + dynamoDB_userId, {
     method: "GET",
     headers: {
       'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ function getUser(userId, pageName){
         const parsedResponse = JSON.parse(stringedResponse);
         const parsedBody = JSON.parse(parsedResponse.body);
         if(pageName == 'index'){
-          setTimeout(function(){ window.location.href = '/profile'; }, 3000);
+          setTimeout(function(){ window.location.href = '/profile'; }, 4000);
         }
         else if(pageName == 'profile'){
           document.getElementById('PROFILE_userId').innerHTML = parsedBody.Item.userId;
@@ -47,8 +47,7 @@ function getUser(userId, pageName){
         }
       }
       catch(e){
-        console.log(e);
-        //window.location.href = '/signin';
+        window.location.href = '/signin';
       }
   });
 };

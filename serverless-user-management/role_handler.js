@@ -126,7 +126,7 @@ module.exports.commandUpdateRole = async (event, context, callback) => {
   }
 };
 
-module.exports.commandDeleteRole = (event, context, callback) => {
+module.exports.commandDeleteRole = async (event, context, callback) => {
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS

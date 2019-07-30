@@ -179,7 +179,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564473570835-2019-07-30T07:59:30.835Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564493181513-2019-07-30T13:26:21.513Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-admin_authorizer",
               "Handler": "handler.admin_authorizer",
@@ -215,7 +215,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564473570835-2019-07-30T07:59:30.835Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564493181513-2019-07-30T13:26:21.513Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-user_authorizer",
               "Handler": "handler.user_authorizer",
@@ -251,7 +251,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564473570835-2019-07-30T07:59:30.835Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564493181513-2019-07-30T13:26:21.513Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-recovery",
               "Handler": "handler.recovery",
@@ -287,7 +287,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-user-management/dev/1564473570835-2019-07-30T07:59:30.835Z/serverless-user-management.zip"
+                "S3Key": "serverless/serverless-user-management/dev/1564493181513-2019-07-30T13:26:21.513Z/serverless-user-management.zip"
               },
               "FunctionName": "serverless-user-management-dev-mediator",
               "Handler": "handler.mediator",
@@ -607,7 +607,7 @@
               "APINestedStack"
             ]
           },
-          "ApiGatewayDeployment1564473549944": {
+          "ApiGatewayDeployment1564493161547": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -846,25 +846,6 @@
             },
             "DependsOn": []
           },
-          "APINestedStack": {
-            "Type": "AWS::CloudFormation::Stack",
-            "Properties": {
-              "Parameters": {},
-              "TemplateURL": {
-                "Fn::Join": [
-                  "/",
-                  [
-                    "https://s3.eu-central-1.amazonaws.com",
-                    {
-                      "Ref": "ServerlessDeploymentBucket"
-                    },
-                    "serverless/serverless-user-management/dev/1564473570835-2019-07-30T07:59:30.835Z",
-                    "cloudformation-template-API-nested-stack.json"
-                  ]
-                ]
-              }
-            }
-          },
           "PermissionsNestedStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
@@ -890,7 +871,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1564473570835-2019-07-30T07:59:30.835Z",
+                    "serverless/serverless-user-management/dev/1564493181513-2019-07-30T13:26:21.513Z",
                     "cloudformation-template-Permissions-nested-stack.json"
                   ]
                 ]
@@ -900,6 +881,25 @@
               "APINestedStack",
               "RecoveryLambdaFunction"
             ]
+          },
+          "APINestedStack": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+              "Parameters": {},
+              "TemplateURL": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "https://s3.eu-central-1.amazonaws.com",
+                    {
+                      "Ref": "ServerlessDeploymentBucket"
+                    },
+                    "serverless/serverless-user-management/dev/1564493181513-2019-07-30T13:26:21.513Z",
+                    "cloudformation-template-API-nested-stack.json"
+                  ]
+                ]
+              }
+            }
           },
           "VersionsNestedStack": {
             "Type": "AWS::CloudFormation::Stack",
@@ -926,7 +926,7 @@
                     {
                       "Ref": "ServerlessDeploymentBucket"
                     },
-                    "serverless/serverless-user-management/dev/1564473570835-2019-07-30T07:59:30.835Z",
+                    "serverless/serverless-user-management/dev/1564493181513-2019-07-30T13:26:21.513Z",
                     "cloudformation-template-Versions-nested-stack.json"
                   ]
                 ]
@@ -951,7 +951,7 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.AdminUnderscoreauthorizerLambdaVersiont2oH2Zdltq9c6BzHlUGAbsQx6kSZtAJZhQYu34LEvoE"
+                "Outputs.AdminUnderscoreauthorizerLambdaVersion8kLL0pyXvBQCdpFGj7mMbbh6IKxiXyg1aQza27eyk"
               ]
             }
           },
@@ -960,7 +960,7 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.UserUnderscoreauthorizerLambdaVersion1ndu4QAa3qPrWdww0jslVtR4Xn8D7wHXDPTTUVJAc"
+                "Outputs.UserUnderscoreauthorizerLambdaVersion09O3Q2aeVe103H3tcHmW5YhT4xb2o373p5IM58i518"
               ]
             }
           },
@@ -969,7 +969,7 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.RecoveryLambdaVersionabg5lNaBlDdUdBJpthDUNjjeIwUHtiAV9YjQlnTNXCI"
+                "Outputs.RecoveryLambdaVersionlquviddoyiBuuGAIVFvp5p1LYLPRPlmnv4m9c63V4"
               ]
             }
           },
@@ -978,7 +978,7 @@
             "Value": {
               "Fn::GetAtt": [
                 "VersionsNestedStack",
-                "Outputs.MediatorLambdaVersionzBLTYl9IXqzAxZBJWpyi5o8MFTdNz3PFBtCEEoU"
+                "Outputs.MediatorLambdaVersionsHZ9nWOG5geFUjX9IQe6C4KdOlEqGoGA9kwdPPZFCk"
               ]
             }
           },
@@ -1362,7 +1362,7 @@
     "artifact": "C:\\Users\\loren\\Desktop\\Stage\\event-driven\\serverless-user-management\\.serverless\\serverless-user-management.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/serverless-user-management/dev/1564473570835-2019-07-30T07:59:30.835Z",
+    "artifactDirectoryName": "serverless/serverless-user-management/dev/1564493181513-2019-07-30T13:26:21.513Z",
     "artifact": "serverless-user-management.zip"
   }
 }

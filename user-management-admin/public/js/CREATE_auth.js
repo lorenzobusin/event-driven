@@ -12,12 +12,11 @@ createAuth.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "authId": document.getElementById('CREATE_authId').value.trim(),
+      "authId": generateUUID(),
       "name": document.getElementById('CREATE_name').value.trim(),
       "desc": document.getElementById('CREATE_desc').value.trim()
     })
   }).then(function(){
-      document.getElementById('CREATE_authId').value = "";
       document.getElementById('CREATE_name').value = "";
       document.getElementById('CREATE_desc').value = "";
   }).catch(function(error){

@@ -80,4 +80,4 @@ module.exports.user_authorizer = (event, context, callback) => { //authorizer fo
       console.log('Catch error: invalid token', err);
       return callback('Unauthorized');
     }
-  };
+};

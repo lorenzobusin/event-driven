@@ -16,13 +16,12 @@ createRole.addEventListener('submit', function(e){
     },
 
     body: JSON.stringify({
-      "roleId": document.getElementById('CREATE_roleId').value.trim(),
+      "roleId": generateUUID(),
       "name": document.getElementById('CREATE_name').value.trim(),
       "desc": document.getElementById('CREATE_desc').value.trim(),
       "auth": document.getElementById('CREATE_auth').value.trim()
     })
   }).then(function(){
-      document.getElementById('CREATE_roleId').value = "";
       document.getElementById('CREATE_name').value = "";
       document.getElementById('CREATE_desc').value = "";
       resetAuth("CREATE_auth", "ul-Auth");

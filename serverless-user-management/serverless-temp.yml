@@ -1,3 +1,170 @@
+service: serverless-user-management
+
+plugins:
+ - serverless-dotenv-plugin
+ - serverless-plugin-split-stacks #to avoid the limit of 200 resources
+
+custom:
+  splitStacks:
+    perFunction: false
+    perType: true
+  dotenv: 
+    include:
+      - AUTH0_ADMIN_CLIENT_ID
+      - AUTH0_ADMIN_CLIENT_PUBLIC_KEY
+      - AUTH0_ADMIN_DOMAIN
+      - AUTH0_USER_CLIENT_ID
+      - AUTH0_USER_CLIENT_PUBLIC_KEY
+      - AUTH0_USER_DOMAIN
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: eu-central-1
+  stage: dev
+  iamRoleStatements:
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - "dynamodb:*"
+        - "sqs:*"
+        - "lambda:*"
+        - "cloudwatch:*"
+        - "apigateway:*"
+
+resources:
+  Resources:
+    GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: EXPIRED_TOKEN
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
+    AuthFailureGatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
+    Failure400GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    Failure500GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    #USER TABLE
+    UsersDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: user
+
+    #ROLE TABLE
+    RolesDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: roleId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: roleId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: role
+
+    #AUTHORIZATION TABLE
+    AuthorizationsDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: authId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: authId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: auth
+
+    #GROUP TABLE
+    GroupsDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: groupId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: groupId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        TableName: group
+
+    #EVENT STORE TABLE
+    EventStoreDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: eventId
+            AttributeType: S
+          - AttributeName: timestamp
+            AttributeType: N
+        KeySchema:
+          - AttributeName: eventId
+            KeyType: HASH
+          - AttributeName: timestamp
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+        StreamSpecification: 
+          StreamViewType: NEW_IMAGE
+        TableName: eventStore
+
+      
+functions:
+
+  # ------------------------------- AUTHORIZER FUNCTIONS ------------------------------- #
+
+  admin_authorizer:
+    handler: handler.admin_authorizer
+    cors: true
+
+  user_authorizer:
+    handler: handler.user_authorizer
+    cors: true
+
   # ------------------------------- USER FUNCTIONS ------------------------------- #
 
   pushCreateUserToSQS: 
@@ -463,3 +630,36 @@
           request:
             template:
               application/json: '{ "userId": "$input.params("userId")" }'
+
+  # ------------------------------- EVENT SOURCING FUNCTIONS ------------------------------- #
+
+  recovery: 
+    handler: handler.recovery
+    timeout: 10
+    events: 
+      - http:
+          path: /recovery
+          method: post
+          authorizer: 
+            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
+            type: request
+            resultTtlInSeconds: 0
+          cors: true
+          integration: lambda
+
+  mediator:
+    handler: handler.mediator
+    events:
+        - stream: arn:aws:dynamodb:eu-central-1:582373673306:table/eventStore/stream/2019-07-29T09:17:19.336 #set the ARN of dynamodb stream
+
+
+
+              
+
+  
+
+  
+
+  
+
+  

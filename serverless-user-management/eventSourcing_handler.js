@@ -1,8 +1,8 @@
 
-module.exports.mediator = (event, context, callback) => {
+module.exports.mediator = (event, context, callback) => { //orchestrates the events stored to update the views
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
-  const parser = AWS.DynamoDB.Converter;
+  const parser = AWS.DynamoDB.Converter; //module to parse dynamodb objects
 
   try{
     var parsedEvent = parser.unmarshall(event.Records[0].dynamodb.NewImage); //convert dynamodb event to js object
@@ -11,12 +11,12 @@ module.exports.mediator = (event, context, callback) => {
     callback(null, err);
   }
  
-  const params = {
+  const params = { //get the SQS params 
      MessageBody: JSON.stringify(parsedEvent.payload),
      QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/" + parsedEvent.executionQueue
   };
 
-  SQS.sendMessage(params, function(err,data){
+  SQS.sendMessage(params, function(err,data){ //push to SQS
     if(err){
       console.log(err);
       callback(null, err);
@@ -26,12 +26,12 @@ module.exports.mediator = (event, context, callback) => {
   });
 };
 
-module.exports.recovery = (event, context, callback) => {
+module.exports.recovery = (event, context, callback) => { //rebuild the system's state(views) from a specific timestamp
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
 
-  const queryParams = {
+  const queryParams = { //params to get all the events stored from a specific timestamp
     TableName: 'eventStore',
     ExpressionAttributeNames:{
       "#eventtimestamp": "timestamp", //timestamp is a reserved keyword
@@ -62,7 +62,7 @@ module.exports.recovery = (event, context, callback) => {
           if (a1 > b1) return 1;
           return 0;
         });
-        utils.asyncPushToExecutionQueue(events); 
+        utils.asyncPushToExecutionQueue(events); //push the events to the corresponding queue
         callback(null, "Recovering...");
       }
     } 

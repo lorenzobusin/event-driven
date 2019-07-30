@@ -1,24 +1,24 @@
-module.exports.admin_authorizer = (event, context, callback) => {
+module.exports.admin_authorizer = (event, context, callback) => { //authorizer for admin side application
   const jwt = require('jsonwebtoken');
   const utils = require('./utils.js');
   const AUTH0_ADMIN_CLIENT_ID = process.env.AUTH0_ADMIN_CLIENT_ID; //get variables from environment
   const AUTH0_ADMIN_CLIENT_PUBLIC_KEY = process.env.AUTH0_ADMIN_CLIENT_PUBLIC_KEY; 
   const AUTH0_ADMIN_DOMAIN = process.env.AUTH0_ADMIN_DOMAIN;
 
-  const token = event.headers.Authorization
+  const token = event.headers.Authorization //extract the bearer token from event
 
   if (!token) {
     return callback('Unauthorized');
   }
 
-  const tokenParts = token.split(' ');
+  const tokenParts = token.split(' '); //split the 'Bearer' string from the token value
   const tokenValue = tokenParts[1];
 
   if (!(tokenParts[0].toLowerCase() === 'bearer' && tokenValue)) { // no auth token
     return callback('Unauthorized');
   }
   
-  const options = {
+  const options = { //claims
     algorithms: ['RS256'],
     audience: AUTH0_ADMIN_CLIENT_ID,
     ignoreExpiration: false,
@@ -40,27 +40,27 @@ module.exports.admin_authorizer = (event, context, callback) => {
   }
 };
 
-module.exports.user_authorizer = (event, context, callback) => {
+module.exports.user_authorizer = (event, context, callback) => { //authorizer for user side application
     const jwt = require('jsonwebtoken');
     const utils = require('./utils.js');
     const AUTH0_USER_CLIENT_ID = process.env.AUTH0_USER_CLIENT_ID; //get variables from environment
 		const AUTH0_USER_CLIENT_PUBLIC_KEY = process.env.AUTH0_USER_CLIENT_PUBLIC_KEY; 
     const AUTH0_USER_DOMAIN = process.env.AUTH0_USER_DOMAIN;
 
-    const token = event.headers.Authorization
+    const token = event.headers.Authorization //extract the bearer token from event
 
     if (!token) {
       return callback('Unauthorized');
     }
   
-    const tokenParts = token.split(' ');
+    const tokenParts = token.split(' '); //split the 'Bearer' string from the token value
     const tokenValue = tokenParts[1];
   
     if (!(tokenParts[0].toLowerCase() === 'bearer' && tokenValue)) { // no auth token
       return callback('Unauthorized');
 		}
 		
-    const options = {
+    const options = { //claims
 			algorithms: ['RS256'],
 			audience: AUTH0_USER_CLIENT_ID,
 			ignoreExpiration: false,

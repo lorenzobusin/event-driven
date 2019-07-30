@@ -41,8 +41,21 @@ module.exports.commandCreateRole = async (event, context, callback) => {
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
+
+  const checkIdParams = { //params to check for duplicated roleId
+    TableName: 'role',
+    ProjectionExpression: "roleId",
+    FilterExpression: "roleId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": eventToCheck.roleId
+    }
+  };
+
+  const roleIdAlreadyExists = await utils.asyncCheckScanDB(checkIdParams); //check for duplicated roleId
+  if(roleIdAlreadyExists)
+    callback(null, "roleId already exists");
    
-  const checkNameParams = {
+  const checkNameParams = { //params to check for duplicated name
     TableName: 'role',
     ExpressionAttributeNames:{
       "#rolename": "name" //name is a reserved keyword
@@ -54,12 +67,14 @@ module.exports.commandCreateRole = async (event, context, callback) => {
     }
   };
 
-  const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
+  const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams); //check for duplicated name
+  if(nameAlreadyExists)
+    callback(null, "Name already exists");
   
-  if((eventToCheck.roleId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
-    callback(null, "Name already exists or empty attributes");
+  if(eventToCheck.roleId == "" || eventToCheck.name == "" || eventToCheck.desc == "") //check for empty attributes
+    callback(null, "Empty attributes");
   else{
-    utils.storeEvent("role", "executeCreateRoleQueue", eventToCheck);
+    utils.storeEvent("role", "executeCreateRoleQueue", eventToCheck); //store into eventStore
     callback(null, "Role event stored");
   }
     
@@ -73,24 +88,40 @@ module.exports.commandUpdateRole = async (event, context, callback) => {
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
 
+  const checkIdParams = { //params to check if roleId exists
+    TableName: 'role',
+    ProjectionExpression: "roleId",
+    FilterExpression: "roleId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": eventToCheck.roleId
+    }
+  };
+
+  const roleIdExists = await utils.asyncCheckScanDB(checkIdParams); //check if roleId exists
+  if(!roleIdExists)
+    callback(null, "Role not found");
+
   const checkNameParams = {
     TableName: 'role',
     ExpressionAttributeNames:{
       "#rolename": "name" //name is a reserved keyword
     },
     ProjectionExpression: "#rolename",
-    FilterExpression: "#rolename = :checkname",
+    FilterExpression: "#rolename = :checkname and roleId<>:checkRoleId", //valid if the name not changed
     ExpressionAttributeValues: {
-        ":checkname": eventToCheck.name
+        ":checkname": eventToCheck.name,
+        ":checkRoleId": eventToCheck.roleId
     }
   };
 
-  const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
+  const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams); //check for duplicated name
+  if(nameAlreadyExists)
+    callback(null, "Name already exists");
   
-  if((eventToCheck.roleId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
-    callback(null, "Name already exists or empty attributes");
+  if(eventToCheck.roleId == "" || eventToCheck.name == "" || eventToCheck.desc == "") //check for empty attributes 
+    callback(null, "Empty attributes");
   else{
-    utils.storeEvent("role", "executeUpdateRoleQueue", eventToCheck);
+    utils.storeEvent("role", "executeUpdateRoleQueue", eventToCheck); //store into eventStore
     callback(null, "Role event stored");
   }
 };
@@ -102,11 +133,22 @@ module.exports.commandDeleteRole = (event, context, callback) => {
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
+
+  const checkIdParams = { //params to check if roleId exists
+    TableName: 'role',
+    ProjectionExpression: "roleId",
+    FilterExpression: "roleId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": eventToCheck.roleId
+    }
+  };
+
+  const roleIdExists = await utils.asyncCheckScanDB(checkIdParams); //check if roleId exists
   
-  if(eventToCheck.roleId == "")
-    callback(null, "Empty attribute");
+  if(!roleIdExists)
+    callback(null, "Role not found");
   else{
-    utils.storeEvent("role", "executeDeleteRoleQueue", eventToCheck);
+    utils.storeEvent("role", "executeDeleteRoleQueue", eventToCheck); //store into eventStore
     callback(null, "Role event stored");
   }
 };
@@ -198,7 +240,6 @@ module.exports.deleteRole = async (event, context, callback) => {
 };
 
 //READ MODE LAMBDAs
-
 module.exports.readRole = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -206,7 +247,7 @@ module.exports.readRole = (event, context, callback) => {
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
 
-  const params = {
+  const params = { //get role by id
     TableName: 'role',
     Key: {
       "roleId": parsedEvent.roleId

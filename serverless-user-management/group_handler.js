@@ -42,7 +42,20 @@ module.exports.commandCreateGroup = async (event, context, callback) => {
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
 
-  const checkNameParams = {
+  const checkIdParams = { //params to check for duplicated groupId
+    TableName: 'group',
+    ProjectionExpression: "groupId",
+    FilterExpression: "groupId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": eventToCheck.groupId
+    }
+  };
+
+  const groupIdAlreadyExists = await utils.asyncCheckScanDB(checkIdParams); //check for duplicated groupId
+  if(groupIdAlreadyExists)
+    callback(null, "groupId already exists");
+
+  const checkNameParams = { //params to check for duplicated name
     TableName: 'group',
     ExpressionAttributeNames:{
       "#groupname": "name" //name is a reserved keyword
@@ -54,13 +67,15 @@ module.exports.commandCreateGroup = async (event, context, callback) => {
     }
   };
 
-  const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
+  const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams); //check for duplicated name
+  if(nameAlreadyExists)
+    callback(null, "Name already exists");
   
-  if((eventToCheck.groupId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
-    callback(null, "Name already exists or empty attributes");
+  if(eventToCheck.groupId == "" || eventToCheck.name == "" || eventToCheck.desc == "") //check for empty attributes
+    callback(null, "Empty attributes");
   else{
     utils.storeEvent("group", "executeCreateGroupQueue", eventToCheck);
-    callback(null, "Group event stored");
+    callback(null, "Group event stored"); //store into eventStore
   }
 };
 
@@ -72,24 +87,40 @@ module.exports.commandUpdateGroup = async (event, context, callback) => {
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
 
+  const checkIdParams = { //params to check if groupId exists
+    TableName: 'group',
+    ProjectionExpression: "groupId",
+    FilterExpression: "groupId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": eventToCheck.groupId
+    }
+  };
+
+  const groupIdExists = await utils.asyncCheckScanDB(checkIdParams); //check if groupId exists
+  if(!groupIdExists)
+    callback(null, "Group not found");
+
   const checkNameParams = {
     TableName: 'group',
     ExpressionAttributeNames:{
       "#groupname": "name" //name is a reserved keyword
     },
     ProjectionExpression: "#groupname",
-    FilterExpression: "#groupname = :checkname",
+    FilterExpression: "#groupname = :checkname and groupId<>:checkGroupId", //valid if the name not changed
     ExpressionAttributeValues: {
-        ":checkname": eventToCheck.name
+        ":checkname": eventToCheck.name,
+        ":checkGroupId": eventToCheck.groupId
     }
   };
 
-  const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
+  const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams); //check for duplicated name
+  if(nameAlreadyExists)
+    callback(null, "Name already exists");
   
-  if((eventToCheck.groupId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
-    callback(null, "Name already exists or empty attributes");
+  if(eventToCheck.groupId == "" || eventToCheck.name == "" || eventToCheck.desc == "") //check for empty attributes
+    callback(null, "Empty attributes");
   else{
-    utils.storeEvent("group", "executeUpdateGroupQueue", eventToCheck);
+    utils.storeEvent("group", "executeUpdateGroupQueue", eventToCheck); // store into eventStore
     callback(null, "Group event stored");
   }
 };
@@ -101,11 +132,22 @@ module.exports.commandDeleteGroup = async (event, context, callback) => {
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
+
+  const checkIdParams = { //params to check if groupId exists
+    TableName: 'group',
+    ProjectionExpression: "groupId",
+    FilterExpression: "groupId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": eventToCheck.groupId
+    }
+  };
+
+  const groupIdExists = await utils.asyncCheckScanDB(checkIdParams); //check if groupId exists
   
-  if(eventToCheck.groupId == "")
-    callback(null, "Empty attributes");
+  if(!groupIdExists)
+    callback(null, "Group not found");
   else{
-    utils.storeEvent("group", "executeDeleteGroupQueue", eventToCheck);
+    utils.storeEvent("group", "executeDeleteGroupQueue", eventToCheck); //store into eventStore
     callback(null, "Group event stored");
   }
 };
@@ -194,7 +236,6 @@ module.exports.deleteGroup = async (event, context, callback) => {
 };
 
 //READ MODE LAMBDAs
-
 module.exports.readGroup = (event, context, callback) => {
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -202,7 +243,7 @@ module.exports.readGroup = (event, context, callback) => {
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
 
-  const params = {
+  const params = { //get group by id
     TableName: 'group',
     Key: {
       "groupId": parsedEvent.groupId

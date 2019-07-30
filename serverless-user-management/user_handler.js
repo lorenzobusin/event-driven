@@ -42,7 +42,7 @@ module.exports.commandCreateUser = async (event, context, callback) => {
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
 
-  const checkIdParams = {
+  const checkIdParams = { //params to check for duplicated userId
     TableName: 'user',
     ProjectionExpression: "userId",
     FilterExpression: "userId = :checkId",
@@ -51,9 +51,11 @@ module.exports.commandCreateUser = async (event, context, callback) => {
     }
   };
 
-  const userIdAlreadyExists = await utils.asyncCheckScanDB(checkIdParams);
+  const userIdAlreadyExists = await utils.asyncCheckScanDB(checkIdParams); //check for duplicated userId
+  if(userIdAlreadyExists)
+    callback(null, "userId already exists");
 
-  const checkEmailParams = {
+  const checkEmailParams = {  //params to check for duplicated email
     TableName: 'user',
     ProjectionExpression: "email",
     FilterExpression: "email = :checkEmail",
@@ -62,13 +64,15 @@ module.exports.commandCreateUser = async (event, context, callback) => {
     }
   };
 
-  const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
+  const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams); //check for duplicated email
+  if(emailAlreadyExists)
+    callback(null, "Email already exists");
   
-  if((eventToCheck.firstName == "" || eventToCheck.lastName == "" || eventToCheck.date == "" || eventToCheck.role == "" || eventToCheck.group == "") || (userIdAlreadyExists) || (emailAlreadyExists)){
-    callback(null, "Email/userId already exists or empty attributes");
+  if(eventToCheck.userId == "" ||eventToCheck.firstName == "" || eventToCheck.lastName == "" || eventToCheck.date == "" || eventToCheck.role == "" || eventToCheck.group == ""){ //check for empty attributes
+    callback(null, "Empty attributes");
   }
   else{
-    utils.storeEvent("user", "executeCreateUserQueue", eventToCheck);
+    utils.storeEvent("user", "executeCreateUserQueue", eventToCheck); //store into eventStore
     callback(null, "User event stored");
   }
 };
@@ -83,23 +87,38 @@ module.exports.commandUpdateUser = async (event, context, callback) => {
   if(!eventToCheck.userId)
     eventToCheck = JSON.parse(eventToCheck);
 
-  const checkEmailParams = {
+  const checkIdParams = { //params to check if userId exists
+    TableName: 'user',
+    ProjectionExpression: "userId",
+    FilterExpression: "userId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": eventToCheck.userId
+    }
+  };
+  
+  const userIdExists = await utils.asyncCheckScanDB(checkIdParams); //check if userId exists
+  if(!userIdExists)
+    callback(null, "User not found");
+
+  const checkEmailParams = { //params to check for duplicated email
     TableName: 'user',
     ProjectionExpression: "email, userId",
-    FilterExpression: "email=:checkEmail and userId<>:checkUserId",
+    FilterExpression: "email=:checkEmail and userId<>:checkUserId", //valid if the email not changed 
     ExpressionAttributeValues: {
         ":checkEmail": eventToCheck.email,
         ":checkUserId": eventToCheck.userId
     }
   };
   
-  const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams);
+  const emailAlreadyExists = await utils.asyncCheckScanDB(checkEmailParams); //check for duplicated email
+  if (emailAlreadyExists)
+    callback(null, "Email already exists")
   
-  if((eventToCheck.userId == "" || eventToCheck.firstName == "" || eventToCheck.lastName == "" || eventToCheck.date == "" || eventToCheck.role == "" || eventToCheck.group == "") || (emailAlreadyExists)){
-    callback(null, "Email/userId already exists or empty attributes");
+  if(eventToCheck.userId == "" || eventToCheck.firstName == "" || eventToCheck.lastName == "" || eventToCheck.date == "" || eventToCheck.role == "" || eventToCheck.group == ""){ //check for empty attributes
+    callback(null, "Empty attributes");
   }
   else{
-    utils.storeEvent("user", "executeUpdateUserQueue", eventToCheck);
+    utils.storeEvent("user", "executeUpdateUserQueue", eventToCheck); //store into eventStore
     callback(null, "User event stored");
   }
 };
@@ -111,11 +130,22 @@ module.exports.commandDeleteUser = async (event, context, callback) => {
   const eventParsed = JSON.parse(stringedEvent);
   const stringedBody = JSON.stringify(eventParsed.body);
   const eventToCheck = JSON.parse(stringedBody);
+
+  const checkIdParams = { //params to check if userId exists
+    TableName: 'user',
+    ProjectionExpression: "userId",
+    FilterExpression: "userId = :checkId",
+    ExpressionAttributeValues: {
+        ":checkId": eventToCheck.userId
+    }
+  };
+
+  const userIdExists = await utils.asyncCheckScanDB(checkIdParams); //check if userId exists
   
-  if(eventToCheck.userId == "" )
-    callback(null, "Empty attribute");
+  if(!userIdExists) 
+    callback(null, "User not found");
   else{
-    utils.storeEvent("user", "executeDeleteUserQueue", eventToCheck);
+    utils.storeEvent("user", "executeDeleteUserQueue", eventToCheck); //store into eventStore
     callback(null, "User event stored");
   }
 };
@@ -217,7 +247,7 @@ module.exports.readUser = (event, context, callback) => {
   const stringedEvent = JSON.stringify(event);
   const parsedEvent = JSON.parse(stringedEvent);
 
-  const params = {
+  const params = { //get user by userId
     TableName: 'user',
     Key: {
       "userId": parsedEvent.userId
@@ -256,7 +286,8 @@ module.exports.readUser = (event, context, callback) => {
 
 
 //USER APP
-module.exports.pushSigninUserToSQS = async (event, context, callback) => {
+//these functions are only accessed by users from the user application, so they will be protected by an user_authorizer 
+module.exports.pushSigninUserToSQS = async (event, context, callback) => { //signin into user app the first time
   const utils = require('./utils.js');
   
   const stringedEvent = JSON.stringify(event);

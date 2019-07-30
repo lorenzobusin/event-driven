@@ -41,6 +41,19 @@
     const eventParsed = JSON.parse(stringedEvent);
     const stringedBody = JSON.stringify(eventParsed.body);
     const eventToCheck = JSON.parse(stringedBody);
+
+    const checkIdParams = { //params to check for duplicated authId
+      TableName: 'auth',
+      ProjectionExpression: "authId",
+      FilterExpression: "authId = :checkId",
+      ExpressionAttributeValues: {
+          ":checkId": eventToCheck.authId
+      }
+    };
+  
+    const authIdAlreadyExists = await utils.asyncCheckScanDB(checkIdParams); //check for duplicated authId
+    if(authIdAlreadyExists)
+      callback(null, "authId already exists");
   
     const checkNameParams = {
       TableName: 'auth',
@@ -55,11 +68,13 @@
     };
   
     const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
+    if(nameAlreadyExists)
+      callback(null, "Name already exists");
     
-    if((eventToCheck.authId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
-      callback(null, "Name already exists or empty attributes");
+    if(eventToCheck.authId == "" || eventToCheck.name == "" || eventToCheck.desc == "") //check for empty attributes
+      callback(null, "Empty attributes");
     else{
-      utils.storeEvent("auth", "executeCreateAuthQueue", eventToCheck);
+      utils.storeEvent("auth", "executeCreateAuthQueue", eventToCheck); //store into eventStore
       callback(null, "Auth event stored");
     }
   };
@@ -71,6 +86,19 @@
     const eventParsed = JSON.parse(stringedEvent);
     const stringedBody = JSON.stringify(eventParsed.body);
     const eventToCheck = JSON.parse(stringedBody);
+
+    const checkIdParams = { //params to check if authId exists
+      TableName: 'auth',
+      ProjectionExpression: "authId",
+      FilterExpression: "authId = :checkId",
+      ExpressionAttributeValues: {
+          ":checkId": eventToCheck.authId
+      }
+    };
+  
+    const authIdExists = await utils.asyncCheckScanDB(checkIdParams); //check if authId exists
+    if(!authIdExists)
+      callback(null, "Auth not found");
   
     const checkNameParams = {
       TableName: 'auth',
@@ -78,18 +106,21 @@
         "#authname": "name" //name is a reserved keyword
       },
       ProjectionExpression: "#authname",
-      FilterExpression: "#authname = :checkname",
+      FilterExpression: "#authname = :checkname and authId<>:checkAuthId", //valid if the name not changed
       ExpressionAttributeValues: {
-          ":checkname": eventToCheck.name
+          ":checkname": eventToCheck.name,
+          ":checkAuthId": eventToCheck.authId
       }
     };
   
     const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
+    if(nameAlreadyExists)
+      callback(null, "Name already exists");
     
-    if((eventToCheck.authId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
-      callback(null, "Name already exists or empty attributes");
+    if(eventToCheck.authId == "" || eventToCheck.name == "" || eventToCheck.desc == "") //check for empty attributes
+      callback(null, "Empty attributes");
     else{
-      utils.storeEvent("auth", "executeUpdateAuthQueue", eventToCheck);
+      utils.storeEvent("auth", "executeUpdateAuthQueue", eventToCheck); //store into eventStore
       callback(null, "Auth event stored");
     }
   };
@@ -101,12 +132,23 @@
     const eventParsed = JSON.parse(stringedEvent);
     const stringedBody = JSON.stringify(eventParsed.body);
     const eventToCheck = JSON.parse(stringedBody);
+
+    const checkIdParams = { //params to check if authId exists
+      TableName: 'auth',
+      ProjectionExpression: "authId",
+      FilterExpression: "authId = :checkId",
+      ExpressionAttributeValues: {
+          ":checkId": eventToCheck.authId
+      }
+    };
+  
+    const authIdExists = await utils.asyncCheckScanDB(checkIdParams); //check if authId exists
     
-    if(eventToCheck.authId == "")
-      callback(null, "Empty attribute");
+    if(!authIdExists)
+      callback(null, "Auth not found");
     else{
-      utils.storeEvent("auth", "executeDeleteAuthQueue", eventToCheck);
-      callback(null, "Auth event stored");
+      utils.storeEvent("auth", "executeDeleteAuthQueue", eventToCheck); //store into eventStore
+      callback(null, "Auth event stored"); 
     }
   };
   
@@ -201,7 +243,7 @@
     const stringedEvent = JSON.stringify(event);
     const parsedEvent = JSON.parse(stringedEvent);
   
-    const params = {
+    const params = { //get auth by id
       TableName: 'auth',
       Key: {
         "authId": parsedEvent.authId

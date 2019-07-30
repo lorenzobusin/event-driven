@@ -1,4 +1,4 @@
-module.exports.generateUUID = () => {
+module.exports.generateUUID = () => { //generates a unique identifier
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -13,7 +13,7 @@ module.exports.pushToSQS = async (params) => {
 
   try{
     const res = await SQS.sendMessage(params).promise();
-    return {
+    return { //success response
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
@@ -25,14 +25,14 @@ module.exports.pushToSQS = async (params) => {
   }
   catch(error){
     console.log(error);
-    return {
+    return { //error response
       statusCode: 500
     };
   }
 };
 
-module.exports.asyncPushToExecutionQueue = async (arrayEvent) => {
-  const AWS = require('aws-sdk');
+module.exports.asyncPushToExecutionQueue = async (arrayEvent) => { //push events to the corresponding execution queue in the right order
+  const AWS = require('aws-sdk');                                  //and wait for their execution
   const SQS = new AWS.SQS();
 
   for(var i = 0; i < arrayEvent.length; i++){
@@ -46,12 +46,12 @@ module.exports.asyncPushToExecutionQueue = async (arrayEvent) => {
  };
 };
 
-module.exports.storeEvent = (typeAggregate, queue, eventPayload) => {
+module.exports.storeEvent = (typeAggregate, queue, eventPayload) => { //store events into eventStore
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const utils = require('./utils.js');
 
-  const item = {
+  const item = { //build the event object
     eventId: utils.generateUUID(),
     aggregate: typeAggregate,
     executionQueue: queue,
@@ -59,7 +59,7 @@ module.exports.storeEvent = (typeAggregate, queue, eventPayload) => {
     payload: eventPayload
   };
 
-  const eventSourcingParams = {
+  const eventSourcingParams = { //params to store the event
     TableName: 'eventStore',
     Item: item
   };
@@ -70,28 +70,28 @@ module.exports.storeEvent = (typeAggregate, queue, eventPayload) => {
   });
 };
 
-module.exports.asyncCheckScanDB = async (params) => {
+module.exports.asyncCheckScanDB = async (params) => { //check for an item into a dynamodb table
   const AWS = require('aws-sdk');
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
   const res = await dynamoDb.scan(params).promise();
 
-  if(res.Count == 0)
-    return false;
+  if(res.Count == 0) 
+    return false; //if the item not exists in the table
   else  
-    return true;
+    return true; //if the item exists in the table
 };
 
-module.exports.validateEmail = (email) => {
+module.exports.validateEmail = (email) => { //validate an email string with a regex
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 };
 
-module.exports.validatePassword = (pass) => {
+module.exports.validatePassword = (pass) => { //validate a password string with a regex
   var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
   return re.test(String(pass));
 };
 
-module.exports.generatePolicy = (principalId, effect, resource) => {
+module.exports.generatePolicy = (principalId, effect, resource) => { //generates an AWS policy
   const authResponse = {};
   authResponse.principalId = principalId;
   if (effect && resource) {

@@ -6,6 +6,8 @@ block content
       .form-group
         h3.crud_title Create group
         if locals.user
+          label roleId
+          input#CREATE_groupId.form-control(type='text', name='name', required='')
           label Name
           input#CREATE_name.form-control(type='text', name='name', required='')
           label Description

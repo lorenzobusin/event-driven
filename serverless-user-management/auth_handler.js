@@ -1,88 +1,37 @@
   module.exports.pushCreateAuthToSQS = async (event, context, callback) => {
-    const AWS = require('aws-sdk');
-    const SQS = new AWS.SQS();
+    const utils = require('./utils.js');
   
     const params = {
       MessageBody: JSON.stringify(event),
       QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createAuthQueue"
     };
   
-    try{
-      const res = await SQS.sendMessage(params).promise();
-      return callback(null, {
-        statusCode: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
-        body: JSON.stringify(res)
-      });
-    }
-    catch(error){
-      console.log(error);
-      return callback(null, {
-        statusCode: 500
-      });
-    } 
+    const res = await utils.pushToSQS(params);
+    callback(null, res);
   };
 
   module.exports.pushUpdateAuthToSQS = async (event, context, callback) => {
-    const AWS = require('aws-sdk');
-    const SQS = new AWS.SQS();
+    const utils = require('./utils.js');
   
     const params = {
       MessageBody: JSON.stringify(event),
       QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateAuthQueue"
     };
   
-    try{
-      const res = await SQS.sendMessage(params).promise();
-      return callback(null, {
-        statusCode: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
-        body: JSON.stringify(res)
-      });
-    }
-    catch(error){
-      console.log(error);
-      return callback(null, {
-        statusCode: 500
-      });
-    } 
+    const res = await utils.pushToSQS(params);
+    callback(null, res);
   };
 
   module.exports.pushDeleteAuthToSQS = async (event, context, callback) => {
-    const AWS = require('aws-sdk');
-    const SQS = new AWS.SQS();
+    const utils = require('./utils.js');
   
     const params = {
       MessageBody: JSON.stringify(event),
       QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/deleteAuthQueue"
     };
   
-    try{
-      const res = await SQS.sendMessage(params).promise();
-      return callback(null, {
-        statusCode: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true
-        },
-        body: JSON.stringify(res)
-      });
-    }
-    catch(error){
-      console.log(error);
-      return callback(null, {
-        statusCode: 500
-      });
-    } 
+    const res = await utils.pushToSQS(params);
+    callback(null, res); 
   };
 
   module.exports.commandCreateAuth = async (event, context, callback) => {

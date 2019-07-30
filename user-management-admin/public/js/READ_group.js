@@ -18,7 +18,8 @@ function addRow(n, d) { //attributes
     fetch(linkGroupAPI_GET + document.getElementById('READ_groupId').value.trim(), {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('id_token')
       }
     }).then(function(response){
         const responseJSON = response.json();
@@ -29,13 +30,13 @@ function addRow(n, d) { //attributes
         const parsedResponse = JSON.parse(stringedResponse);
         const parsedBody = JSON.parse(parsedResponse.body);
 
-        document.getElementById('messageSuccessREAD').style.color = 'green';
-        document.getElementById('messageSuccessREAD').innerHTML = 'Group read';
-
         document.getElementById('READ_groupId').value = "";
         document.getElementById("tableResult").style.visibility = "visible";
 
         addRow(parsedBody.Item.name, parsedBody.Item.desc);
+    }).catch(function(error){
+        document.getElementById('messageSuccessREAD').style.color = 'red';
+        document.getElementById('messageSuccessREAD').innerHTML = 'Group not read';
     });
 
   });

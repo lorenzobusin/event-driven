@@ -7,6 +7,30 @@ module.exports.generateUUID = () => {
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 };
 
+module.exports.pushToSQS = async (params) => {
+  const AWS = require('aws-sdk');
+  const SQS = new AWS.SQS();
+
+  try{
+    const res = await SQS.sendMessage(params).promise();
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
+      body: JSON.stringify(res)
+    };
+  }
+  catch(error){
+    console.log(error);
+    return {
+      statusCode: 500
+    };
+  }
+};
+
 module.exports.asyncPushToExecutionQueue = async (arrayEvent) => {
   const AWS = require('aws-sdk');
   const SQS = new AWS.SQS();
@@ -83,3 +107,4 @@ module.exports.generatePolicy = (principalId, effect, resource) => {
   }
   return authResponse;
 };
+

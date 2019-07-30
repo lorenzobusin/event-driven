@@ -8,39 +8,6 @@
     "UserUnderscoreauthorizerLambdaFunctionParameter": {
       "Type": "String"
     },
-    "PushCreateAuthToSQSLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "PushUpdateAuthToSQSLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "PushDeleteAuthToSQSLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "CommandCreateAuthLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "CommandUpdateAuthLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "CommandDeleteAuthLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "CreateAuthLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "UpdateAuthLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "DeleteAuthLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "ReadAuthLambdaFunctionParameter": {
-      "Type": "String"
-    },
-    "GetAllAuthsLambdaFunctionParameter": {
-      "Type": "String"
-    },
     "RecoveryLambdaFunctionParameter": {
       "Type": "String"
     },
@@ -49,246 +16,70 @@
     }
   },
   "Resources": {
-    "AdminUnderscoreauthorizerLambdaVersion6LnpttCj3D6myBmVmoVII8ucNW84THFhALmFuFAbs": {
+    "AdminUnderscoreauthorizerLambdaVersiont2oH2Zdltq9c6BzHlUGAbsQx6kSZtAJZhQYu34LEvoE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AdminUnderscoreauthorizerLambdaFunctionParameter"
         },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
+        "CodeSha256": "1TFE45Jed2WQHOZlcsK0IQRww+XHvsjxkDMtHlLNKso="
       },
       "DependsOn": []
     },
-    "CommandCreateAuthLambdaVersionv3lY3Ce7MXpGn5j1HgROEMkMBAxblRHQb763EIp0r1c": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "CommandCreateAuthLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "CommandDeleteAuthLambdaVersionENSt9lopIXORegcMACN1JbIerz1Qg1DF5BOXqDRCk": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "CommandDeleteAuthLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "CommandUpdateAuthLambdaVersiongHRz3UAvbhesP3PxD5P28kf7QQ6Xrz21KjOBHCGwcA": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "CommandUpdateAuthLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "CreateAuthLambdaVersionCcyihW49eL29sV3zaOrFUPELQfmmoh5MYQyVdAI": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "CreateAuthLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "DeleteAuthLambdaVersionWQrzXpkNJGAOwbnyZapWNKgoV7mpKDEsfzi1OVydj4": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "DeleteAuthLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "GetAllAuthsLambdaVersion3fWfiY7PCFlZ5WugHYtFPxQKZWv7HlTpH15TAHXLhHw": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "GetAllAuthsLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "MediatorLambdaVersionHAHrqi0Mycf8wOkuOVmLzk6icfoR0fmqaEqTw9spE": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "MediatorLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "PushCreateAuthToSQSLambdaVersionYwmMaOHQasghUm5NmnUhsrT1ojg7GbtZlFG4Oqc": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "PushCreateAuthToSQSLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "PushDeleteAuthToSQSLambdaVersionuAHDrrVTV2K2uVtIkin0J4GILPwwZM462B84KPPHM": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "PushDeleteAuthToSQSLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "PushUpdateAuthToSQSLambdaVersiondxvrGfB9M0rnTyLeBxvWPSJRgpcfXimOcdOB25bQao": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "PushUpdateAuthToSQSLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "ReadAuthLambdaVersioneCKflZIZTmBDcPwv6EDN4uu98HzcRgTS7NajTP3Q0": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "ReadAuthLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "RecoveryLambdaVersionsDrmlTHOXbW8quWiZB7zuQzwiqX9YNZ9dKso8inV0": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "RecoveryLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "UpdateAuthLambdaVersionbaWf4unAdCORAxngsN26AwonmNkeR31KHJOC9aclVg": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "UpdateAuthLambdaFunctionParameter"
-        },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
-      },
-      "DependsOn": []
-    },
-    "UserUnderscoreauthorizerLambdaVersionF3RvpzVGWNMHnlp8MBK0YBa3GiWCoO4DtWyS1Yu9s": {
+    "UserUnderscoreauthorizerLambdaVersion1ndu4QAa3qPrWdww0jslVtR4Xn8D7wHXDPTTUVJAc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserUnderscoreauthorizerLambdaFunctionParameter"
         },
-        "CodeSha256": "VTzFkshmnZn/btESTyT5O85rQGOG070W4GiiDARj62c="
+        "CodeSha256": "1TFE45Jed2WQHOZlcsK0IQRww+XHvsjxkDMtHlLNKso="
+      },
+      "DependsOn": []
+    },
+    "RecoveryLambdaVersionabg5lNaBlDdUdBJpthDUNjjeIwUHtiAV9YjQlnTNXCI": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "RecoveryLambdaFunctionParameter"
+        },
+        "CodeSha256": "1TFE45Jed2WQHOZlcsK0IQRww+XHvsjxkDMtHlLNKso="
+      },
+      "DependsOn": []
+    },
+    "MediatorLambdaVersionzBLTYl9IXqzAxZBJWpyi5o8MFTdNz3PFBtCEEoU": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "MediatorLambdaFunctionParameter"
+        },
+        "CodeSha256": "1TFE45Jed2WQHOZlcsK0IQRww+XHvsjxkDMtHlLNKso="
       },
       "DependsOn": []
     }
   },
   "Outputs": {
-    "MediatorLambdaVersionHAHrqi0Mycf8wOkuOVmLzk6icfoR0fmqaEqTw9spE": {
+    "MediatorLambdaVersionzBLTYl9IXqzAxZBJWpyi5o8MFTdNz3PFBtCEEoU": {
       "Value": {
-        "Ref": "MediatorLambdaVersionHAHrqi0Mycf8wOkuOVmLzk6icfoR0fmqaEqTw9spE"
+        "Ref": "MediatorLambdaVersionzBLTYl9IXqzAxZBJWpyi5o8MFTdNz3PFBtCEEoU"
       }
     },
-    "RecoveryLambdaVersionsDrmlTHOXbW8quWiZB7zuQzwiqX9YNZ9dKso8inV0": {
+    "RecoveryLambdaVersionabg5lNaBlDdUdBJpthDUNjjeIwUHtiAV9YjQlnTNXCI": {
       "Value": {
-        "Ref": "RecoveryLambdaVersionsDrmlTHOXbW8quWiZB7zuQzwiqX9YNZ9dKso8inV0"
+        "Ref": "RecoveryLambdaVersionabg5lNaBlDdUdBJpthDUNjjeIwUHtiAV9YjQlnTNXCI"
       }
     },
-    "GetAllAuthsLambdaVersion3fWfiY7PCFlZ5WugHYtFPxQKZWv7HlTpH15TAHXLhHw": {
+    "UserUnderscoreauthorizerLambdaVersion1ndu4QAa3qPrWdww0jslVtR4Xn8D7wHXDPTTUVJAc": {
       "Value": {
-        "Ref": "GetAllAuthsLambdaVersion3fWfiY7PCFlZ5WugHYtFPxQKZWv7HlTpH15TAHXLhHw"
+        "Ref": "UserUnderscoreauthorizerLambdaVersion1ndu4QAa3qPrWdww0jslVtR4Xn8D7wHXDPTTUVJAc"
       }
     },
-    "ReadAuthLambdaVersioneCKflZIZTmBDcPwv6EDN4uu98HzcRgTS7NajTP3Q0": {
+    "AdminUnderscoreauthorizerLambdaVersiont2oH2Zdltq9c6BzHlUGAbsQx6kSZtAJZhQYu34LEvoE": {
       "Value": {
-        "Ref": "ReadAuthLambdaVersioneCKflZIZTmBDcPwv6EDN4uu98HzcRgTS7NajTP3Q0"
-      }
-    },
-    "DeleteAuthLambdaVersionWQrzXpkNJGAOwbnyZapWNKgoV7mpKDEsfzi1OVydj4": {
-      "Value": {
-        "Ref": "DeleteAuthLambdaVersionWQrzXpkNJGAOwbnyZapWNKgoV7mpKDEsfzi1OVydj4"
-      }
-    },
-    "UpdateAuthLambdaVersionbaWf4unAdCORAxngsN26AwonmNkeR31KHJOC9aclVg": {
-      "Value": {
-        "Ref": "UpdateAuthLambdaVersionbaWf4unAdCORAxngsN26AwonmNkeR31KHJOC9aclVg"
-      }
-    },
-    "CreateAuthLambdaVersionCcyihW49eL29sV3zaOrFUPELQfmmoh5MYQyVdAI": {
-      "Value": {
-        "Ref": "CreateAuthLambdaVersionCcyihW49eL29sV3zaOrFUPELQfmmoh5MYQyVdAI"
-      }
-    },
-    "CommandDeleteAuthLambdaVersionENSt9lopIXORegcMACN1JbIerz1Qg1DF5BOXqDRCk": {
-      "Value": {
-        "Ref": "CommandDeleteAuthLambdaVersionENSt9lopIXORegcMACN1JbIerz1Qg1DF5BOXqDRCk"
-      }
-    },
-    "CommandUpdateAuthLambdaVersiongHRz3UAvbhesP3PxD5P28kf7QQ6Xrz21KjOBHCGwcA": {
-      "Value": {
-        "Ref": "CommandUpdateAuthLambdaVersiongHRz3UAvbhesP3PxD5P28kf7QQ6Xrz21KjOBHCGwcA"
-      }
-    },
-    "CommandCreateAuthLambdaVersionv3lY3Ce7MXpGn5j1HgROEMkMBAxblRHQb763EIp0r1c": {
-      "Value": {
-        "Ref": "CommandCreateAuthLambdaVersionv3lY3Ce7MXpGn5j1HgROEMkMBAxblRHQb763EIp0r1c"
-      }
-    },
-    "PushDeleteAuthToSQSLambdaVersionuAHDrrVTV2K2uVtIkin0J4GILPwwZM462B84KPPHM": {
-      "Value": {
-        "Ref": "PushDeleteAuthToSQSLambdaVersionuAHDrrVTV2K2uVtIkin0J4GILPwwZM462B84KPPHM"
-      }
-    },
-    "PushUpdateAuthToSQSLambdaVersiondxvrGfB9M0rnTyLeBxvWPSJRgpcfXimOcdOB25bQao": {
-      "Value": {
-        "Ref": "PushUpdateAuthToSQSLambdaVersiondxvrGfB9M0rnTyLeBxvWPSJRgpcfXimOcdOB25bQao"
-      }
-    },
-    "PushCreateAuthToSQSLambdaVersionYwmMaOHQasghUm5NmnUhsrT1ojg7GbtZlFG4Oqc": {
-      "Value": {
-        "Ref": "PushCreateAuthToSQSLambdaVersionYwmMaOHQasghUm5NmnUhsrT1ojg7GbtZlFG4Oqc"
-      }
-    },
-    "UserUnderscoreauthorizerLambdaVersionF3RvpzVGWNMHnlp8MBK0YBa3GiWCoO4DtWyS1Yu9s": {
-      "Value": {
-        "Ref": "UserUnderscoreauthorizerLambdaVersionF3RvpzVGWNMHnlp8MBK0YBa3GiWCoO4DtWyS1Yu9s"
-      }
-    },
-    "AdminUnderscoreauthorizerLambdaVersion6LnpttCj3D6myBmVmoVII8ucNW84THFhALmFuFAbs": {
-      "Value": {
-        "Ref": "AdminUnderscoreauthorizerLambdaVersion6LnpttCj3D6myBmVmoVII8ucNW84THFhALmFuFAbs"
+        "Ref": "AdminUnderscoreauthorizerLambdaVersiont2oH2Zdltq9c6BzHlUGAbsQx6kSZtAJZhQYu34LEvoE"
       }
     }
   }

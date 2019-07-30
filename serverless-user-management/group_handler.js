@@ -1,61 +1,37 @@
-module.exports.pushCreateGroupToSQS = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const SQS = new AWS.SQS();
-  const stringedEvent = JSON.stringify(event);
+module.exports.pushCreateGroupToSQS = async (event, context, callback) => {
+  const utils = require('./utils.js');
 
   const params = {
-    MessageBody: stringedEvent,
+    MessageBody: JSON.stringify(event),
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/createGroupQueue"
   };
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "Group event pushed to SQS");
-  });
+  const res = await utils.pushToSQS(params);
+  callback(null, res);
 };
 
-module.exports.pushUpdateGroupToSQS = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const SQS = new AWS.SQS();
-  const stringedEvent = JSON.stringify(event);
+module.exports.pushUpdateGroupToSQS = async (event, context, callback) => {
+  const utils = require('./utils.js');
 
   const params = {
-    MessageBody: stringedEvent,
+    MessageBody: JSON.stringify(event),
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/updateGroupQueue"
   };
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "Group event pushed to SQS");
-  });
+  const res = await utils.pushToSQS(params);
+  callback(null, res);
 };
 
-module.exports.pushDeleteGroupToSQS = (event, context, callback) => {
-  const AWS = require('aws-sdk');
-  const SQS = new AWS.SQS();
-  const stringedEvent = JSON.stringify(event);
+module.exports.pushDeleteGroupToSQS = async (event, context, callback) => {
+  const utils = require('./utils.js');
 
   const params = {
-    MessageBody: stringedEvent,
+    MessageBody: JSON.stringify(event),
     QueueUrl: "https://sqs.eu-central-1.amazonaws.com/582373673306/deleteGroupQueue"
   };
 
-  SQS.sendMessage(params, function(err,data){
-    if(err){
-      console.log(err);
-      callback(null, err);
-    }
-    else
-      callback(null, "Group event pushed to SQS");
-  });
+  const res = await utils.pushToSQS(params);
+  callback(null, res);
 };
 
 module.exports.commandCreateGroup = async (event, context, callback) => {
@@ -63,9 +39,8 @@ module.exports.commandCreateGroup = async (event, context, callback) => {
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
-  const stringedBody = JSON.stringify(eventParsed);
-  const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
+  const stringedBody = JSON.stringify(eventParsed.body);
+  const eventToCheck = JSON.parse(stringedBody);
 
   const checkNameParams = {
     TableName: 'group',
@@ -75,16 +50,16 @@ module.exports.commandCreateGroup = async (event, context, callback) => {
     ProjectionExpression: "#groupname",
     FilterExpression: "#groupname = :checkname",
     ExpressionAttributeValues: {
-        ":checkname": check.name
+        ":checkname": eventToCheck.name
     }
   };
 
   const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
   
-  if((check.groupId == "" || check.name == "" || check.desc == "") || nameAlreadyExists)
+  if((eventToCheck.groupId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
     callback(null, "Name already exists or empty attributes");
   else{
-    utils.storeEvent("group", "executeCreateGroupQueue", bodyParsed.body);
+    utils.storeEvent("group", "executeCreateGroupQueue", eventToCheck);
     callback(null, "Group event stored");
   }
 };
@@ -94,9 +69,8 @@ module.exports.commandUpdateGroup = async (event, context, callback) => {
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
-  const stringedBody = JSON.stringify(eventParsed);
-  const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
+  const stringedBody = JSON.stringify(eventParsed.body);
+  const eventToCheck = JSON.parse(stringedBody);
 
   const checkNameParams = {
     TableName: 'group',
@@ -106,33 +80,32 @@ module.exports.commandUpdateGroup = async (event, context, callback) => {
     ProjectionExpression: "#groupname",
     FilterExpression: "#groupname = :checkname",
     ExpressionAttributeValues: {
-        ":checkname": check.name
+        ":checkname": eventToCheck.name
     }
   };
 
   const nameAlreadyExists = await utils.asyncCheckScanDB(checkNameParams);
   
-  if((check.groupId == "" || check.name == "" || check.desc == "") || nameAlreadyExists)
+  if((eventToCheck.groupId == "" || eventToCheck.name == "" || eventToCheck.desc == "") || nameAlreadyExists)
     callback(null, "Name already exists or empty attributes");
   else{
-    utils.storeEvent("group", "executeUpdateGroupQueue", bodyParsed.body);
+    utils.storeEvent("group", "executeUpdateGroupQueue", eventToCheck);
     callback(null, "Group event stored");
   }
 };
 
-module.exports.commandDeleteGroup = (event, context, callback) => {
+module.exports.commandDeleteGroup = async (event, context, callback) => {
   const utils = require('./utils.js');
 
   const stringedEvent = event.Records[0].body.toString('utf-8'); //read new event from SQS
   const eventParsed = JSON.parse(stringedEvent);
-  const stringedBody = JSON.stringify(eventParsed);
-  const bodyParsed = JSON.parse(stringedBody);
-  const check = bodyParsed.body;
+  const stringedBody = JSON.stringify(eventParsed.body);
+  const eventToCheck = JSON.parse(stringedBody);
   
-  if(check.groupId == "")
+  if(eventToCheck.groupId == "")
     callback(null, "Empty attributes");
   else{
-    utils.storeEvent("group", "executeDeleteGroupQueue", bodyParsed.body);
+    utils.storeEvent("group", "executeDeleteGroupQueue", eventToCheck);
     callback(null, "Group event stored");
   }
 };

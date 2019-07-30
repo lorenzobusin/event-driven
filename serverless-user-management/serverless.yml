@@ -167,119 +167,15 @@ functions:
 
   # ------------------------------- USER FUNCTIONS ------------------------------- #
 
-  
 
   # ------------------------------- ROLE FUNCTIONS ------------------------------- #
 
   
   # ------------------------------- AUTHORIZATION FUNCTIONS ------------------------------- #
 
-  pushCreateAuthToSQS: 
-    handler: handler.pushCreateAuthToSQS 
-    events: 
-      - http:
-          path: /pushcreateauthtosqs
-          method: post
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
-    
-  pushUpdateAuthToSQS: 
-    handler: handler.pushUpdateAuthToSQS 
-    events: 
-      - http:
-          path: /pushupdateauthtosqs
-          method: post
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
 
-  pushDeleteAuthToSQS: 
-    handler: handler.pushDeleteAuthToSQS 
-    events: 
-      - http:
-          path: /pushdeleteauthtosqs
-          method: post
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
+  # ------------------------------- GROUP FUNCTIONS ------------------------------- #
 
-  commandCreateAuth:
-    handler: handler.commandCreateAuth
-    timeout: 10
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:createAuthQueue 
-  
-  commandUpdateAuth:
-    handler: handler.commandUpdateAuth
-    timeout: 10
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:updateAuthQueue
-
-  commandDeleteAuth:
-    handler: handler.commandDeleteAuth
-    timeout: 10
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:deleteAuthQueue
-
-  createAuth:
-    handler: handler.createAuth
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:executeCreateAuthQueue
-
-  updateAuth:
-    handler: handler.updateAuth
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:executeUpdateAuthQueue
-
-  deleteAuth: 
-    handler: handler.deleteAuth
-    events:
-      - sqs:
-          arn: arn:aws:sqs:eu-central-1:582373673306:executeDeleteAuthQueue
-
-  readAuth: 
-    handler: handler.readAuth
-    events: 
-      - http: 
-          path: /readAuth
-          method: get
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
-          request:
-            template:
-              application/json: '{ "authId": "$input.params("authId")" }'
-    
-  getAllAuths: 
-    handler: handler.getAllAuths
-    events: 
-      - http: 
-          path: /getAllAuths
-          method: get
-          authorizer: 
-            arn: arn:aws:lambda:eu-central-1:582373673306:function:serverless-user-management-dev-admin_authorizer
-            type: request
-            resultTtlInSeconds: 0
-          cors: true
-          integration: lambda
 
   # ------------------------------- EVENT SOURCING FUNCTIONS ------------------------------- #
 

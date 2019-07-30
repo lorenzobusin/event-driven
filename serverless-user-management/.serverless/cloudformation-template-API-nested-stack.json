@@ -3,86 +3,6 @@
   "Description": "APINestedStack nested stack",
   "Parameters": {},
   "Resources": {
-    "ApiGatewayResourceGetallauths": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "PathPart": "getAllAuths",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      },
-      "DependsOn": []
-    },
-    "ApiGatewayResourcePushcreateauthtosqs": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "PathPart": "pushcreateauthtosqs",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      },
-      "DependsOn": []
-    },
-    "ApiGatewayResourcePushdeleteauthtosqs": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "PathPart": "pushdeleteauthtosqs",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      },
-      "DependsOn": []
-    },
-    "ApiGatewayResourcePushupdateauthtosqs": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "PathPart": "pushupdateauthtosqs",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      },
-      "DependsOn": []
-    },
-    "ApiGatewayResourceReadauth": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "PathPart": "readAuth",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      },
-      "DependsOn": []
-    },
     "ApiGatewayResourceRecovery": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
@@ -116,31 +36,6 @@
     "ApiGatewayRestApi": {
       "Value": {
         "Ref": "ApiGatewayRestApi"
-      }
-    },
-    "ApiGatewayResourcePushcreateauthtosqs": {
-      "Value": {
-        "Ref": "ApiGatewayResourcePushcreateauthtosqs"
-      }
-    },
-    "ApiGatewayResourcePushupdateauthtosqs": {
-      "Value": {
-        "Ref": "ApiGatewayResourcePushupdateauthtosqs"
-      }
-    },
-    "ApiGatewayResourcePushdeleteauthtosqs": {
-      "Value": {
-        "Ref": "ApiGatewayResourcePushdeleteauthtosqs"
-      }
-    },
-    "ApiGatewayResourceReadauth": {
-      "Value": {
-        "Ref": "ApiGatewayResourceReadauth"
-      }
-    },
-    "ApiGatewayResourceGetallauths": {
-      "Value": {
-        "Ref": "ApiGatewayResourceGetallauths"
       }
     },
     "ApiGatewayResourceRecovery": {

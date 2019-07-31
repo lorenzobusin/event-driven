@@ -1,0 +1,132 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wenneker Assignment
+% LaTeX Template
+% Version 2.0 (12/1/2019)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Vel (vel@LaTeXTemplates.com)
+% Frits Wenneker
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt]{article} % Font size
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+
+\title{	
+	\normalfont\normalsize
+	\includegraphics[width=0.5\columnwidth]{logo-black}
+	%\textsc{Molo17 S.r.l.}\\ % Your university, school and/or department name(s)
+	\vspace{25pt} % Whitespace
+	\rule{\linewidth}{0.5pt}\\ % Thin top horizontal rule
+	\vspace{20pt} % Whitespace
+	{\huge Event-Driven cloud architectures, CQRS and Event Sourcing}\\ % The assignment title
+	\vspace{12pt} % Whitespace
+	\rule{\linewidth}{2pt}\\ % Thick bottom horizontal rule
+	\vspace{12pt} % Whitespace
+}
+
+\author{\LARGE Lorenzo Busin} % Your name
+
+\date{\normalsize August, 2019} % Today's date (\today) or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+%\section{Image Interpretation}
+
+%\begin{figure}[h] % [h] forces the figure to be output where it is defined in the code (it suppresses floating)
+	%\centering
+	%\includegraphics[width=0.5\columnwidth]{swallow.jpg} % Example image
+	%\caption{European swallow.}
+%\end{figure}
+
+\section{Event-Driven architectures}  
+
+\subsection{What is an Event-Driven architecture?}
+The Event-Driven architecture is a popular distributed asynchronous architecture pattern used to produce highly scalable and adaptable applications. The Event-Driven architecture is made of highly decoupled and single-purpose event processing components that asynchronously receive and process events. 
+
+\subsection{What is an event?}
+An event is an action recognized and handled by the software, often asynchronously. Events can be generated or triggered by the system, the user or in other ways. The software can also trigger its own set of events to forward information to other services or communicate with them. An application that changes its behavior in response to events is called "Event-Driven".\\
+The main difference between commands and events is that the firsts say to the system \emph"This is what you have to do" while the seconds just say \emph{"This is happened"} and then is up to the handler to decide what to do.
+
+\subsection{What is Event-Driven programming?}
+Event-Driven programming is a programming paradigm where the flow of the program is determined by events such as user actions , sensor outputs, or messages from other programs. This paradigm is mostly used in graphical user interfaces and other applications such as JavaScript web apps that are centered on performing actions in response to inputs. \\
+In an Event-Driven application there is a main loop that listens for events and then triggers a callback function when one of those is detected. The events listener is a common thing among applications, for this reason many programming frameworks take care of their implementation and expect the user to provide only the code for the event handlers  
+
+\subsection{Event-Driven architecture's topologies}
+This pattern consists of two main topologies: mediator and broker. The mediator one is commonly used when you need to orchestrate multiple steps within an event through a central mediator, whereas the broker topology is used when you want to chain events together without the use of a central mediator.
+
+\subsubsection{Mediator topology}
+The mediator topology is useful for events that have multiple steps and require some level of orchestration to process the event. For example, a single event to place a stock trade might require you to first validate the trade, then check the compliance of that stock trade against various compliance rules, assign the trade to a broker, calculate the commission, and finally place the trade with that broker. All of these steps would require some level of orchestration to determine the order of the steps and which ones can be done serially and in parallel. \\
+There are four main types of architecture components within the mediator topology: event queues, an event mediator, event channels, and event processors. The event flow starts with a client sending an event to an event queue, which is used to transport the event to the event mediator. The event mediator receives the initial event and orchestrates that event by sending additional asynchronous events to event channels to execute each step of the process. Event processors, which listen on the event channels, receive the event from the event mediator and execute specific business logic to process the event.
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[scale=0.8]{mediator}
+\end{figure}
+There are two types of events within this pattern: an initial event and a processing event. The initial event is the original event received by the mediator, whereas the processing events are ones that are generated by the mediator and received by the event-processing components.\\
+The event-mediator component is responsible for orchestrating the steps contained within the initial event. For each step in the initial event, the event mediator sends out a specific processing event to an event channel, which is then received and processed by the event processor. It is important to note that the event mediator doesn’t actually perform the business logic necessary to process the initial event; rather, it knows of the steps required to process the initial event.\\
+Event channels are used by the event mediator to asynchronously pass specific processing events related to each step in the initial event to the event processors. The event channels can be either message queues or message topics, although message topics are most widely used with the mediator topology so that processing events can be processed by multiple event processors (each performing a different task based on the processing event received).\\
+The event processor components contain the application business logic necessary to process the processing event. Event processors are self-contained, independent, highly decoupled architecture components that perform a specific task in the application or system. While the granularity of the event-processor component can vary from fine-grained (e.g. calculate sales tax on an order) to coarse-grained (e.g. process an insurance claim), it is important to keep in mind that in general, each event-processor component should perform a single business task and not rely on other event processors to complete its specific task.
+
+\subsubsection{Broker topology}
+The broker topology differs from the mediator topology in that there is no central event mediator; rather, the message flow is distributed across the event processor components in a chain-like fashion through a lightweight message broker. This topology is useful when you have a relatively simple event processing flow.
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[scale=0.8]{broker}
+\end{figure}
+
+As you can see from the diagram, there is no central event-mediator component controlling and orchestrating the initial event; rather, each event-processor component is responsible for processing an event and publishing a new event indicating the action it just performed. For example, an event processor that balances a portfolio of stocks may receive an initial event called stock split. Based on that initial event, the event processor may do some portfolio rebalancing, and then publish a new event to the broker called rebalance portfolio, which would then be picked up by a different event processor. 
+
+\subsubsection{Hybrid topology}
+You can integrate both topologies, specially when you have to build a complex system.
+
+\subsection{Pattern analysis}
+\begin{figure} [H]
+	\centering
+	\includegraphics[scale=0.8]{analysis}
+\end{figure}
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\begin{itemize}
+	\item \textbf{Overall agility}(\color{darkgreen}High\color{black}): is the ability to respond quickly to a constantly changing environment. Since event-processor components are single-purpose and completely decoupled from other event processor components, changes are generally isolated to one or a few event processors and can be made quickly without impacting other components;
+	\item \textbf{Ease of deployment}(\color{darkgreen}High\color{black}): this pattern is relatively easy to deploy due to the decoupled nature of the event-processor components. The broker topology tends to be easier to deploy than the mediator topology, primarily because the event mediator component is somewhat tightly coupled to the event processors: a change in an event processor component might also require a change in the event mediator, requiring both to be deployed for any given change;
+	\item \textbf{Testability}(\color{red}Low\color{black}): while individual unit testing is not overly difficult, it does require some sort of specialized testing client or testing tool to generate events. Testing is also complicated by the asynchronous nature of this pattern;
+	\item \textbf{Performance}(\color{darkgreen}High\color{black}): the pattern achieves high performance through its asynchronous capabilities;
+	\item \textbf{Scalability}(\color{darkgreen}High\color{black}): is naturally achieved in this pattern through highly independent and decoupled event processors;
+	\item \textbf{Ease of development}(\color{red}Low\color{black}): development can be somewhat complicated due to the asynchronous nature of the pattern as well as contract creation and the need for more advanced error handling.
+\end{itemize}
+
+\newpage
+\section{CQRS} 
+Example of application model that not adopts CQRS:
+\begin{figure} [H]
+	\centering
+	\includegraphics[scale=0.8]{CQRS1}
+\end{figure}
+
+\begin{figure} [H]
+Example of application model that adopts CQRS:
+	\centering
+	\includegraphics[scale=0.8]{CQRS2}
+\end{figure}
+
+\newpage
+\section{Event Sourcing} 
+
+\newpage
+\section{Comparison between cloud providers} 
+
+\end{document}

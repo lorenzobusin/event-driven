@@ -1,8 +1,8 @@
 \newsection{Amazon Web Services}
-Amazon Web Services (AWS) is a subsidiary of Amazon that provides on-demand cloud computing platforms to individuals, companies, and governments, on a pay-as-you-go basis. These cloud computing web services provide a set of primitive abstract technical infrastructure and distributed computing building blocks and tools. AWS version of virtual computers emulate most of the attributes of a real computer including, hardware central processing units and graphics processing units, local/RAM memory, hard-disk/SSD storage; a choice of operating systems; networking; and pre-loaded application software such as web servers and databases.
+Amazon Web Services (AWS) is a subsidiary of Amazon that provides on-demand cloud computing platforms to individuals, companies, and governments, on a pay-as-you-go basis. These cloud computing web services provide a set of primitive abstract technical infrastructure and distributed computing building blocks and tools. AWS version of virtual computers emulate most of the attributes of a real computer, including hardware central processing units, graphics processing units, memories and storage.
 
 \subsection{Lambda}
-AWS Lambda is an Event-Driven, serverless computing platform provided by Amazon. It is a computing service that runs code in response to events and automatically manages the computing resources required by that code. The purpose of Lambda is to simplify building smaller, on-demand applications that are responsive to events and new information. AWS targets starting a Lambda instance within milliseconds of an event. Node.js, Python, Java, Go, Ruby and C\# through .NET Core are all officially supported.
+AWS Lambda is an Event-Driven serverless computing platform provided by Amazon. It is a computing service that runs code in response to events and automatically manages the computing resources required by that code. The purpose of Lambda is to simplify building applications that are responsive to events and new information. AWS targets starting a Lambda instance within milliseconds of an event.
 
 In this project, lambda functions are the computing core for the execution of all commands and are written in Node.js.
 
@@ -50,7 +50,7 @@ Example:
 \paragraph{CommandOperationAggregate} \Spazio
 These functions validate the values of the attributes before storing the event in the \emph{eventStore} and are triggered when a new event arrives to the corresponding queue. \\ 
 If you have to check for duplicated attributes in the database, the function must be marked \emph{async} because it has to wait for the result of the check operation.\\
-In this example, the function checks for a duplicated userId or email address and if the attributes value is empty, else the event is stored.
+In this example the function checks for a duplicated userId or email address and if the attributes value is empty, otherwise the event is stored.
 \begin{lstlisting}
 	module.exports.commandCreateUser = async (event, context, callback) => {
 		const utils = require('./utils.js');
@@ -144,7 +144,7 @@ After that, the mediator retrieves the \emph{executionQueue} parameter from the 
 
 
 \paragraph{OperationAggregate} \Spazio
-These functions execute a single operation using the event payload and are triggered when new event arrives to the corresponding execution queue.\\
+These functions execute a single operation using the event payload and are triggered when a new event arrives to corresponding execution queue.\\
 Example:
 \begin{lstlisting}
 	module.exports.createUser = async (event, context, callback) => {
@@ -171,7 +171,7 @@ Example:
 \end{figure}
 
 \paragraph{Recovery} \Spazio
-This function allows you to rebuild the system state starting from a given timestamp by replaying all the events into the \emph{eventStore} table which were stored after that time. \\
+This function allows you to rebuild the state of the system starting from a given timestamp by replaying all the events which were stored after that time into the \emph{eventStore} table.\\
 Is important to re-execute the events one by one and in the correct order(from the oldest one); for this purpose the recovery function implements a sorting algorithm that retrieves an array of events and sorts them by timestamp, and an \emph{async} function which sends every event to the corresponding execution queue.
 \begin{lstlisting}
 	module.exports.recovery = (event, context, callback) => { 
@@ -220,7 +220,7 @@ Is important to re-execute the events one by one and in the correct order(from t
 \subsubsection{Read mode Lambda functions}
 \begin{figure} [H]
 \paragraph{ReadOperationAggregate} \Spazio
-These functions work in the read side of the architecture; they query the database to retrieve the information needed without passing throw a SQS queue or a mediator. This kind of events aren't stored into the \emph{eventStore} because they don't change the current system state; this Lambda functions fetch the URL of a GET endpoint using a GET request and listen for a response result.
+These functions work in the read side of the architecture; they query the database to retrieve the information needed without passing through a SQS queue or a mediator. This kind of events aren't stored into the \emph{eventStore} because they don't change the current system state; these Lambda functions fetch the URL of a GET endpoint using a GET request and listen for a response result.
 \begin{lstlisting}
 	fetch(linkUserAPI_GET, {
 		method: "get",
@@ -286,7 +286,7 @@ Amazon CloudWatch is a monitoring and management service built for developers, s
 This tool can be very helpful to debug your Lambda functions and to understand what happens to your system.
 
 \subsection{DynamoDB}
-Amazon DynamoDB is a fully managed proprietary NoSQL database service that supports key-value and document data structures and is offered by Amazon Web Services.
+Amazon DynamoDB is a fully managed proprietary NoSQL database service that supports key-value and document data's structures and is offered by Amazon Web Services.
 In this project the DynamoDB instance is used for two purpose: it is used to store events and to keep updated the aggregates views.\\
 The tables are the following:
 \begin{itemize}
@@ -311,7 +311,7 @@ There are two types of Lambda authorizers:
 \begin{itemize}
 	\item A token-based Lambda authorizer (also called TOKEN authorizer) receives the caller's identity in a bearer token, such as a JSON Web Token (JWT);
 
-	\item A request parameter-based Lambda authorizer (also called a REQUEST authorizer) receives the caller's identity in a combination of headers, query string parameters, stage variables, and context variables.
+	\item A request parameter-based Lambda authorizer (also called a REQUEST authorizer) receives the caller's identity in a combination of headers, query string parameters, stage variables and context variables.
 \end{itemize}
 \begin{figure} [H]
 	\centering

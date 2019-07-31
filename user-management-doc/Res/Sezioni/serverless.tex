@@ -3,11 +3,11 @@
 \subsection{Description}
 The Serverless Framework is a free and open-source web framework written using Node.js. Serverless is the first framework that was originally developed for building applications exclusively on AWS Lambda, a serverless computing platform provided by Amazon as a part of the Amazon Web Services.
 \subsection{Serverless.yml}
-One advantage of using this tool is the capability to deploy every time an entire serverless system based on cloud providers, in this case AWS. You can define a \emph{serverless.yml} configuration file which contains all the information about your service. You don't need to manually create the resources you need in a project, like database tables, queues, API endpoints and Lambda functions. You just have to write the code and then deploying your app.
+One advantage of using this tool is the capability to deploy every time an entire serverless system based on cloud providers, in this case AWS. You can define a \emph{serverless.yml} configuration file which contains all the information about your service. You don't need to manually create the resources you need in a project, like database tables, queues, API endpoints and Lambda functions. You just have to write the code and then deploy your app.
 \subsubsection{Serverless configuration for user management}
 \begin{figure} [H]
 This snippet of serverless configuration shows the name of your service, a list of plugins and the custom field. The \emph{dotenv} plugin is helpful if you have variables stored in a \emph{.env} file that you want loaded into your serverless yaml config. This will allow you to reference them inside your config and it will load them into your lambdas. Into custom field you have to declare the name of your variables.\\
-The \emph{split-stack} plugin is useful when you reach the limit of 200 resources to deploy because it automatically split your resources using nested stacks.
+The \emph{split-stack} plugin is useful when you reach the limit of 200 resources to deploy because it automatically splits your resources using nested stacks.
 
 \begin{lstlisting}[language=C]
 	service: serverless-user-management

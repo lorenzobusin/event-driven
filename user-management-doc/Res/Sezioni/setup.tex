@@ -39,15 +39,15 @@ You have to configure your serverless CLI with yours AWS credentials, so you hav
 	\begin{ttfamily}serverless config credentials ---provider aws ---key YOURKEY ---secret YOURSECRET\end{ttfamily}
 \end{enumerate}
 
-\subsection{Deploying the serverless User Management service}
+\subsection{Deploying the serverless service}
 To deploy your serverless application you have to:
 \begin{enumerate}
 	\item Create a new directory;
-	\item To create a new project run the command: \begin{ttfamily}serverless or sls\end{ttfamily}
-	\item To install dependencies run the command: 
+	\item Create a new project running the command: \begin{ttfamily}serverless or sls\end{ttfamily}
+	\item Install dependencies runnig the command: 
 	\begin{ttfamily}npm install\end{ttfamily}
-	\item To install a plugin you have to define it into the \emph{serverless.yml} and then run the command: 
+	\item Install the plugins you need defining them into the \emph{serverless.yml} and then running the command: 
 	\begin{ttfamily}npm install -PLUGINNAME\end{ttfamily}
-	\item To deploy your service run the command: 
+	\item Deploy your service running the command: 
 	\begin{ttfamily}serverless deploy or sls deploy\end{ttfamily}
 \end{enumerate}

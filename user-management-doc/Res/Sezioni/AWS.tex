@@ -47,7 +47,6 @@ Example:
 	\caption{Lambda: pushOperationAggregateToSQS}
 \end{figure}
 
-\begin{figure}
 \paragraph{CommandOperationAggregate} \Spazio
 These functions validate the values of the attributes before storing the event in the \emph{eventStore} and are triggered when a new event arrives to the corresponding queue. \\ 
 If you have to check for duplicated attributes in the database, the function must be marked \emph{async} because it has to wait for the result of the check operation.\\
@@ -90,6 +89,7 @@ In this example, the function checks for a duplicated userId or email address an
 		}
 	};
 \end{lstlisting}
+\begin{figure}[H]
 	\caption{Lambda: commandOperationAggregate}
 \end{figure}
 
@@ -99,7 +99,7 @@ This function catch the \emph{DynamoDB} event and is triggered when a change occ
 You have to be careful that the \emph{DynamoDB} events are mapped using the char type attribute value. This is an example: \\
 
 	\centering
-	\includegraphics[scale=1.2]{../Img/dynamoEvent}
+	\includegraphics[scale=1]{../Img/dynamoEvent}
 	\caption{DynamoDB event object}\label{}
 \end{figure}
 
@@ -107,7 +107,7 @@ You can use the \emph{"AWS.DynamoDB.Converter"} module to parse a DynamoDB event
 
 \begin{figure} [H]
 	\centering
-	\includegraphics[scale=1.2]{../Img/parsedDynamoEvent}
+	\includegraphics[scale=1]{../Img/parsedDynamoEvent}
 	\caption{Parsed DynamoDB event object}\label{}
 \end{figure}
 
@@ -142,7 +142,7 @@ After that, the mediator retrieves the \emph{executionQueue} parameter from the 
 	\caption{Lambda: mediator}
 \end{figure}
 
-\begin{figure} [H]
+
 \paragraph{OperationAggregate} \Spazio
 These functions execute a single operation using the event payload and are triggered when new event arrives to the corresponding execution queue.\\
 Example:
@@ -166,11 +166,11 @@ Example:
 		}).promise();
 	};
 \end{lstlisting}
+\begin{figure} [H]
 	\caption{Lambda: operationAggregate}
 \end{figure}
 
-\begin{figure} [H]
-\paragraph{Recovery} \MiniSpazio
+\paragraph{Recovery} \Spazio
 This function allows you to rebuild the system state starting from a given timestamp by replaying all the events into the \emph{eventStore} table which were stored after that time. \\
 Is important to re-execute the events one by one and in the correct order(from the oldest one); for this purpose the recovery function implements a sorting algorithm that retrieves an array of events and sorts them by timestamp, and an \emph{async} function which sends every event to the corresponding execution queue.
 \begin{lstlisting}
@@ -213,6 +213,7 @@ Is important to re-execute the events one by one and in the correct order(from t
 		});
 	};
 \end{lstlisting}
+\begin{figure} [H]
 	\caption{Lambda: recovery}
 \end{figure}
 
@@ -318,7 +319,7 @@ There are two types of Lambda authorizers:
 	\caption{Authorizer workflow}\label{}
 \end{figure}
 
-In this project the authorizer is used to protect the access to public endpoints. There are two different authorizer functions, one for admins and one for users. The workflow is the same, the only difference refers to the \emph{client id} and the \emph{public key} provided by \emph{Auht0}, which are needed to authenticate the client.
+In this project the authorizer is used to protect the access to public endpoints. There are two different authorizer functions, one for admins and one for users. The workflow is the same, the only difference refers to the \emph{client id} and the \emph{public key} provided by \emph{Auht0}, which are needed to authenticate the client identity.
 
 \subsection{Simple Queue Service}
 Simple Queue Service(SQS) is a distributed message queuing service introduced by Amazon. It supports programmatic sending of messages via web service applications as a way to communicate over the Internet. SQS is intended to provide a highly scalable hosted message queue that resolves issues arising from the common producer-consumer problem or connectivity between producer and consumer.\\

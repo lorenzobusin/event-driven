@@ -5,20 +5,21 @@ To create a new type of aggregate you have to:
 \begin{itemize}
 	\item Define a new DynamoDB table in the \emph{serverless.yml};
 	\item Create an operationQueue and an executionQueue with SQS;
-	\item Define all the Lambda functions you need in the \emph{serverless.yml};
+	\item Define the Lambda functions you need in the \emph{serverless.yml};
 	\item Define the trigger events in the \emph{serverless.yml};
 	\item Create a handler file named \emph{"aggregate\_handler.js"} in the project's root which contains the Lambda's handlers that refer the same aggregate type;
-	\item Add the new handlers file in the module.exports of the main handler;
+	\item Add the new handlers file in the \emph{module.exports} of the main handler;
 	\item Deploy the serverless application.
 \end{itemize}
 
-\subsection{New write functions}
-To add a new write function you have to:
+\subsection{New write operation}
+To add a new write operation you have to:
 \begin{itemize}
-	\item Define the function's name and te corresponding handler's name in the \emph{serverless.yml};
-	\item Define trigger events in the \emph{serverless.yml};
 	\item Create an \emph{operationAggregateQueue} and an \emph{executeOperationAggregateQueue}; 
-	\item In the \emph{"aggregate\_handler.js"} you must write:
+	\item Define a \emph{pushOperationAggregateToSQS} with a POST API endpoint and the corresponding authorizer function to protect it in the \emph{serverless.yml};
+	\item Define a \emph{commandOperationAggregate} and an \emph{operationAggregate} functions in the \emph{serverless.yml};
+	\item Define trigger events in the \emph{serverless.yml};
+	\item In the \emph{"aggregate\_handler.js"} write:
 	\begin{itemize}
 		\item a \emph{pushOperationAggregateToSQS} function to push the event in the corresponding queue;
 		\item a \emph{commandOperationAggregate} function to check if the event is valid and store it into the \emph{eventStore};
@@ -27,11 +28,12 @@ To add a new write function you have to:
 	\item Deploy the serverless application.
 \end{itemize}
 
-\subsection{New read functions}
-To add a new read function you have to:
+\subsection{New read operation}
+To add a new read operation you have to:
 \begin{itemize}
 	\item Define the function's name and te corresponding handler's name in the \emph{serverless.yml};
-	\item Define the corresponding get API endpoint in the \emph{serverless.yml};
-	\item Write the \emph{readOperation} function to query the database;
+	\item Define the corresponding GET API endpoint in the \emph{serverless.yml};
+	\item Define the authorizer function to protect the endpoint in the \emph{serverless.yml};
+	\item In the \emph{"aggregate\_handler.js"} write the \emph{readOperation} function to query the database;
 	\item Deploy the serverless application.
 \end{itemize}

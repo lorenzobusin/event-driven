@@ -17,7 +17,7 @@
 
 \subsubsection{Role}
 \begin{itemize}
-	\item \textbf{RoleId}: this attribute is generated with a UUID function;
+	\item \textbf{RoleId}: is a UUID;
 	\item \textbf{Name}: this attribute must be unique;
 	\item \textbf{Desc}: role's description;
 	\item External links:
@@ -28,21 +28,21 @@
 
 \subsubsection{Authorization}
 \begin{itemize}
-	\item \textbf{AuthId}: this attribute is generated with a UUID function;
+	\item \textbf{AuthId}: is a UUID;
 	\item \textbf{Name}: this attribute must be unique;
 	\item \textbf{Desc}: auth's description.
 \end{itemize}
 
 \subsubsection{Group}
 \begin{itemize}
-	\item \textbf{GroupId}: this attribute is generated with a UUID function;
+	\item \textbf{GroupId}: is a UUID;
 	\item \textbf{Name}: this attribute must be unique;
 	\item \textbf{Desc}: group's description.
 \end{itemize}
 
 \subsection{Admin side}
 \subsubsection{Authentication}
-The authentication feature si provided by a third part provider, Auth0. In the admin side only admin users can log in; the user must be in the corresponding application's database on Auth0.
+The authentication feature si provided by a third-party provider, Auth0. In the admin side only administrators can log in; the client must be signed into the corresponding application's database on Auth0.
 \subsubsection{Use cases}
 
 \begin{figure} [H]
@@ -57,14 +57,14 @@ The authentication feature si provided by a third part provider, Auth0. In the a
 	\item UC3: the admin updates an object based on the type of aggregate;
 	\item UC4: the admin deletes an object;
 	\item UC5: the admin recovers the system state from the chosen timestamp re-running of the event occurred after that; 
-	\item UC6: the admin log in into the application using the Auth0 portal;
-	\item UC7: the admin log out from the application.
+	\item UC6: the admin logs in into the application using the Auth0 portal;
+	\item UC7: the admin logs out from the application.
 \end{itemize}
 	
 
 \subsection{User side}
 \subsubsection{Authentication}
-The authentication feature si provided by a third part provider, Auth0. In the user side only users can log in; it can sign in with email and password or using Google's authentication or just log in using its credentials.
+The authentication feature si provided by a third-party provider, Auth0. In the user side only users can log in; he can sign in with email and password or using Google's authentication or just logs in using his credentials.
 \subsubsection{Use cases}
 
 \begin{figure} [H]
@@ -77,8 +77,8 @@ The authentication feature si provided by a third part provider, Auth0. In the u
 	\item UC1: the user fills the form to sign in into the application the first time logs in;
 	\item UC2: the user read his profile;
 	\item UC3: the user updates his profile;
-	\item UC4: the user sign up to Auth0 authentication portal using email and password or Google's account;
-	\item UC5: the user log in to Auth0 authentication portal using email and password or Google's account;
-	\item UC6: the user log out from the application.
+	\item UC4: the user signs up to Auth0 authentication portal using email and password or Google's account;
+	\item UC5: the user logs in to Auth0 authentication portal using email and password or Google's account;
+	\item UC6: the user logs out from the application.
 \end{itemize}
 

@@ -4,8 +4,9 @@
 	\emph{"Event Sourcing ensures that all changes to application are stored as a sequence of events."} \\
 \end{center}
 
-You can query these events, use the event log to reconstruct past states and adjust the state to cope with retroactive changes.\\
+You can query the events, use the event log to reconstruct past states and adjust the state to cope with retroactive changes.\\
 The core idea of event sourcing is that whenever we make a change to the state of a system, we record that state change as an event, and we can confidently rebuild the system state by reprocessing the events at any time in the future.\\
+Before storing the event you must validate it because you don't have to store events that generate errors or exceptions.\\ 
 When working with an event log can be useful to build snapshots of the working copy so that you don't have to process all the events when you rebuild the system or every time you need to query the database. For this reason when a new event is stored triggers another function to update the views.\\
 Event sourcing can be used to:
 \begin{itemize}
@@ -17,7 +18,9 @@ Event sourcing can be used to:
 
 \subsection{Event store}
 Event store is a database's table that contains all the events occurred from the begin.
-When using Event sourcing the event store becomes the principal source of truth and the system state is completely derived from it. 
+With event sourcing the event store becomes the principal source of truth and the system state is completely derived from it. \\
+Is essential that the table can't be modified and the events that are replayed don't have to be stored again. 
+This because the event store can reach huge dimensions and we must avoid to overload it.
 
 \subsubsection{Event object}
 Each event stored in the table is a JSON object and respect this format:
@@ -32,7 +35,7 @@ Each event stored in the table is a JSON object and respect this format:
 \begin{figure} [H]
 	\centering
 	\includegraphics[scale=1.2]{../Img/event_object}
-	\caption{DynamoDB eventStore example item}\label{}
+	\caption{Event object item}\label{}
 \end{figure}
 
 

@@ -1,10 +1,5 @@
 \newpage
 \newsection{Event Sourcing}
-\begin{center}
-	\emph{"Event Sourcing ensures that all changes to application are stored as a sequence of events."} \\
-\end{center}
-
-You can query the events, use the event log to reconstruct past states and adjust the state to cope with retroactive changes.\\
 The core idea of event sourcing is that whenever we make a change to the state of a system, we record that state change as an event and we can confidently rebuild the system state by reprocessing the events at any time in the future.\\
 Before storing the event you must validate it because you don't have to store events that generate errors or exceptions.\\ 
 When working with an event log can be useful to build snapshots of the working copy so that you don't have to process all the events when you rebuild the system or every time you need to query the database. For this reason when a new event is stored triggers another function to update the views.\\

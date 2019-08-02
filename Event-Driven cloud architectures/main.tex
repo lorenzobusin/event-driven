@@ -138,7 +138,6 @@ In complex and intricate systems the best choice is tho adopt an hybrid topology
  
  \textbf{Ease of development}(\color{red}Low\color{black}): development can be complicated due to the asynchronous nature of the pattern from the contract creation to the need for more advanced error handling, but also due to the complex events flow.
 
-\newpage
 \section{CQRS} 
 \subsection{What is CQRS?}
 \textbf{Command Query Responsibility Segregation} is an architectural pattern which separates the responsibility for modifying data(\emph{Command}) from reading them(\emph{Query}). The change that CQRS introduces is to split the conceptual model into separate models for updating and displaying data. The use of distinct models for writing and reading allows the infrastructure to easily scale to best fit the needs and allows to design and optimize each model for its responsibilities; this also allows the selection of the most appropriate technologies.
@@ -167,7 +166,7 @@ In these cases the ideal solution is to separate the system into two independent
   \includegraphics[scale=0.8]{CQRS2} \\
   Example of application model that adopts CQRS \\
 \end{figure} 
-\newpage
+
 \section{Event Sourcing} 
 \begin{center}
 	\emph{"Event Sourcing ensures that all changes to application are stored as a sequence of events."  \\Martin Fowler} \\
@@ -180,7 +179,7 @@ Before storing the event you must validate it because you don't have to store ev
 When working with an event log can be useful to build snapshots of the working copy so you don't have to process all the events when rebuild the system or every time you need to query the database. For this reason when a new event is stored triggers another function to update the views.
 
 \subsection{When using Event Sourcing?}
-Event sourcing can be used to:
+Event Sourcing can be used to:
 \begin{itemize}
 	\item \textbf{Complete Rebuild}: you can completely discard the application state  and rebuild it by re-running the events from the event store on an empty application.
 	\item \textbf{Temporal Query}: you can determine the application state at any point in time. This can be used considering multiple time-lines (like branching in a VCS).
@@ -201,7 +200,62 @@ In a complex system with billions of users the best choice is to implement an ev
 \subsection{CQRS and Event Sourcing}
 Both patterns are frequently grouped together. Applying Event Sourcing on  CQRS means persisting each event on the write part of our application. Then the read part is derived from the sequence of events. \\
 Event Sourcing isn't required when you implement CQRS, but in most of the use cases, CQRS is required when you implement Event Sourcing. This because you have to retrieve a state in \emph{O(1)} without computing \emph{n} different events.
-\newpage
+
 \section{Comparison between cloud providers} 
+
+\subsection{AWS vs Azure vs Google}
+Amazon, Microsoft and Google are the three dominant providers in public cloud computing. Each of three has its own set of advantages and your best will depend on your needs. 
+\begin{figure} [H]
+	\centering
+	\includegraphics[scale=0.17]{ahp-cloud-providers} \\
+\end{figure}
+
+\subsubsection{COMPUTE}
+The main compute services are AWS’s Amazon Elastic Compute Cloud (\emph{EC2}), Microsoft Azure’s Virtual Machines and Google Cloud’s Compute Engine. All three boast scalability, top security, flexibility and a wide variety of supported operating systems:
+\begin{itemize}
+\item \textbf{Amazon}: Elastic Compute Cloud web service provides scalable compute capacity in the cloud. You can easily increase and decrease capacity in minutes and can commission thousands of server instances simultaneously. AWS Auto Scaling monitors your apps and automatically scales capacity to maintain optimal performance at the lowest possible cost;
+\item \textbf{Microsoft}: Virtual Machines virtualize a wide range of computing solutions including development and testing, running applications,and datacenter extension. Its open-source software supports a full range of Linux distributions, Windows Server, SQL Server, Oracle, IBM and SAP. Virtual machines can be created for both on-premises servers and on the cloud, and can be integrated to provide global load balancing;
+\item \textbf{Google}: Compute Engine creates virtual machines that run in its data centers and worldwide network. It supports instances with up to 160 virtual CPUs, 3.75 TB of memory and persistent SSD and HDD disks up to 64 TB. Google automatically discounts prices for long-running workloads.
+\end{itemize}
+
+\subsubsection{STORAGE}
+\begin{itemize}
+\item \textbf{Amazon}: Simple Storage Service (\emph{S3}) is scalable object storage service. Any amount of data can be stored and protected. Amazon S3 is designed for durability and stores millions of applications from companies all around the world. Its use cases include: backup and restore, disaster recovery, archiving, data lakes and big data analytics, hybrid cloud storage and cloud-native application data;
+\item \textbf{Microsoft}: Azure Storage is an all-encompassing data storage service. It includes the following storage types: file, disk, blob, data lake storage and archive; 
+\item \textbf{Google}: Cloud Storage is an unified object storage. Google's approach to storage is the most simple and convenient.  It has a single API for all storage classes. Object Lifecycle Management helps you automatically optimize price/performance across classes.
+\end{itemize}
+
+\subsubsection{SECURITY}
+Amazon, Microsoft and Google are the best when it comes to data security. They all offer expert security guidance and assistance:
+\begin{itemize}
+\item \textbf{Amazon}: partners offer hundreds of security solutions that complement the existing AWS services. Amazon Inspector automatically assesses your applications for vulnerabilities and deviations from best practices and you may perform penetration testing on your EC2 and RDS instances;
+\item \textbf{Microsoft}: Azure Security Center offers a unified view and control of security for all of your on-premises and cloud workloads; 
+\item \textbf{Google}: data stored in cloud infrastructure is automatically encrypted and distributed to maximize availability and reliability.
+\end{itemize}
+
+\subsubsection{PRICING}
+Amazon, Microsoft and Google offer trial versions and free-tier products and services. Each provider offers unique services and special pricing  Also, prices change all the time and it is difficult to get an accurate comparison. \\
+Google generally offers the lowest prices, however AWS does offer better deals on some of their long-term commitments. 
+
+\section{Cloud portability}
+\subsection{What is cloud portability?}
+Cloud \textbf{portability} is the  “\emph{cloud customer’s ability to move applications and data between on-premises and cloud systems, and between cloud services offered by different providers}”. \\
+Portability can be broken into two types: \textbf{application portability} and \textbf{data portability}:
+\begin{itemize}
+\item Cloud application portability is the ability to move an application from one cloud service to another or between a customer's systems and a cloud service. It's important to be able to do that with relative ease;
+\item Cloud data portability is the ability to move data among cloud and on-premises systems. This should be done using a mechanism for importing data into the targeted cloud service, typically with an API.
+\end{itemize}
+
+\subsection{Cloud portability with containers}
+The notion of containerizing applications provides cloud portability. \\
+Portability is a key advantage of containers, as developers can easily move a container from a laptop to a test environment and then to production. \\
+They take abstraction a layer beyond virtualization. Once an application is running successfully within a container, there is no need to be concern about OS dependencies. Containers are lightweight, portable and consistent across the development, testing and production environments. Containerizing applications reduces the level of effort associated with migration between clouds.
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[scale=0.5]{containers} \\
+\end{figure}
+
+Thanks to services such as Docker, Kubernetes and OSB API you can achieve application portability in form of containers, the ability to orchestrate the deployment, their scalability and tie services across cloud providers and on-premises to different platforms. The resulting suite maximizes application portability across cloud infrastructure.
 
 \end{document}
